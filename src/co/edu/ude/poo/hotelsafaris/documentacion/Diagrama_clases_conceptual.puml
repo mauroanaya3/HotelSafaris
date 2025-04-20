@@ -57,5 +57,73 @@ class Habitacion {
     + toString()
 }
 
+class Reserva {
+    - int id
+    - Cliente cliente
+    - Hotel hotel
+    - List<Habitacion> habitacionesReservadas
+    - Date fechaInicio
+    - Date fechaFin
+    - double anticipo
+    - boolean confirmada
+    - String estado
+    --
+    + validarFechas()
+    + calcularPrecio()
+    + cancelarReserva(String)
+    + toString()
+}
+
+class Estancia {
+    - int id
+    - Reserva reserva
+    - List <Habitacion> habitacionesOcupadas
+    - Date fechaInicio
+    - Date fechaFin
+    - List<Actividad> actividadesContratadas
+    --
+    + calcularTotalEstancia()
+    + validarCondicionesReserva()
+    + toString() 
+}
+
+class Actividad {
+    - int codigo
+    - String nombre
+    - String descripcion
+    - String horario
+    - List<String> diasSemana
+    - boolean gratuito
+    - double precio
+    - Empleado animador
+    --
+    + calcularCostoCliente()
+    + verDetalles()
+    + toString()
+}
+
+class Suplemento {
+    - String tipo
+    - double importe
+    --
+    + sumarAlPrecio(double)
+    + toString()
+}
+
+class Factura {
+    - int id
+    - Estancia estancia
+    - Date fechaEmision
+    - double totalHabitaciones
+    - double totalSuplementos
+    - double totalActividades
+    - double anticipoDescontado
+    - double totalPagar
+    --
+    + calcularTotal()
+    + generarFactura()
+    + toString()
+}
+
 }
 @enduml
