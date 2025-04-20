@@ -1,2 +1,61 @@
 @startuml
+
+package "Gestión Hotelera Safari’S" {
+
+abstract class Persona {
+    - String dni
+    - String nombre
+    - String direccion
+    - String telefono
+    --
+    + toString()
+}
+
+class Empleado {
+    - int codigo
+    - String nivelEducativo
+    - String tipo
+    - Hotel hotel
+    --
+    + asignarHotel(hotel)
+    + obtenerInformacion()
+    + toString()
+}
+
+class Cliente {
+    -- 
+    + verHistorialReservas()
+    + contratarActividad(Actividad)
+    + toString()
+}
+
+class Hotel {
+    - int codigo
+    - String nombre
+    - int categoria
+    - String direccion
+    - String telefono
+    - Empleado director
+    --
+    + agregarEmpleado(Empleado)
+    + agregarHabitacion(Habitacion)
+    + listarEmpleadosTipo(String)
+    + getDisponibilidadTipo(String)
+    + toString()
+}
+
+class Habitacion {
+    - int numero
+    - String tipo
+    - boolean disponible
+    - double precioBase
+    - List<Suplemento> suplementos
+    - Hotel hotel
+    --
+    + calcularPrecioTotal()
+    + agregarSuplemento(suplemento)
+    + toString()
+}
+
+}
 @enduml
