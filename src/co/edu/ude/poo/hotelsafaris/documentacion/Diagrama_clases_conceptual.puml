@@ -2,6 +2,7 @@
 
 package "Gestión Hotelera Safari’S" {
 
+'Clases
 abstract class Persona {
     - String dni
     - String nombre
@@ -124,6 +125,13 @@ class Factura {
     + generarFactura()
     + toString()
 }
+
+' Herencia
+Persona <|-- Empleado
+Persona <|-- Cliente
+
+'Relaciones
+
 
 }
 @enduml
