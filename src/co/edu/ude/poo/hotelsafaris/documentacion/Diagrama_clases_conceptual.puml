@@ -1,0 +1,152 @@
+@startuml
+
+package "Gestión Hotelera Safari’S" {
+
+'Clases
+abstract class Persona {
+    - String dni
+    - String nombre
+    - String direccion
+    - String telefono
+    --
+    + toString()
+}
+
+class Empleado {
+    - int codigo
+    - String nivelEducativo
+    - String tipo
+    - Hotel hotel
+    --
+    + asignarHotel(hotel)
+    + obtenerInformacion()
+    + toString()
+}
+
+class Cliente {
+    -- 
+    + verHistorialReservas()
+    + contratarActividad(Actividad)
+    + toString()
+}
+
+class Hotel {
+    - int codigo
+    - String nombre
+    - int categoria
+    - String direccion
+    - String telefono
+    - Empleado director
+    --
+    + agregarEmpleado(Empleado)
+    + agregarHabitacion(Habitacion)
+    + listarEmpleadosTipo(String)
+    + getDisponibilidadTipo(String)
+    + toString()
+}
+
+class Habitacion {
+    - int numero
+    - String tipo
+    - boolean disponible
+    - double precioBase
+    - List<Suplemento> suplementos
+    - Hotel hotel
+    --
+    + calcularPrecioTotal()
+    + agregarSuplemento(suplemento)
+    + toString()
+}
+
+class Reserva {
+    - int id
+    - Cliente cliente
+    - Hotel hotel
+    - List<Habitacion> habitacionesReservadas
+    - Date fechaInicio
+    - Date fechaFin
+    - double anticipo
+    - boolean confirmada
+    - String estado
+    --
+    + validarFechas()
+    + calcularPrecio()
+    + cancelarReserva(String)
+    + toString()
+}
+
+class Estancia {
+    - int id
+    - Reserva reserva
+    - List <Habitacion> habitacionesOcupadas
+    - Date fechaInicio
+    - Date fechaFin
+    - List<Actividad> actividadesContratadas
+    --
+    + calcularTotalEstancia()
+    + validarCondicionesReserva()
+    + toString() 
+}
+
+class Actividad {
+    - int codigo
+    - String nombre
+    - String descripcion
+    - String horario
+    - List<String> diasSemana
+    - boolean gratuito
+    - double precio
+    - Empleado animador
+    --
+    + calcularCostoCliente()
+    + verDetalles()
+    + toString()
+}
+
+class Suplemento {
+    - String tipo
+    - double importe
+    --
+    + sumarAlPrecio(double)
+    + toString()
+}
+
+class Factura {
+    - int id
+    - Estancia estancia
+    - Date fechaEmision
+    - double totalHabitaciones
+    - double totalSuplementos
+    - double totalActividades
+    - double anticipoDescontado
+    - double totalPagar
+    --
+    + calcularTotal()
+    + generarFactura()
+    + toString()
+}
+
+' Herencia
+Persona <|-- Empleado
+Persona <|-- Cliente
+
+'Relaciones
+Hotel "1" o-- "0..*" Empleado : emplea >
+Hotel "1" o-- "0..*" Habitacion : contiene >
+Hotel "1" o-- "0..*" Actividad : ofrece >
+
+Empleado "1" -- "0..*" Actividad : gestiona >
+
+Cliente "1" -- "0..*" Reserva : realiza >
+Reserva "1" --> "0..1" Estancia : genera >
+Reserva "1" --> "1" Hotel : pertenece >
+Reserva "1" --> "1..*" Habitacion : incluye >
+
+Habitacion "1" -- "0..*" Suplemento : tiene >
+
+Estancia "1" --> "1" Reserva : se basa en >
+Estancia "1" --> "0..*" Actividad : contrata >
+Estancia "1" --> "1" Factura : genera >
+
+}
+@enduml
