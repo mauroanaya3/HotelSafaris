@@ -131,7 +131,22 @@ Persona <|-- Empleado
 Persona <|-- Cliente
 
 'Relaciones
+Hotel "1" o-- "0..*" Empleado : emplea >
+Hotel "1" o-- "0..*" Habitacion : contiene >
+Hotel "1" o-- "0..*" Actividad : ofrece >
 
+Empleado "1" -- "0..*" Actividad : gestiona >
+
+Cliente "1" -- "0..*" Reserva : realiza >
+Reserva "1" --> "0..1" Estancia : genera >
+Reserva "1" --> "1" Hotel : pertenece >
+Reserva "1" --> "1..*" Habitacion : incluye >
+
+Habitacion "1" -- "0..*" Suplemento : tiene >
+
+Estancia "1" --> "1" Reserva : se basa en >
+Estancia "1" --> "0..*" Actividad : contrata >
+Estancia "1" --> "1" Factura : genera >
 
 }
 @enduml
