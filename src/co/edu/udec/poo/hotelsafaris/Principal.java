@@ -3,6 +3,9 @@ package co.edu.udec.poo.hotelsafaris;
 import co.edu.udec.poo.hotelsafaris.modelo.crud.*;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.*;
 import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Principal {
 
@@ -357,69 +360,90 @@ public class Principal {
     }
 
     // Menu Estancias
-    public static void menuSuplementos(Scanner entrada) {
+    public static void menuEstancias(Scanner entrada) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         int opcion;
         do {
-            System.out.println("\n--- CRUD SUPLEMENTOS ---");
+            System.out.println("\n--- CRUD ESTANCIAS ---");
             System.out.println("1. Agregar");
             System.out.println("2. Buscar");
             System.out.println("3. Editar");
             System.out.println("4. Eliminar");
             System.out.println("5. Listar todos");
             System.out.println("6. Contar todos");
-            System.out.println("7. Volver al menu principal");
-            System.out.print("Seleccione una opcion: ");
+            System.out.println("7. Volver al menú principal");
+            System.out.print("Seleccione una opción: ");
             opcion = entrada.nextInt();
-            entrada.nextLine();
+            entrada.nextLine(); // limpiar buffer
 
             try {
                 switch (opcion) {
                     case 1 -> {
-                        System.out.print("Tipo de suplemento: ");
-                        String tipo = entrada.nextLine();
-                        System.out.print("Importe: ");
-                        double importe = entrada.nextDouble();
+                        System.out.print("ID de estancia: ");
+                        int id = entrada.nextInt();
                         entrada.nextLine();
-                        Suplemento s = new Suplemento(tipo, importe);
-                        SuplementoCrud.agregar(s);
-                        System.out.println("Suplemento agregado correctamente.");
+                        System.out.print("ID de reserva (ya existente): ");
+                        Reserva reserva = ReservaCrud.buscar(entrada.nextInt());
+                        entrada.nextLine();
+
+                        System.out.print("Fecha inicio (dd/MM/yyyy): ");
+                        Date fi = formato.parse(entrada.nextLine());
+
+                        System.out.print("Fecha fin (dd/MM/yyyy): ");
+                        Date ff = formato.parse(entrada.nextLine());
+
+                        Estancia e = new Estancia(id, reserva, new ArrayList<>(), fi, ff);
+                        EstanciaCrud.agregar(e);
+                        System.out.println("Estancia agregada correctamente.");
                     }
                     case 2 -> {
-                        System.out.print("Ingrese tipo a buscar: ");
-                        Suplemento s = SuplementoCrud.buscar(entrada.nextLine());
-                        System.out.println("Suplemento encontrado: " + s);
+                        System.out.print("ID a buscar: ");
+                        Estancia e = EstanciaCrud.buscar(entrada.nextInt());
+                        entrada.nextLine();
+                        System.out.println("Estancia encontrada: " + e);
                     }
                     case 3 -> {
-                        System.out.print("Ingrese tipo del suplemento a editar: ");
-                        Suplemento s = SuplementoCrud.buscar(entrada.nextLine());
-                        System.out.print("Nuevo importe: ");
-                        s.setImporte(entrada.nextDouble());
+                        System.out.print("ID de la estancia a editar: ");
+                        Estancia e = EstanciaCrud.buscar(entrada.nextInt());
                         entrada.nextLine();
-                        SuplementoCrud.editar(s);
-                        System.out.println("Suplemento editado correctamente.");
+
+                        System.out.print("Nueva fecha inicio (dd/MM/yyyy): ");
+                        Date nuevaFi = formato.parse(entrada.nextLine());
+                        e.setFechaInicio(nuevaFi);
+
+                        System.out.print("Nueva fecha fin (dd/MM/yyyy): ");
+                        Date nuevaFf = formato.parse(entrada.nextLine());
+                        e.setFechaFin(nuevaFf);
+
+                        EstanciaCrud.editar(e);
+                        System.out.println("Estancia editada correctamente.");
                     }
                     case 4 -> {
-                        System.out.print("Ingrese tipo a eliminar: ");
-                        SuplementoCrud.eliminar(entrada.nextLine());
-                        System.out.println("Suplemento eliminado correctamente.");
+                        System.out.print("ID a eliminar: ");
+                        EstanciaCrud.eliminar(entrada.nextInt());
+                        entrada.nextLine();
+                        System.out.println("Estancia eliminada correctamente.");
                     }
                     case 5 ->
-                        SuplementoCrud.listarTodo().forEach(System.out::println);
+                        EstanciaCrud.listarTodo().forEach(System.out::println);
                     case 6 ->
-                        System.out.println("Total suplementos: " + SuplementoCrud.contar());
+                        System.out.println("Total estancias: " + EstanciaCrud.contar());
                     case 7 ->
-                        System.out.println("Volviendo al menu principal...");
+                        System.out.println("Volviendo al menú principal...");
                     default ->
-                        System.out.println("Opcion no valida.");
+                        System.out.println("Opción no válida.");
                 }
+            } catch (ParseException pe) {
+                System.out.println("Formato de fecha inválido, debe ser dd/MM/yyyy");
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
         } while (opcion != 7);
     }
 
-    // Menu Actividades
+    // Menu Facturas
     public static void menuFacturas(Scanner entrada) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         int opcion;
         do {
             System.out.println("\n--- CRUD FACTURAS ---");
@@ -440,29 +464,19 @@ public class Principal {
                         System.out.print("ID factura: ");
                         int id = entrada.nextInt();
                         entrada.nextLine();
+
                         System.out.print("ID de estancia existente: ");
                         Estancia estancia = EstanciaCrud.buscar(entrada.nextInt());
                         entrada.nextLine();
-                        System.out.print("Fecha de emisión: ");
-                        String fecha = entrada.nextLine();
-                        System.out.print("Total habitaciones: ");
-                        double totalHabitaciones = entrada.nextDouble();
-                        entrada.nextLine();
-                        System.out.print("Total suplementos: ");
-                        double totalSuplementos = entrada.nextDouble();
-                        entrada.nextLine();
-                        System.out.print("Total actividades: ");
-                        double totalActividades = entrada.nextDouble();
-                        entrada.nextLine();
+
+                        System.out.print("Fecha de emisión (dd/MM/yyyy): ");
+                        Date fechaEmision = formato.parse(entrada.nextLine());
+
                         System.out.print("Anticipo descontado: ");
                         double anticipo = entrada.nextDouble();
                         entrada.nextLine();
-                        System.out.print("Total a pagar: ");
-                        double totalPagar = entrada.nextDouble();
-                        entrada.nextLine();
 
-                        Factura f = new Factura(id, estancia, fecha, totalHabitaciones, totalSuplementos,
-                                totalActividades, anticipo, totalPagar);
+                        Factura f = new Factura(id, estancia, fechaEmision, anticipo);
                         FacturaCrud.agregar(f);
                         System.out.println("Factura agregada correctamente.");
                     }
@@ -470,29 +484,24 @@ public class Principal {
                         System.out.print("ID a buscar: ");
                         Factura f = FacturaCrud.buscar(entrada.nextInt());
                         entrada.nextLine();
-                        System.out.println("Factura encontrada: " + f);
+                        System.out.println("Factura encontrada: \n" + f);
                     }
                     case 3 -> {
                         System.out.print("ID de la factura a editar: ");
                         Factura f = FacturaCrud.buscar(entrada.nextInt());
                         entrada.nextLine();
-                        System.out.print("Nueva fecha de emisión: ");
-                        f.setFechaEmision(entrada.nextLine());
-                        System.out.print("Nuevo total habitaciones: ");
-                        f.setTotalHabitaciones(entrada.nextDouble());
-                        entrada.nextLine();
-                        System.out.print("Nuevo total suplementos: ");
-                        f.setTotalSuplementos(entrada.nextDouble());
-                        entrada.nextLine();
-                        System.out.print("Nuevo total actividades: ");
-                        f.setTotalActividades(entrada.nextDouble());
-                        entrada.nextLine();
+
+                        System.out.print("Nueva fecha de emisión (dd/MM/yyyy): ");
+                        Date nuevaFechaEmision = formato.parse(entrada.nextLine());
+                        f.setFechaEmision(nuevaFechaEmision);
+
                         System.out.print("Nuevo anticipo descontado: ");
-                        f.setAnticipoDescontado(entrada.nextDouble());
+                        double nuevoAnticipo = entrada.nextDouble();
                         entrada.nextLine();
-                        System.out.print("Nuevo total a pagar: ");
-                        f.setTotalPagar(entrada.nextDouble());
-                        entrada.nextLine();
+                        f.setAnticipoDescontado(nuevoAnticipo);
+
+                        f.calcularTotal(); // recalcula los totales
+
                         FacturaCrud.editar(f);
                         System.out.println("Factura editada correctamente.");
                     }
@@ -502,15 +511,22 @@ public class Principal {
                         entrada.nextLine();
                         System.out.println("Factura eliminada correctamente.");
                     }
-                    case 5 ->
+                    case 5 -> {
+                        System.out.println("\n--- Lista de Facturas ---");
                         FacturaCrud.listarTodo().forEach(System.out::println);
-                    case 6 ->
+                    }
+                    case 6 -> {
                         System.out.println("Total facturas: " + FacturaCrud.contar());
-                    case 7 ->
+                    }
+                    case 7 -> {
                         System.out.println("Volviendo al menu principal...");
-                    default ->
-                        System.out.println("Opcion no valida.");
+                    }
+                    default -> {
+                        System.out.println("Opción no válida.");
+                    }
                 }
+            } catch (ParseException pe) {
+                System.out.println("Formato de fecha inválido, debe ser dd/MM/yyyy");
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
@@ -519,6 +535,7 @@ public class Principal {
 
     // Menu Reservas
     public static void menuReservas(Scanner entrada) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         int opcion;
         do {
             System.out.println("\n--- CRUD RESERVAS ---");
@@ -539,15 +556,20 @@ public class Principal {
                         System.out.print("ID de reserva: ");
                         int id = entrada.nextInt();
                         entrada.nextLine();
+
                         System.out.print("DNI del cliente: ");
                         Cliente cliente = ClienteCrud.buscar(entrada.nextLine());
+
                         System.out.print("Código del hotel: ");
                         Hotel hotel = HotelCrud.buscar(entrada.nextInt());
                         entrada.nextLine();
-                        System.out.print("Fecha inicio: ");
-                        String fechaInicio = entrada.nextLine();
-                        System.out.print("Fecha fin: ");
-                        String fechaFin = entrada.nextLine();
+
+                        System.out.print("Fecha inicio (dd/MM/yyyy): ");
+                        Date fechaInicio = formato.parse(entrada.nextLine());
+
+                        System.out.print("Fecha fin (dd/MM/yyyy): ");
+                        Date fechaFin = formato.parse(entrada.nextLine());
+
                         System.out.print("Anticipo: ");
                         double anticipo = entrada.nextDouble();
                         entrada.nextLine();
@@ -566,18 +588,26 @@ public class Principal {
                         System.out.print("ID de la reserva a editar: ");
                         Reserva r = ReservaCrud.buscar(entrada.nextInt());
                         entrada.nextLine();
-                        System.out.print("Nueva fecha inicio: ");
-                        r.setFechaInicio(entrada.nextLine());
-                        System.out.print("Nueva fecha fin: ");
-                        r.setFechaFin(entrada.nextLine());
+
+                        System.out.print("Nueva fecha inicio (dd/MM/yyyy): ");
+                        Date nuevaFechaInicio = formato.parse(entrada.nextLine());
+                        r.setFechaInicio(nuevaFechaInicio);
+
+                        System.out.print("Nueva fecha fin (dd/MM/yyyy): ");
+                        Date nuevaFechaFin = formato.parse(entrada.nextLine());
+                        r.setFechaFin(nuevaFechaFin);
+
                         System.out.print("Nuevo anticipo: ");
                         r.setAnticipo(entrada.nextDouble());
                         entrada.nextLine();
+
                         System.out.print("¿Confirmada? (true/false): ");
                         r.setConfirmada(entrada.nextBoolean());
                         entrada.nextLine();
+
                         System.out.print("Nuevo estado: ");
                         r.setEstado(entrada.nextLine());
+
                         ReservaCrud.editar(r);
                         System.out.println("Reserva editada correctamente.");
                     }
@@ -596,6 +626,8 @@ public class Principal {
                     default ->
                         System.out.println("Opcion no valida.");
                 }
+            } catch (ParseException pe) {
+                System.out.println("Formato de fecha inválido, debe ser dd/MM/yyyy");
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
@@ -633,7 +665,7 @@ public class Principal {
                         double precio = entrada.nextDouble();
                         entrada.nextLine();
 
-                        Habitacion h = new Habitacion(numero, tipo, disponible, precio, new ArrayList<>(), null);
+                        Habitacion h = new Habitacion(numero, tipo, disponible, precio, null);
                         HabitacionCrud.agregar(h);
                         System.out.println("Habitación agregada correctamente.");
                     }
@@ -711,6 +743,7 @@ public class Principal {
                         String telefono = entrada.nextLine();
 
                         Hotel h = new Hotel(codigo, nombre, categoria, direccion, telefono, null);
+
                         HotelCrud.agregar(h);
                         System.out.println("Hotel agregado correctamente.");
                     }
