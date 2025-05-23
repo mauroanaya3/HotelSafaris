@@ -25,22 +25,6 @@ public class Empleado extends Persona {
         return hotel;
     }
 
-    public String getDni() {
-        return dni;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
     public void setNivelEducativo(String nivelEducativo) {
         this.nivelEducativo = nivelEducativo;
     }
@@ -53,22 +37,7 @@ public class Empleado extends Persona {
         this.hotel = hotel;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
+   
     @Override
     public String toString() {
         return "Empleado\n" + super.toString() +

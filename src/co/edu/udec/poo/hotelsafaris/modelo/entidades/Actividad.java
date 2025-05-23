@@ -32,6 +32,70 @@ public class Actividad {
         return nombre + " - " + descripcion + " (" + horario + ")";
     }
 
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public List<String> getDiasSemana() {
+        return diasSemana;
+    }
+
+    public boolean isGratuito() {
+        return gratuito;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public Empleado getAnimador() {
+        return animador;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    public void setDiasSemana(List<String> diasSemana) {
+        this.diasSemana = diasSemana;
+    }
+
+    public void setGratuito(boolean gratuito) {
+        this.gratuito = gratuito;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public void setAnimador(Empleado animador) {
+        this.animador = animador;
+    }
+
     @Override
     public String toString() {
         return "Actividad: " + nombre +
