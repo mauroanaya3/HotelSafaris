@@ -41,6 +41,78 @@ public class Reserva {
         this.confirmada = false;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public List<Habitacion> getHabitacionesReservadas() {
+        return habitacionesReservadas;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public double getAnticipo() {
+        return anticipo;
+    }
+
+    public boolean isConfirmada() {
+        return confirmada;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+    public void setHabitacionesReservadas(List<Habitacion> habitacionesReservadas) {
+        this.habitacionesReservadas = habitacionesReservadas;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public void setAnticipo(double anticipo) {
+        this.anticipo = anticipo;
+    }
+
+    public void setConfirmada(boolean confirmada) {
+        this.confirmada = confirmada;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
         return "Reserva #" + id + "\nCliente: " + cliente.getNombre() +

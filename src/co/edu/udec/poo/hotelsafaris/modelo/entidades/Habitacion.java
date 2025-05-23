@@ -27,6 +27,54 @@ public class Habitacion {
         return precioBase + suplementos.stream().mapToDouble(Suplemento::getImporte).sum();
     }
 
+    public int getNumero() {
+        return numero;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public double getPrecioBase() {
+        return precioBase;
+    }
+
+    public List<Suplemento> getSuplementos() {
+        return suplementos;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public void setPrecioBase(double precioBase) {
+        this.precioBase = precioBase;
+    }
+
+    public void setSuplementos(List<Suplemento> suplementos) {
+        this.suplementos = suplementos;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
     @Override
     public String toString() {
         return "Habitación " + numero + " (" + tipo + ") - Precio base: $" + precioBase +

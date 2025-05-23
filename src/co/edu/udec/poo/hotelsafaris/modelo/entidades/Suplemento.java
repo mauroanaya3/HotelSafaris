@@ -13,6 +13,18 @@ public class Suplemento {
         return importe;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setImporte(double importe) {
+        this.importe = importe;
+    }
+
     @Override
     public String toString() {
         return "Suplemento: " + tipo + " ($" + importe + ")";
