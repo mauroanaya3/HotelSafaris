@@ -4,12 +4,14 @@ import co.edu.udec.poo.hotelsafaris.modelo.entidades.Hotel;
 import java.util.ArrayList;
 
 public class HotelCrud {
+
     private static ArrayList<Hotel> listaHoteles = new ArrayList<>();
 
     public static void agregar(Hotel hotel) throws Exception {
         for (Hotel h : listaHoteles) {
             if (h.getCodigo() == hotel.getCodigo()) {
-                throw new Exception("Ya existe un hotel con código: " + hotel.getCodigo());
+                throw new Exception("Ya existe un hotel con código: " + 
+                        hotel.getCodigo());
             }
         }
         listaHoteles.add(hotel);
