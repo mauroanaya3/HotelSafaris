@@ -23,6 +23,8 @@ public class Actividad {
         this.precio = precio;
         this.animador = animador;
     }
+    
+    public Actividad() {}
 
     public double calcularCostoCliente() {
         return gratuito ? 0.0 : precio;

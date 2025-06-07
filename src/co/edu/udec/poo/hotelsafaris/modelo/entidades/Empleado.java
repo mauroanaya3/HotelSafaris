@@ -12,6 +12,8 @@ public class Empleado extends Persona {
         this.tipo = tipo;
         this.hotel = hotel;
     }
+    
+    public Empleado() {}
 
     public String getNivelEducativo() {
         return nivelEducativo;

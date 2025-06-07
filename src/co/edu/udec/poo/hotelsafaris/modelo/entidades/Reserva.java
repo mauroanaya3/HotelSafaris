@@ -25,6 +25,8 @@ public class Reserva {
         this.confirmada = confirmada;
         this.estado = estado;
     }
+    
+    public Reserva() {}
 
     public boolean validarFechas() {
         return fechaInicio.before(fechaFin);

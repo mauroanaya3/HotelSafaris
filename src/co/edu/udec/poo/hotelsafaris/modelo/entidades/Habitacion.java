@@ -18,6 +18,8 @@ public class Habitacion {
         this.precioBase = precioBase;
         this.hotel = hotel;
     }
+    
+    public Habitacion() {}
 
     public void agregarSuplemento(Suplemento s) {
         suplementos.add(s);

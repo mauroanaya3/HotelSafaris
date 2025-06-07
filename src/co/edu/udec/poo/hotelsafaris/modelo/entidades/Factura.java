@@ -20,6 +20,8 @@ public class Factura {
         this.anticipoDescontado = anticipoDescontado;
         calcularTotal();
     }
+    
+    public Factura() {}
 
     public void calcularTotal() {
         this.totalHabitaciones = estancia.calcularTotalEstancia();

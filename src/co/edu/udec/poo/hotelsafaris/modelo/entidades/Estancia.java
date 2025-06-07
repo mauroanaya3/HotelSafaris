@@ -20,6 +20,8 @@ public class Estancia {
         this.fechaFin = fechaFin;
         this.actividadesContratadas = new ArrayList<>();
     }
+    
+    public Estancia() {}
 
     public void agregarActividad(Actividad a) {
         actividadesContratadas.add(a);

@@ -9,6 +9,8 @@ public class Suplemento {
         this.importe = importe;
     }
 
+    public Suplemento() {}
+    
     public double getImporte() {
         return importe;
     }

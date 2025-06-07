@@ -21,6 +21,8 @@ public class Hotel {
         this.telefono = telefono;
         this.director = director;
     }
+    
+    public Hotel() {}
 
     public void agregarEmpleado(Empleado e) {
         empleados.add(e);
