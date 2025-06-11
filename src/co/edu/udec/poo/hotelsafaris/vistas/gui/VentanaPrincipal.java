@@ -18,14 +18,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         MenuBarSuperior = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
-        itemAgregarHotel1 = new javax.swing.JMenuItem();
-        itemBuscarHotel1 = new javax.swing.JMenuItem();
-        itemEditarHotel1 = new javax.swing.JMenuItem();
-        itemEliminarHotel1 = new javax.swing.JMenuItem();
+        itemAgregarUsuario = new javax.swing.JMenuItem();
+        itemBuscarUsuario = new javax.swing.JMenuItem();
+        itemEditarUsuario = new javax.swing.JMenuItem();
+        itemEliminarUsuario = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        menuHotelReportes1 = new javax.swing.JMenu();
-        itemReporteXNombreHotel1 = new javax.swing.JMenuItem();
-        itemReporteXCategoriaHotel1 = new javax.swing.JMenuItem();
+        menuUsuarioReporte = new javax.swing.JMenu();
+        itemReporteXNombreUsuario = new javax.swing.JMenuItem();
+        itemReporteXCategoriaUsuario = new javax.swing.JMenuItem();
         menuHotel = new javax.swing.JMenu();
         itemAgregarHotel = new javax.swing.JMenuItem();
         itemBuscarHotel = new javax.swing.JMenuItem();
@@ -106,54 +106,54 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuUsuario.setText("Usuario");
         menuUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
-        itemAgregarHotel1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemAgregarHotel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarHotel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
-        itemAgregarHotel1.setText("Agregar...");
-        itemAgregarHotel1.addActionListener(new java.awt.event.ActionListener() {
+        itemAgregarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemAgregarUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemAgregarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarUsuario.setText("Agregar...");
+        itemAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemAgregarHotel1ActionPerformed(evt);
+                itemAgregarUsuarioActionPerformed(evt);
             }
         });
-        menuUsuario.add(itemAgregarHotel1);
+        menuUsuario.add(itemAgregarUsuario);
 
-        itemBuscarHotel1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemBuscarHotel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarHotel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
-        itemBuscarHotel1.setText("Buscar...");
-        menuUsuario.add(itemBuscarHotel1);
+        itemBuscarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemBuscarUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemBuscarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
+        itemBuscarUsuario.setText("Buscar...");
+        menuUsuario.add(itemBuscarUsuario);
 
-        itemEditarHotel1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemEditarHotel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarHotel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
-        itemEditarHotel1.setText("Editar...");
-        itemEditarHotel1.addActionListener(new java.awt.event.ActionListener() {
+        itemEditarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemEditarUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemEditarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
+        itemEditarUsuario.setText("Editar...");
+        itemEditarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEditarHotel1ActionPerformed(evt);
+                itemEditarUsuarioActionPerformed(evt);
             }
         });
-        menuUsuario.add(itemEditarHotel1);
+        menuUsuario.add(itemEditarUsuario);
 
-        itemEliminarHotel1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemEliminarHotel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarHotel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
-        itemEliminarHotel1.setText("Eliminar...");
-        menuUsuario.add(itemEliminarHotel1);
+        itemEliminarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemEliminarUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemEliminarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
+        itemEliminarUsuario.setText("Eliminar...");
+        menuUsuario.add(itemEliminarUsuario);
         menuUsuario.add(jSeparator3);
 
-        menuHotelReportes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
-        menuHotelReportes1.setText("Reportes");
-        menuHotelReportes1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuUsuarioReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
+        menuUsuarioReporte.setText("Reportes");
+        menuUsuarioReporte.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
-        itemReporteXNombreHotel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemReporteXNombreHotel1.setText("Buscar por Nombre...");
-        menuHotelReportes1.add(itemReporteXNombreHotel1);
+        itemReporteXNombreUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemReporteXNombreUsuario.setText("Buscar por Nombre...");
+        menuUsuarioReporte.add(itemReporteXNombreUsuario);
 
-        itemReporteXCategoriaHotel1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemReporteXCategoriaHotel1.setText("Buscar por Categoría...");
-        menuHotelReportes1.add(itemReporteXCategoriaHotel1);
+        itemReporteXCategoriaUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemReporteXCategoriaUsuario.setText("Buscar por Categoría...");
+        menuUsuarioReporte.add(itemReporteXCategoriaUsuario);
 
-        menuUsuario.add(menuHotelReportes1);
+        menuUsuario.add(menuUsuarioReporte);
 
         MenuBarSuperior.add(menuUsuario);
 
@@ -644,13 +644,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_itemEditarEmpleadoActionPerformed
 
-    private void itemAgregarHotel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarHotel1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_itemAgregarHotel1ActionPerformed
+    private void itemAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarUsuarioActionPerformed
+        VentanaUsuarios ventana = new VentanaUsuarios(this, true);
+    }//GEN-LAST:event_itemAgregarUsuarioActionPerformed
 
-    private void itemEditarHotel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarHotel1ActionPerformed
+    private void itemEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_itemEditarHotel1ActionPerformed
+    }//GEN-LAST:event_itemEditarUsuarioActionPerformed
 
     private void itemAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarClienteActionPerformed
         // TODO add your handling code here:
@@ -716,11 +716,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -759,8 +755,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemAgregarFactura;
     private javax.swing.JMenuItem itemAgregarHabitacion;
     private javax.swing.JMenuItem itemAgregarHotel;
-    private javax.swing.JMenuItem itemAgregarHotel1;
     private javax.swing.JMenuItem itemAgregarReserva;
+    private javax.swing.JMenuItem itemAgregarUsuario;
     private javax.swing.JMenuItem itemBuscarCliente;
     private javax.swing.JMenuItem itemBuscarEmpleado;
     private javax.swing.JMenuItem itemBuscarEmpleado5;
@@ -768,8 +764,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemBuscarFactura;
     private javax.swing.JMenuItem itemBuscarHabitacion;
     private javax.swing.JMenuItem itemBuscarHotel;
-    private javax.swing.JMenuItem itemBuscarHotel1;
     private javax.swing.JMenuItem itemBuscarReserva;
+    private javax.swing.JMenuItem itemBuscarUsuario;
     private javax.swing.JMenuItem itemEditarCliente;
     private javax.swing.JMenuItem itemEditarEmpleado;
     private javax.swing.JMenuItem itemEditarEmpleado5;
@@ -777,8 +773,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemEditarFactura;
     private javax.swing.JMenuItem itemEditarHabitacion;
     private javax.swing.JMenuItem itemEditarHotel;
-    private javax.swing.JMenuItem itemEditarHotel1;
     private javax.swing.JMenuItem itemEditarReserva;
+    private javax.swing.JMenuItem itemEditarUsuario;
     private javax.swing.JMenuItem itemEliminarCliente;
     private javax.swing.JMenuItem itemEliminarEmpleado;
     private javax.swing.JMenuItem itemEliminarEmpleado5;
@@ -786,10 +782,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemEliminarFactura;
     private javax.swing.JMenuItem itemEliminarHabitacion;
     private javax.swing.JMenuItem itemEliminarHotel;
-    private javax.swing.JMenuItem itemEliminarHotel1;
     private javax.swing.JMenuItem itemEliminarReserva;
+    private javax.swing.JMenuItem itemEliminarUsuario;
     private javax.swing.JMenuItem itemReporteXCategoriaHotel;
-    private javax.swing.JMenuItem itemReporteXCategoriaHotel1;
+    private javax.swing.JMenuItem itemReporteXCategoriaUsuario;
     private javax.swing.JMenuItem itemReporteXClienteEstancia;
     private javax.swing.JMenuItem itemReporteXClienteFactura;
     private javax.swing.JMenuItem itemReporteXClienteReserva;
@@ -801,7 +797,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemReporteXNivelEmpleado;
     private javax.swing.JMenuItem itemReporteXNombreCliente;
     private javax.swing.JMenuItem itemReporteXNombreHotel;
-    private javax.swing.JMenuItem itemReporteXNombreHotel1;
+    private javax.swing.JMenuItem itemReporteXNombreUsuario;
     private javax.swing.JMenuItem itemReporteXTelefonoCliente;
     private javax.swing.JMenuItem itemReporteXTipoEmpleado;
     private javax.swing.JMenuItem itemReporteXTipoHabitacion;
@@ -827,11 +823,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuHabitacionReportes;
     private javax.swing.JMenu menuHotel;
     private javax.swing.JMenu menuHotelReportes;
-    private javax.swing.JMenu menuHotelReportes1;
     private javax.swing.JMenu menuReserva;
     private javax.swing.JMenu menuReservaReportes;
     private javax.swing.JMenu menuSuplemento;
     private javax.swing.JMenu menuSuplementoReportes;
     private javax.swing.JMenu menuUsuario;
+    private javax.swing.JMenu menuUsuarioReporte;
     // End of variables declaration//GEN-END:variables
 }
