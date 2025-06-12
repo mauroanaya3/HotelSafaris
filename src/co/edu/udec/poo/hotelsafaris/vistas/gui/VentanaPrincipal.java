@@ -1,6 +1,6 @@
-
 package co.edu.udec.poo.hotelsafaris.vistas.gui;
 
+import javax.swing.JFrame;
 
 public class VentanaPrincipal extends javax.swing.JFrame {
 
@@ -9,23 +9,47 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setLocationRelativeTo(null);
+        this.setLayout(null); 
+
+        centrarLogo();
+
+        this.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                centrarLogo();
+            }
+            
+            @Override
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                centrarLogo();
+            }
+        });
+
     }
 
-   
+    
+    private void centrarLogo() {
+        int anchoContenedor = this.getContentPane().getWidth();
+        int altoContenedor = this.getContentPane().getHeight();
+
+        int anchoLabel = jLFondo.getWidth();
+        int altoLabel = jLFondo.getHeight();
+
+        int x = (anchoContenedor - anchoLabel) / 2;
+        int y = (altoContenedor - altoLabel) / 2;
+
+        jLFondo.setLocation(x, y);
+    }
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLFondo = new javax.swing.JLabel();
         MenuBarSuperior = new javax.swing.JMenuBar();
-        menuUsuario = new javax.swing.JMenu();
-        itemAgregarUsuario = new javax.swing.JMenuItem();
-        itemBuscarUsuario = new javax.swing.JMenuItem();
-        itemEditarUsuario = new javax.swing.JMenuItem();
-        itemEliminarUsuario = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        menuUsuarioReporte = new javax.swing.JMenu();
-        itemReporteXNombreUsuario = new javax.swing.JMenuItem();
-        itemReporteXCategoriaUsuario = new javax.swing.JMenuItem();
         menuHotel = new javax.swing.JMenu();
         itemAgregarHotel = new javax.swing.JMenuItem();
         itemBuscarHotel = new javax.swing.JMenuItem();
@@ -101,69 +125,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión Hotelera");
+        setMinimumSize(new java.awt.Dimension(900, 600));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        menuUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/usuario24.png"))); // NOI18N
-        menuUsuario.setText("Usuario");
-        menuUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/logo280.png"))); // NOI18N
+        jLFondo.setText("jLabel1");
+        getContentPane().add(jLFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 280, -1));
 
-        itemAgregarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemAgregarUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
-        itemAgregarUsuario.setText("Agregar...");
-        itemAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemAgregarUsuarioActionPerformed(evt);
-            }
-        });
-        menuUsuario.add(itemAgregarUsuario);
-
-        itemBuscarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemBuscarUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
-        itemBuscarUsuario.setText("Buscar...");
-        menuUsuario.add(itemBuscarUsuario);
-
-        itemEditarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemEditarUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
-        itemEditarUsuario.setText("Editar...");
-        itemEditarUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEditarUsuarioActionPerformed(evt);
-            }
-        });
-        menuUsuario.add(itemEditarUsuario);
-
-        itemEliminarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemEliminarUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
-        itemEliminarUsuario.setText("Eliminar...");
-        menuUsuario.add(itemEliminarUsuario);
-        menuUsuario.add(jSeparator3);
-
-        menuUsuarioReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
-        menuUsuarioReporte.setText("Reportes");
-        menuUsuarioReporte.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-
-        itemReporteXNombreUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemReporteXNombreUsuario.setText("Buscar por Nombre...");
-        menuUsuarioReporte.add(itemReporteXNombreUsuario);
-
-        itemReporteXCategoriaUsuario.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemReporteXCategoriaUsuario.setText("Buscar por Categoría...");
-        menuUsuarioReporte.add(itemReporteXCategoriaUsuario);
-
-        menuUsuario.add(menuUsuarioReporte);
-
-        MenuBarSuperior.add(menuUsuario);
-
-        menuHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/hotel24.png"))); // NOI18N
+        menuHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/hotel24.png"))); // NOI18N
         menuHotel.setText("Hotel");
-        menuHotel.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuHotel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         itemAgregarHotel.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemAgregarHotel.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarHotel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        itemAgregarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
         itemAgregarHotel.setText("Agregar...");
         itemAgregarHotel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,14 +148,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuHotel.add(itemAgregarHotel);
 
         itemBuscarHotel.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemBuscarHotel.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
+        itemBuscarHotel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        itemBuscarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarHotel.setText("Buscar...");
+        itemBuscarHotel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemBuscarHotelActionPerformed(evt);
+            }
+        });
         menuHotel.add(itemBuscarHotel);
 
         itemEditarHotel.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemEditarHotel.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
+        itemEditarHotel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        itemEditarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
         itemEditarHotel.setText("Editar...");
         itemEditarHotel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,21 +170,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuHotel.add(itemEditarHotel);
 
         itemEliminarHotel.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemEliminarHotel.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
+        itemEliminarHotel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        itemEliminarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarHotel.setText("Eliminar...");
+        itemEliminarHotel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarHotelActionPerformed(evt);
+            }
+        });
         menuHotel.add(itemEliminarHotel);
         menuHotel.add(jSeparator1);
 
-        menuHotelReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
+        menuHotelReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reporte20.png"))); // NOI18N
         menuHotelReportes.setText("Reportes");
-        menuHotelReportes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuHotelReportes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        itemReporteXNombreHotel.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemReporteXNombreHotel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         itemReporteXNombreHotel.setText("Buscar por Nombre...");
         menuHotelReportes.add(itemReporteXNombreHotel);
 
-        itemReporteXCategoriaHotel.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemReporteXCategoriaHotel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         itemReporteXCategoriaHotel.setText("Buscar por Categoría...");
         menuHotelReportes.add(itemReporteXCategoriaHotel);
 
@@ -212,13 +197,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         MenuBarSuperior.add(menuHotel);
 
-        menuCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/cliente24.png"))); // NOI18N
+        menuCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/cliente24.png"))); // NOI18N
         menuCliente.setText("Cliente");
-        menuCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         itemAgregarCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemAgregarCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
         itemAgregarCliente.setText("Agregar...");
         itemAgregarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,13 +214,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemBuscarCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemBuscarCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
+        itemBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarCliente.setText("Buscar...");
         menuCliente.add(itemBuscarCliente);
 
         itemEditarCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEditarCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
+        itemEditarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
         itemEditarCliente.setText("Editar...");
         itemEditarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,20 +231,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemEliminarCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEliminarCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
+        itemEliminarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarCliente.setText("Eliminar...");
         menuCliente.add(itemEliminarCliente);
         menuCliente.add(jSeparator4);
 
-        menuClienteReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
+        menuClienteReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reporte20.png"))); // NOI18N
         menuClienteReportes.setText("Reportes");
-        menuClienteReportes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuClienteReportes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        itemReporteXNombreCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemReporteXNombreCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         itemReporteXNombreCliente.setText("Buscar por Nombre...");
         menuClienteReportes.add(itemReporteXNombreCliente);
 
-        itemReporteXTelefonoCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemReporteXTelefonoCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         itemReporteXTelefonoCliente.setText("Buscar por Telefono...");
         menuClienteReportes.add(itemReporteXTelefonoCliente);
 
@@ -267,13 +252,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         MenuBarSuperior.add(menuCliente);
 
-        menuEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/empleado24.png"))); // NOI18N
+        menuEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/empleado24.png"))); // NOI18N
         menuEmpleado.setText("Empleado");
-        menuEmpleado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuEmpleado.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         itemAgregarEmpleado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemAgregarEmpleado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
         itemAgregarEmpleado.setText("Agregar...");
         itemAgregarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,13 +269,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemBuscarEmpleado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemBuscarEmpleado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
+        itemBuscarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarEmpleado.setText("Buscar...");
         menuEmpleado.add(itemBuscarEmpleado);
 
         itemEditarEmpleado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEditarEmpleado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
+        itemEditarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
         itemEditarEmpleado.setText("Editar...");
         itemEditarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,12 +286,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemEliminarEmpleado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEliminarEmpleado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
+        itemEliminarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarEmpleado.setText("Eliminar...");
         menuEmpleado.add(itemEliminarEmpleado);
         menuEmpleado.add(jSeparator2);
 
-        menuEmpleadoReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
+        menuEmpleadoReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reporte20.png"))); // NOI18N
         menuEmpleadoReportes.setText("Reportes");
         menuEmpleadoReportes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
@@ -322,13 +307,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         MenuBarSuperior.add(menuEmpleado);
 
-        menuEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/estancia24.png"))); // NOI18N
+        menuEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/estancia24.png"))); // NOI18N
         menuEstancia.setText("Estancia");
-        menuEstancia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuEstancia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         itemAgregarEstancia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemAgregarEstancia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
         itemAgregarEstancia.setText("Agregar...");
         itemAgregarEstancia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -339,13 +324,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemBuscarEstancia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemBuscarEstancia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
+        itemBuscarEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarEstancia.setText("Buscar...");
         menuEstancia.add(itemBuscarEstancia);
 
         itemEditarEstancia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEditarEstancia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
+        itemEditarEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
         itemEditarEstancia.setText("Editar...");
         itemEditarEstancia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,12 +341,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemEliminarEstancia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEliminarEstancia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
+        itemEliminarEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarEstancia.setText("Eliminar...");
         menuEstancia.add(itemEliminarEstancia);
         menuEstancia.add(jSeparator5);
 
-        menuEstanciaReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
+        menuEstanciaReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reporte20.png"))); // NOI18N
         menuEstanciaReportes.setText("Reportes");
         menuEstanciaReportes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
@@ -377,13 +362,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         MenuBarSuperior.add(menuEstancia);
 
-        menuFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/factura24.png"))); // NOI18N
+        menuFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/factura24.png"))); // NOI18N
         menuFactura.setText("Factura");
-        menuFactura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuFactura.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         itemAgregarFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemAgregarFactura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
         itemAgregarFactura.setText("Agregar...");
         itemAgregarFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -394,13 +379,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemBuscarFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemBuscarFactura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
+        itemBuscarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarFactura.setText("Buscar...");
         menuFactura.add(itemBuscarFactura);
 
         itemEditarFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEditarFactura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
+        itemEditarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
         itemEditarFactura.setText("Editar...");
         itemEditarFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -411,12 +396,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemEliminarFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEliminarFactura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
+        itemEliminarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarFactura.setText("Eliminar...");
         menuFactura.add(itemEliminarFactura);
         menuFactura.add(jSeparator6);
 
-        menuFacturaReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
+        menuFacturaReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reporte20.png"))); // NOI18N
         menuFacturaReportes.setText("Reportes");
         menuFacturaReportes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
@@ -437,13 +422,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         MenuBarSuperior.add(menuFactura);
 
-        menuHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/habitacion24.png"))); // NOI18N
+        menuHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/habitacion24.png"))); // NOI18N
         menuHabitacion.setText("Habitación");
-        menuHabitacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuHabitacion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         itemAgregarHabitacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemAgregarHabitacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
         itemAgregarHabitacion.setText("Agregar...");
         itemAgregarHabitacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -454,13 +439,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemBuscarHabitacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemBuscarHabitacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
+        itemBuscarHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarHabitacion.setText("Buscar...");
         menuHabitacion.add(itemBuscarHabitacion);
 
         itemEditarHabitacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEditarHabitacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
+        itemEditarHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
         itemEditarHabitacion.setText("Editar...");
         itemEditarHabitacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -471,12 +456,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemEliminarHabitacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEliminarHabitacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
+        itemEliminarHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarHabitacion.setText("Eliminar...");
         menuHabitacion.add(itemEliminarHabitacion);
         menuHabitacion.add(jSeparator7);
 
-        menuHabitacionReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
+        menuHabitacionReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reporte20.png"))); // NOI18N
         menuHabitacionReportes.setText("Reportes");
         menuHabitacionReportes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
@@ -497,13 +482,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         MenuBarSuperior.add(menuHabitacion);
 
-        menuReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reserva24.png"))); // NOI18N
+        menuReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reserva24.png"))); // NOI18N
         menuReserva.setText("Reserva");
-        menuReserva.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuReserva.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         itemAgregarReserva.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemAgregarReserva.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
         itemAgregarReserva.setText("Agregar...");
         itemAgregarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -514,13 +499,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemBuscarReserva.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemBuscarReserva.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
+        itemBuscarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarReserva.setText("Buscar...");
         menuReserva.add(itemBuscarReserva);
 
         itemEditarReserva.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEditarReserva.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
+        itemEditarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
         itemEditarReserva.setText("Editar...");
         itemEditarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -531,12 +516,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemEliminarReserva.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEliminarReserva.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
+        itemEliminarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarReserva.setText("Eliminar...");
         menuReserva.add(itemEliminarReserva);
         menuReserva.add(jSeparator8);
 
-        menuReservaReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
+        menuReservaReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reporte20.png"))); // NOI18N
         menuReservaReportes.setText("Reportes");
         menuReservaReportes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
@@ -557,13 +542,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         MenuBarSuperior.add(menuReserva);
 
-        menuSuplemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/suplemento24.png"))); // NOI18N
+        menuSuplemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/suplemento24.png"))); // NOI18N
         menuSuplemento.setText("Suplemento");
-        menuSuplemento.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuSuplemento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         itemAgregarEmpleado5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemAgregarEmpleado5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
         itemAgregarEmpleado5.setText("Agregar...");
         itemAgregarEmpleado5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -574,13 +559,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemBuscarEmpleado5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemBuscarEmpleado5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/busccar20.png"))); // NOI18N
+        itemBuscarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarEmpleado5.setText("Buscar...");
         menuSuplemento.add(itemBuscarEmpleado5);
 
         itemEditarEmpleado5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEditarEmpleado5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/modificar20.png"))); // NOI18N
+        itemEditarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
         itemEditarEmpleado5.setText("Editar...");
         itemEditarEmpleado5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -591,12 +576,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         itemEliminarEmpleado5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemEliminarEmpleado5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/eliminar20.png"))); // NOI18N
+        itemEliminarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarEmpleado5.setText("Eliminar...");
         menuSuplemento.add(itemEliminarEmpleado5);
         menuSuplemento.add(jSeparator9);
 
-        menuSuplementoReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/img/reporte20.png"))); // NOI18N
+        menuSuplementoReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reporte20.png"))); // NOI18N
         menuSuplementoReportes.setText("Reportes");
         menuSuplementoReportes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
@@ -614,26 +599,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(MenuBarSuperior);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1161, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemAgregarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarHotelActionPerformed
-        // TODO add your handling code here:
+        VentanaCrudHotel ventana = new VentanaCrudHotel(this, true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setAccion("agregar");
+        ventana.setVisible(true);
+
     }//GEN-LAST:event_itemAgregarHotelActionPerformed
 
     private void itemEditarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarHotelActionPerformed
-        // TODO add your handling code here:
+        VentanaCrudHotel ventana = new VentanaCrudHotel(this, true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setAccion("editar");
+        ventana.setVisible(true);
     }//GEN-LAST:event_itemEditarHotelActionPerformed
 
     private void itemAgregarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarEmpleadoActionPerformed
@@ -643,14 +624,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void itemEditarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarEmpleadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_itemEditarEmpleadoActionPerformed
-
-    private void itemAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarUsuarioActionPerformed
-        VentanaUsuarios ventana = new VentanaUsuarios(this, true);
-    }//GEN-LAST:event_itemAgregarUsuarioActionPerformed
-
-    private void itemEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_itemEditarUsuarioActionPerformed
 
     private void itemAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarClienteActionPerformed
         // TODO add your handling code here:
@@ -712,11 +685,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_itemReporteXFechaReservaActionPerformed
 
+    private void itemBuscarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBuscarHotelActionPerformed
+        VentanaCrudHotel ventana = new VentanaCrudHotel(this, true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setAccion("buscar");
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemBuscarHotelActionPerformed
+
+    private void itemEliminarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarHotelActionPerformed
+        VentanaCrudHotel ventana = new VentanaCrudHotel(this, true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setAccion("eliminar");
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemEliminarHotelActionPerformed
+
+ 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -756,7 +744,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemAgregarHabitacion;
     private javax.swing.JMenuItem itemAgregarHotel;
     private javax.swing.JMenuItem itemAgregarReserva;
-    private javax.swing.JMenuItem itemAgregarUsuario;
     private javax.swing.JMenuItem itemBuscarCliente;
     private javax.swing.JMenuItem itemBuscarEmpleado;
     private javax.swing.JMenuItem itemBuscarEmpleado5;
@@ -765,7 +752,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemBuscarHabitacion;
     private javax.swing.JMenuItem itemBuscarHotel;
     private javax.swing.JMenuItem itemBuscarReserva;
-    private javax.swing.JMenuItem itemBuscarUsuario;
     private javax.swing.JMenuItem itemEditarCliente;
     private javax.swing.JMenuItem itemEditarEmpleado;
     private javax.swing.JMenuItem itemEditarEmpleado5;
@@ -774,7 +760,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemEditarHabitacion;
     private javax.swing.JMenuItem itemEditarHotel;
     private javax.swing.JMenuItem itemEditarReserva;
-    private javax.swing.JMenuItem itemEditarUsuario;
     private javax.swing.JMenuItem itemEliminarCliente;
     private javax.swing.JMenuItem itemEliminarEmpleado;
     private javax.swing.JMenuItem itemEliminarEmpleado5;
@@ -783,9 +768,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemEliminarHabitacion;
     private javax.swing.JMenuItem itemEliminarHotel;
     private javax.swing.JMenuItem itemEliminarReserva;
-    private javax.swing.JMenuItem itemEliminarUsuario;
     private javax.swing.JMenuItem itemReporteXCategoriaHotel;
-    private javax.swing.JMenuItem itemReporteXCategoriaUsuario;
     private javax.swing.JMenuItem itemReporteXClienteEstancia;
     private javax.swing.JMenuItem itemReporteXClienteFactura;
     private javax.swing.JMenuItem itemReporteXClienteReserva;
@@ -797,14 +780,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemReporteXNivelEmpleado;
     private javax.swing.JMenuItem itemReporteXNombreCliente;
     private javax.swing.JMenuItem itemReporteXNombreHotel;
-    private javax.swing.JMenuItem itemReporteXNombreUsuario;
     private javax.swing.JMenuItem itemReporteXTelefonoCliente;
     private javax.swing.JMenuItem itemReporteXTipoEmpleado;
     private javax.swing.JMenuItem itemReporteXTipoHabitacion;
     private javax.swing.JMenuItem itemReporteXTipoSuplemento;
+    private javax.swing.JLabel jLFondo;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
@@ -827,7 +809,5 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuReservaReportes;
     private javax.swing.JMenu menuSuplemento;
     private javax.swing.JMenu menuSuplementoReportes;
-    private javax.swing.JMenu menuUsuario;
-    private javax.swing.JMenu menuUsuarioReporte;
     // End of variables declaration//GEN-END:variables
 }

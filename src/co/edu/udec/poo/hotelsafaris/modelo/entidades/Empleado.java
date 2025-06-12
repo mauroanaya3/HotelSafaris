@@ -39,9 +39,12 @@ public class Empleado extends Persona {
         this.hotel = hotel;
     }
 
-   
-    @Override
+       @Override
     public String toString() {
+        return getNombre();
+    }
+    
+    public String toDescripcionCompleta() {
         return "Empleado\n" + super.toString() +
                "\nNivel educativo: " + nivelEducativo +
                "\nTipo: " + tipo +

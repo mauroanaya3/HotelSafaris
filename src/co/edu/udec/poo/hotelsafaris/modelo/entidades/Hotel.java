@@ -2,6 +2,7 @@ package co.edu.udec.poo.hotelsafaris.modelo.entidades;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Hotel {
     private int codigo;
@@ -103,5 +104,22 @@ public class Hotel {
                "\nDirector: " + (director != null ? director.getNombre() : "No asignado") +
                "\nHabitaciones: " + habitaciones.size() +
                "\nEmpleados: " + empleados.size();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Hotel hotel = (Hotel) obj;
+        return codigo == hotel.codigo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo);
     }
 }
