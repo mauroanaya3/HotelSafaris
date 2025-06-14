@@ -44,6 +44,7 @@ public class Empleado extends Persona {
         return getNombre();
     }
     
+    
     public String toDescripcionCompleta() {
         return "Empleado\n" + super.toString() +
                "\nNivel educativo: " + nivelEducativo +

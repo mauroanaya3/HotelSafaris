@@ -1,7 +1,6 @@
 package co.edu.udec.poo.hotelsafaris.modelo.entidades;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 public class Estancia {
     private int id;

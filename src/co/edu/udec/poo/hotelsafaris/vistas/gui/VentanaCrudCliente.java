@@ -1,20 +1,16 @@
 package co.edu.udec.poo.hotelsafaris.vistas.gui;
 
-import co.edu.udec.poo.hotelsafaris.modelo.crud.EmpleadoCrud;
-import co.edu.udec.poo.hotelsafaris.modelo.crud.HotelCrud;
-import co.edu.udec.poo.hotelsafaris.modelo.entidades.Empleado;
-import co.edu.udec.poo.hotelsafaris.modelo.entidades.Hotel;
-import java.util.ArrayList;
+import co.edu.udec.poo.hotelsafaris.modelo.crud.ClienteCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.entidades.Cliente;
 import javax.swing.JOptionPane;
 
-public class VentanaCrudEmpleado extends javax.swing.JDialog {
+public class VentanaCrudCliente extends javax.swing.JDialog {
 
     private String accion;
 
-    public VentanaCrudEmpleado(java.awt.Frame parent, boolean modal) {
+    public VentanaCrudCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cargarHoteles();
 
     }
 
@@ -35,16 +31,10 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         jTNombre = new javax.swing.JTextField();
         jTDireccion = new javax.swing.JTextField();
         jTTelefono = new javax.swing.JTextField();
-        jCTipo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jCNivelEducativo = new javax.swing.JComboBox<>();
-        jCHotel = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
         jBAgregar = new javax.swing.JButton();
         jBBuscar = new javax.swing.JButton();
         jBEditar = new javax.swing.JButton();
@@ -53,10 +43,8 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
 
         setTitle("Empleados");
         setAlwaysOnTop(true);
-        setMaximumSize(new java.awt.Dimension(780, 400));
         setMinimumSize(new java.awt.Dimension(780, 400));
         setModal(true);
-        setPreferredSize(new java.awt.Dimension(780, 400));
         setResizable(false);
         setSize(new java.awt.Dimension(780, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -100,11 +88,6 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         jTTelefono.setPreferredSize(new java.awt.Dimension(165, 23));
         jPDatos.add(jTTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 120, -1, -1));
 
-        jCTipo.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jCTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Animador", "Director", "Gestión", "Limpieza" }));
-        jCTipo.setPreferredSize(new java.awt.Dimension(165, 23));
-        jPDatos.add(jCTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 180, -1, -1));
-
         jLabel3.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("DNI:");
@@ -115,11 +98,6 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         jLabel4.setText("Nombre:");
         jPDatos.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 100, 23));
 
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Niel Educativo:");
-        jPDatos.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 100, 23));
-
         jLabel6.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Dirección:");
@@ -129,27 +107,6 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("Telefono:");
         jPDatos.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 100, 23));
-
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel8.setText("Tipo:");
-        jPDatos.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 100, 23));
-
-        jCNivelEducativo.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jCNivelEducativo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Básica primaria", "Secundaria", "Técnico", "Tecnólogo", "Profesional", "Especialización", "Maestría", "Doctorado" }));
-        jCNivelEducativo.setMaximumSize(new java.awt.Dimension(165, 23));
-        jCNivelEducativo.setMinimumSize(new java.awt.Dimension(165, 23));
-        jCNivelEducativo.setPreferredSize(new java.awt.Dimension(165, 23));
-        jPDatos.add(jCNivelEducativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 150, 165, 23));
-
-        jCHotel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jCHotel.setPreferredSize(new java.awt.Dimension(165, 23));
-        jPDatos.add(jCHotel, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 210, -1, -1));
-
-        jLabel9.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("Hotel:");
-        jPDatos.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 100, 23));
 
         getContentPane().add(jPDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 410, 250));
 
@@ -206,17 +163,9 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
         jTDni.setText("");
         jTNombre.setText("");
-        if (jCNivelEducativo.getItemCount() > 0) {
-            jCNivelEducativo.setSelectedIndex(0);
-        }
         jTDireccion.setText("");
         jTTelefono.setText("");
-        if (jCTipo.getItemCount() > 0) {
-            jCTipo.setSelectedIndex(0);
-        }
-        if (jCHotel.getItemCount() > 0) {
-            jCHotel.setSelectedIndex(0);
-        }
+
         jBEditar.setEnabled(false);
         jBEliminar.setEnabled(false);
 
@@ -229,12 +178,9 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         String nombre = jTNombre.getText().trim();
         String direccion = jTDireccion.getText().trim();
         String telefono = jTTelefono.getText().trim();
-        String nivelEducativo = (String) jCNivelEducativo.getSelectedItem();
-        String tipo = (String) jCTipo.getSelectedItem();
-        Hotel hotel = (Hotel) jCHotel.getSelectedItem();
 
         // Validaciones
-          if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || hotel == null) {
+        if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos deben estar completos.");
             return;
         }
@@ -259,40 +205,35 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         );
 
         if (opcion == JOptionPane.NO_OPTION) {
-            return; // Cancelado por el usuario
+            return; // Cancelado 
         }
 
         // Crear objeto
-        Empleado nuevoEmpleado = new Empleado(
-                dni, 
-                nombre, 
-                direccion, 
-                telefono, 
-                nivelEducativo, 
-                tipo, 
-                hotel);
-        
-        
+        Cliente nuevoCliente = new Cliente(
+                dni,
+                nombre,
+                direccion,
+                telefono);
 
         // guardar el objeto en el array
         try {
-            EmpleadoCrud.agregar(nuevoEmpleado);
+            ClienteCrud.agregar(nuevoCliente);
             JOptionPane.showMessageDialog(this,
                     "Registro guardado existosamente.", "Exito",
                     JOptionPane.INFORMATION_MESSAGE);
             // Limpiar formulario
             jBLimpiarActionPerformed(null);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                     "Ocurrió un error al guardar el hotel: " + ex.getMessage(),
-                      "Error",
-                      JOptionPane.ERROR_MESSAGE);
+                    "Ocurrió un error al guardar el hotel: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
 
     }//GEN-LAST:event_jBAgregarActionPerformed
 
-    // Validar caracteres al digitar en jTNombre
+    // Validar caracteres al digitar en jTDni
     private void jTDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTDniKeyTyped
         int tecla = evt.getKeyChar();
 
@@ -302,29 +243,6 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_jTDniKeyTyped
-
-    // Listar hoteles e insertarlos en jCHotel
-    private void cargarHoteles() {
-        try {
-            ArrayList<Hotel> hoteles = HotelCrud.listarTodo();
-            
-            // Limpiar elementos existentes
-            jCHotel.removeAllItems();
-
-            // Agregar los hoteles al combo
-            for (Hotel h : hoteles) {
-                jCHotel.addItem(h);
-            }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Error al cargar hoteles: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
-    }
 
     // Habilitar botones segun la accion
     private void habilitarBotones(String accion) {
@@ -355,9 +273,7 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
                 jTNombre.setEnabled(false);
                 jTDireccion.setEnabled(false);
                 jTTelefono.setEnabled(false);
-                jCNivelEducativo.setEnabled(false);
-                jCHotel.setEnabled(false);
-                jCTipo.setEnabled(false);
+
         }
     }
 
@@ -375,14 +291,18 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaCrudEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaCrudCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaCrudEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaCrudCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaCrudEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaCrudCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaCrudEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaCrudCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -392,7 +312,7 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                VentanaCrudEmpleado dialog = new VentanaCrudEmpleado(new javax.swing.JFrame(), true);
+                VentanaCrudCliente dialog = new VentanaCrudCliente(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -411,17 +331,11 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
     private javax.swing.JButton jBEditar;
     private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBLimpiar;
-    private javax.swing.JComboBox<Hotel> jCHotel;
-    private javax.swing.JComboBox<String> jCNivelEducativo;
-    private javax.swing.JComboBox<String> jCTipo;
     private javax.swing.JLabel jLTitulo;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPDatos;
     private javax.swing.JTextField jTDireccion;
     private javax.swing.JTextField jTDni;

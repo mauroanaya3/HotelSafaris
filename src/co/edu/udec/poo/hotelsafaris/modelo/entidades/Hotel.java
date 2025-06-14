@@ -99,11 +99,15 @@ public class Hotel {
 
     @Override
     public String toString() {
-        return "Hotel: " + nombre + " (" + categoria + " estrellas)\nDirección: " + direccion +
-               "\nTeléfono: " + telefono +
-               "\nDirector: " + (director != null ? director.getNombre() : "No asignado") +
-               "\nHabitaciones: " + habitaciones.size() +
-               "\nEmpleados: " + empleados.size();
+        return getNombre();
+    }
+    
+    public String toDescripcionCompleta() {
+        return "Hotel: " + nombre + " (" + categoria + " estrellas)\nDirección: " + direccion
+                + "\nTeléfono: " + telefono
+                + "\nDirector: " + (director != null ? director.getNombre() : "No asignado")
+                + "\nHabitaciones: " + habitaciones.size()
+                + "\nEmpleados: " + empleados.size();
     }
     
     @Override

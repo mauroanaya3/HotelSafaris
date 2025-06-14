@@ -1,7 +1,6 @@
 package co.edu.udec.poo.hotelsafaris.modelo.entidades;
 
 import java.util.Date;
-import java.util.logging.Logger;
 
 public class Factura {
     private int id;
@@ -25,7 +24,7 @@ public class Factura {
 
     public void calcularTotal() {
         this.totalHabitaciones = estancia.calcularTotalEstancia();
-        this.totalSuplementos = 0; // podría extraerse por habitación
+        this.totalSuplementos = 0; 
         this.totalActividades = estancia.actividadesContratadas.stream()
                 .mapToDouble(Actividad::calcularCostoCliente).sum();
         this.totalPagar = totalHabitaciones + totalActividades - anticipoDescontado;
