@@ -51,13 +51,13 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
 
         jLTitulo.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLTitulo.setForeground(new java.awt.Color(0, 106, 140));
-        jLTitulo.setText("Formulario Empleado");
+        jLTitulo.setText("Formulario Cliente");
         getContentPane().add(jLTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 380, -1));
 
         JLImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/empleado256.png"))); // NOI18N
         getContentPane().add(JLImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 256, 256));
 
-        jPDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 204, 255), 2, true), "Datos del Empleado", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), new java.awt.Color(51, 51, 51))); // NOI18N
+        jPDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 204, 255), 2, true), "Datos del Cliente", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), new java.awt.Color(51, 51, 51))); // NOI18N
         jPDatos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTDni.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
@@ -126,6 +126,11 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
         jBBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         jBBuscar.setText("Buscar");
         jBBuscar.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jBBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, 80, 40));
 
         jBEditar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -133,6 +138,11 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
         jBEditar.setText("Editar");
         jBEditar.setEnabled(false);
         jBEditar.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jBEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEditarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jBEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 80, 40));
 
         jBEliminar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -140,6 +150,11 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
         jBEliminar.setText("Eliminar");
         jBEliminar.setEnabled(false);
         jBEliminar.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jBEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 310, 80, 40));
 
         jBLimpiar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -225,7 +240,7 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
             jBLimpiarActionPerformed(null);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Ocurrió un error al guardar el hotel: " + ex.getMessage(),
+                    "Ocurrió un error al guardar el cliente: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -244,6 +259,132 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jTDniKeyTyped
 
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+        // Valor buscado
+        String codigo = jTDni.getText().trim();
+
+        // Validar campo vacio
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            // realizar la busqueda
+            Cliente cliente = ClienteCrud.buscar(codigo);
+
+            jTNombre.setText(cliente.getNombre());
+            jTDireccion.setText(cliente.getDireccion());
+            jTTelefono.setText(cliente.getTelefono());
+
+
+            // habilitar bonotes
+            habilitarBotones(accion);
+            //jBEliminar.setEnabled(true);
+
+        } catch (Exception ex) {
+            // si no hay resultados
+            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                    "No encontrado", JOptionPane.INFORMATION_MESSAGE);
+
+            jTNombre.setText("");
+            jTDireccion.setText("");
+            jTTelefono.setText("");
+
+            habilitarBotones(accion);
+        }
+    }//GEN-LAST:event_jBBuscarActionPerformed
+
+    private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
+        int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro que desea modificar?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (confirmar != JOptionPane.YES_OPTION) {
+            return; // Cancelado
+        }
+
+        // Traer valores ingresados
+        String dni = jTDni.getText().trim();
+        String nombre = jTNombre.getText().trim();
+        String direccion = jTDireccion.getText().trim();
+        String telefono = jTTelefono.getText().trim();
+
+        // Validaciones
+        if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty()
+                || telefono.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Por favor, complete todos los campos obligatorios.",
+                    "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            // busco el cliente
+            Cliente cliente = ClienteCrud.buscar(dni);
+
+            cliente.setNombre(nombre);
+            cliente.setDireccion(direccion);
+            cliente.setTelefono(telefono);
+
+            JOptionPane.showMessageDialog(this,
+                    "Los cambios se han guardado exitosamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al editar el cliente: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jBEditarActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro que desea eliminar?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (confirmar != JOptionPane.YES_OPTION) {
+            return; // Cancelado
+        }
+        
+        // Valor buscado
+        String dni = jTDni.getText().trim();
+
+        // Validar campo vacio
+        if (dni.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un código.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            
+            ClienteCrud.eliminar(dni);
+
+            JOptionPane.showMessageDialog(this,
+                    "El cliente fue eliminado exitosamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+            jTNombre.setText("");
+            jTDireccion.setText("");
+            jTTelefono.setText("");
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al eliminar el cliente: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
     // Habilitar botones segun la accion
     private void habilitarBotones(String accion) {
         switch (accion.toLowerCase()) {
@@ -252,18 +393,30 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
                 jBBuscar.setEnabled(false);
                 jBEditar.setEnabled(false);
                 jBEliminar.setEnabled(false);
+                jTDireccion.setEnabled(true);
+                jTDni.setEnabled(true);
+                jTNombre.setEnabled(true);
+                jTTelefono.setEnabled(true);                
                 break;
             case "editar":
                 jBAgregar.setEnabled(false);
                 jBBuscar.setEnabled(true);
                 jBEditar.setEnabled(true);
                 jBEliminar.setEnabled(false);
+                jTDireccion.setEnabled(true);
+                jTDni.setEnabled(true);
+                jTNombre.setEnabled(true);
+                jTTelefono.setEnabled(true);
                 break;
             case "eliminar":
                 jBAgregar.setEnabled(false);
                 jBBuscar.setEnabled(true);
                 jBEditar.setEnabled(false);
                 jBEliminar.setEnabled(true);
+                jTDireccion.setEnabled(false);
+                jTDni.setEnabled(true);
+                jTNombre.setEnabled(false);
+                jTTelefono.setEnabled(false);
                 break;
             default:
                 jBAgregar.setEnabled(false);

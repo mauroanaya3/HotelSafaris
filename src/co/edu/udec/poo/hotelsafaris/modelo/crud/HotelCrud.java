@@ -46,6 +46,48 @@ public class HotelCrud {
         }
         return listaHoteles;
     }
+    
+    public static ArrayList<Hotel> buscarPorNombre(String nombre) throws Exception {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            return listarTodo(); // Devuelve todos los hoteles si el texto está vacío
+        }
+
+        ArrayList<Hotel> resultados = new ArrayList<>();
+
+        for (Hotel h : listaHoteles) {
+            if (h.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                resultados.add(h);
+            }
+        }
+
+        if (resultados.isEmpty()) {
+            throw new Exception("No se encontraron hoteles con el nombre: " + nombre);
+        }
+
+        return resultados;
+    }
+    
+    public static ArrayList<Hotel> buscarPorCategoria(String categoria) throws Exception {
+        if (categoria == null || categoria.trim().isEmpty()) {
+            return listarTodo(); // Devuelve todos los hoteles si el texto está vacío
+        }
+
+        ArrayList<Hotel> resultados = new ArrayList<>();
+
+        for (Hotel h : listaHoteles) {
+            if (h.getNombre().toLowerCase().contains(categoria.toLowerCase())) {
+                resultados.add(h);
+            }
+        }
+
+        if (resultados.isEmpty()) {
+            throw new Exception("No se encontraron hoteles con la categoria: " + categoria + " estrellas.");
+        }
+
+        return resultados;
+    }
+
+
 
     public static int contar() {
         return listaHoteles.size();

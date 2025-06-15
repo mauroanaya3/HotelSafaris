@@ -169,6 +169,11 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         jBBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         jBBuscar.setText("Buscar");
         jBBuscar.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jBBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, 80, 40));
 
         jBEditar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -176,6 +181,11 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         jBEditar.setText("Editar");
         jBEditar.setEnabled(false);
         jBEditar.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jBEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEditarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jBEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 80, 40));
 
         jBEliminar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -183,6 +193,11 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         jBEliminar.setText("Eliminar");
         jBEliminar.setEnabled(false);
         jBEliminar.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jBEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 310, 80, 40));
 
         jBLimpiar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -234,7 +249,7 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         Hotel hotel = (Hotel) jCHotel.getSelectedItem();
 
         // Validaciones
-          if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || hotel == null) {
+        if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || hotel == null) {
             JOptionPane.showMessageDialog(this, "Todos los campos deben estar completos.");
             return;
         }
@@ -264,15 +279,13 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
 
         // Crear objeto
         Empleado nuevoEmpleado = new Empleado(
-                dni, 
-                nombre, 
-                direccion, 
-                telefono, 
-                nivelEducativo, 
-                tipo, 
+                dni,
+                nombre,
+                direccion,
+                telefono,
+                nivelEducativo,
+                tipo,
                 hotel);
-        
-        
 
         // guardar el objeto en el array
         try {
@@ -282,11 +295,11 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
                     JOptionPane.INFORMATION_MESSAGE);
             // Limpiar formulario
             jBLimpiarActionPerformed(null);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                     "Ocurrió un error al guardar el hotel: " + ex.getMessage(),
-                      "Error",
-                      JOptionPane.ERROR_MESSAGE);
+                    "Ocurrió un error al guardar el hotel: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
 
@@ -303,11 +316,152 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jTDniKeyTyped
 
+    private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
+        int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro que desea modificar?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (confirmar != JOptionPane.YES_OPTION) {
+            return; // Cancelado
+        }
+
+        // Traer valores ingresados
+        String dni = jTDni.getText().trim();
+        String nombre = jTNombre.getText().trim();
+        String direccion = jTDireccion.getText().trim();
+        String telefono = jTTelefono.getText().trim();
+        String nivelEducativo = (String) jCNivelEducativo.getSelectedItem();
+        String tipo = (String) jCTipo.getSelectedItem();
+        Hotel hotel = (Hotel) jCHotel.getSelectedItem();
+
+        // Validaciones
+        if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty()
+                || telefono.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Por favor, complete todos los campos obligatorios.",
+                    "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if (!telefono.matches("\\d{7,}")) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "El teléfono debe contener solo números y tener al menos 7 dígitos.",
+                    "Teléfono inválido",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        try {
+            Empleado empleado = EmpleadoCrud.buscar(dni);
+
+            empleado.setNombre(nombre);
+            empleado.setDireccion(direccion);
+            empleado.setTelefono(telefono);
+            empleado.setNivelEducativo(nivelEducativo);
+            empleado.setTipo(tipo);
+            empleado.setHotel(hotel);
+            
+            
+
+            JOptionPane.showMessageDialog(this,
+                    "Los cambios se han guardado exitosamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al editar el cliente: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jBEditarActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro que desea eliminar?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (confirmar != JOptionPane.YES_OPTION) {
+            return; // Cancelado
+        }
+
+        // Valor buscado
+        String codigo = jTDni.getText().trim();
+
+        // Validar campo vacio
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            EmpleadoCrud.eliminar(codigo);
+
+            JOptionPane.showMessageDialog(this,
+                    "El empleado fue eliminado exitosamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al eliminar el empleado: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+        // Valor buscado
+        String codigo = jTDni.getText().trim();
+
+        // Validar campo vacio
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            // realizar la busqueda
+            Empleado empleado = EmpleadoCrud.buscar(codigo);
+        
+            jTNombre.setText(empleado.getNombre());
+            jTDireccion.setText(empleado.getDireccion());
+            jTTelefono.setText(empleado.getTelefono());
+            jCNivelEducativo.setSelectedItem(empleado.getNivelEducativo());
+            jCTipo.setSelectedItem(empleado.getTipo());
+            jCHotel.setSelectedItem(empleado.getHotel());
+            
+
+            // habilitar bonotes
+            habilitarBotones(accion);
+
+        } catch (Exception ex) {
+            // si no hay resultados
+            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                    "No encontrado", JOptionPane.INFORMATION_MESSAGE);
+
+            jTNombre.setText("");
+            jTDireccion.setText("");
+            jTTelefono.setText("");
+
+            habilitarBotones(accion);
+        }
+    }//GEN-LAST:event_jBBuscarActionPerformed
+
     // Listar hoteles e insertarlos en jCHotel
     private void cargarHoteles() {
         try {
             ArrayList<Hotel> hoteles = HotelCrud.listarTodo();
-            
+
             // Limpiar elementos existentes
             jCHotel.removeAllItems();
 
@@ -334,18 +488,36 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
                 jBBuscar.setEnabled(false);
                 jBEditar.setEnabled(false);
                 jBEliminar.setEnabled(false);
+                jTNombre.setEnabled(true);
+                jTDireccion.setEnabled(true);
+                jTTelefono.setEnabled(true);
+                jCNivelEducativo.setEnabled(true);
+                jCHotel.setEnabled(true);
+                jCTipo.setEnabled(true);
                 break;
             case "editar":
                 jBAgregar.setEnabled(false);
                 jBBuscar.setEnabled(true);
                 jBEditar.setEnabled(true);
                 jBEliminar.setEnabled(false);
+                jTNombre.setEnabled(true);
+                jTDireccion.setEnabled(true);
+                jTTelefono.setEnabled(true);
+                jCNivelEducativo.setEnabled(true);
+                jCHotel.setEnabled(true);
+                jCTipo.setEnabled(true);
                 break;
             case "eliminar":
                 jBAgregar.setEnabled(false);
                 jBBuscar.setEnabled(true);
                 jBEditar.setEnabled(false);
                 jBEliminar.setEnabled(true);
+                jTNombre.setEnabled(false);
+                jTDireccion.setEnabled(false);
+                jTTelefono.setEnabled(false);
+                jCNivelEducativo.setEnabled(false);
+                jCHotel.setEnabled(false);
+                jCTipo.setEnabled(false);
                 break;
             default:
                 jBAgregar.setEnabled(false);

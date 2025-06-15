@@ -23,7 +23,47 @@ public class EmpleadoCrud {
         }
         throw new Exception("Empleado no encontrado con DNI: " + dni);
     }
+    
+    public static ArrayList<Empleado> buscarPorNombre(String nombre) throws Exception {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            return listarTodo(); // Devuelve todos si la busqueda esta en blanco
+        }
 
+        ArrayList<Empleado> resultados = new ArrayList<>();
+
+        for (Empleado e : listaEmpleados) {
+            if (e.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                resultados.add(e);
+            }
+        }
+
+        if (resultados.isEmpty()) {
+            throw new Exception("No se encontraron empleados con el nombre: " + nombre);
+        }
+
+        return resultados;
+    }
+
+    public static ArrayList<Empleado> buscarPorTipo(String tipo) throws Exception {
+        if (tipo == null || tipo.trim().isEmpty()) {
+            return listarTodo(); // Devuelve todos si la busqueda esta en blanco
+        }
+
+        ArrayList<Empleado> resultados = new ArrayList<>();
+
+        for (Empleado e : listaEmpleados) {
+            if (e.getTipo().toLowerCase().contains(tipo.toLowerCase())) {
+                resultados.add(e);
+            }
+        }
+
+        if (resultados.isEmpty()) {
+            throw new Exception("No se encontraron empleados de tipo: " + tipo);
+        }
+
+        return resultados;
+    }
+    
     public static void editar(Empleado empleado) throws Exception {
         Empleado existente = buscar(empleado.getDni());
         existente.setNombre(empleado.getNombre());

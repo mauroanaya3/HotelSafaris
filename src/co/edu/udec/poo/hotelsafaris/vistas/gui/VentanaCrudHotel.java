@@ -5,8 +5,6 @@ import co.edu.udec.poo.hotelsafaris.modelo.crud.HotelCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Empleado;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Hotel;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.JOptionPane;
 
 public class VentanaCrudHotel extends javax.swing.JDialog {
@@ -52,7 +50,6 @@ public class VentanaCrudHotel extends javax.swing.JDialog {
         jBLimpiar = new javax.swing.JButton();
 
         setTitle("Hoteles");
-        setAlwaysOnTop(true);
         setModal(true);
         setPreferredSize(new java.awt.Dimension(740, 400));
         setResizable(false);
@@ -339,7 +336,8 @@ public class VentanaCrudHotel extends javax.swing.JDialog {
             }
 
             // habilitar bonotes
-            habilitarBotones("editar");
+            habilitarBotones(accion);
+            //jBEliminar.setEnabled(true);
 
         } catch (Exception ex) {
             // si no hay resultados
@@ -414,14 +412,47 @@ public class VentanaCrudHotel extends javax.swing.JDialog {
     }//GEN-LAST:event_jBEditarActionPerformed
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+
+        int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro que desea eliminar?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (confirmar != JOptionPane.YES_OPTION) {
+            return; // Cancelado
+        }
+        
         // Valor buscado
         String codigoTexto = jTCodigo.getText().trim();
 
         // Validar campo vacio
         if (codigoTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un código.", 
+            JOptionPane.showMessageDialog(this, "Debe ingresar un código.",
                     "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
+        }
+
+        try {
+            // guardar el codigo del hotel a modificar
+            int codigo = Integer.parseInt(jTCodigo.getText().trim());
+
+            // busco el hotel
+            // Hotel hotel = HotelCrud.buscar(codigo);
+            
+            HotelCrud.eliminar(codigo);
+
+            JOptionPane.showMessageDialog(this,
+                    "El hotel fue eliminado exitosamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al eliminar el hotel: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBEliminarActionPerformed
 

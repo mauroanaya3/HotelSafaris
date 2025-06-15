@@ -186,11 +186,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuHotelReportes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         itemReporteXNombreHotel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        itemReporteXNombreHotel.setText("Buscar por Nombre...");
+        itemReporteXNombreHotel.setText("Listar por Nombre...");
+        itemReporteXNombreHotel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReporteXNombreHotelActionPerformed(evt);
+            }
+        });
         menuHotelReportes.add(itemReporteXNombreHotel);
 
         itemReporteXCategoriaHotel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        itemReporteXCategoriaHotel.setText("Buscar por Categoría...");
+        itemReporteXCategoriaHotel.setText("Listar por Categoría...");
+        itemReporteXCategoriaHotel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReporteXCategoriaHotelActionPerformed(evt);
+            }
+        });
         menuHotelReportes.add(itemReporteXCategoriaHotel);
 
         menuHotel.add(menuHotelReportes);
@@ -251,11 +261,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuClienteReportes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         itemReporteXNombreCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        itemReporteXNombreCliente.setText("Buscar por Nombre...");
+        itemReporteXNombreCliente.setText("Listar por Nombre...");
+        itemReporteXNombreCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReporteXNombreClienteActionPerformed(evt);
+            }
+        });
         menuClienteReportes.add(itemReporteXNombreCliente);
 
         itemReporteXTelefonoCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        itemReporteXTelefonoCliente.setText("Buscar por Telefono...");
+        itemReporteXTelefonoCliente.setText("Listar por DNI...");
+        itemReporteXTelefonoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReporteXTelefonoClienteActionPerformed(evt);
+            }
+        });
         menuClienteReportes.add(itemReporteXTelefonoCliente);
 
         menuCliente.add(menuClienteReportes);
@@ -316,11 +336,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuEmpleadoReportes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         itemReporteXTipoEmpleado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemReporteXTipoEmpleado.setText("Buscar por Tipo...");
+        itemReporteXTipoEmpleado.setText("Listar por Nombre...");
+        itemReporteXTipoEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReporteXTipoEmpleadoActionPerformed(evt);
+            }
+        });
         menuEmpleadoReportes.add(itemReporteXTipoEmpleado);
 
         itemReporteXNivelEmpleado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemReporteXNivelEmpleado.setText("Buscar por Nivel Educativo...");
+        itemReporteXNivelEmpleado.setText("Listar por Tipo...");
+        itemReporteXNivelEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReporteXNivelEmpleadoActionPerformed(evt);
+            }
+        });
         menuEmpleadoReportes.add(itemReporteXNivelEmpleado);
 
         menuEmpleado.add(menuEmpleadoReportes);
@@ -758,6 +788,44 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventana.setAccion("eliminar");
         ventana.setVisible(true);
     }//GEN-LAST:event_itemEliminarClienteActionPerformed
+
+    private void itemReporteXNombreHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteXNombreHotelActionPerformed
+        VentanaReporteHotelNombre ventana = new VentanaReporteHotelNombre(this, true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+        
+    }//GEN-LAST:event_itemReporteXNombreHotelActionPerformed
+
+    private void itemReporteXCategoriaHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteXCategoriaHotelActionPerformed
+        VentanaReporteHotelCategoria ventana = new VentanaReporteHotelCategoria(this, true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+        
+    }//GEN-LAST:event_itemReporteXCategoriaHotelActionPerformed
+
+    private void itemReporteXNombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteXNombreClienteActionPerformed
+        VentanaReporteClienteNombre ventana = new VentanaReporteClienteNombre(this, true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemReporteXNombreClienteActionPerformed
+
+    private void itemReporteXTelefonoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteXTelefonoClienteActionPerformed
+        VentanaReporteClienteDni ventana = new VentanaReporteClienteDni(this, true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemReporteXTelefonoClienteActionPerformed
+
+    private void itemReporteXTipoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteXTipoEmpleadoActionPerformed
+        VentanaReporteEmpleadoNombre ventana = new VentanaReporteEmpleadoNombre(this, true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemReporteXTipoEmpleadoActionPerformed
+
+    private void itemReporteXNivelEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteXNivelEmpleadoActionPerformed
+        VentanaReporteEmpleadoTipo ventana = new VentanaReporteEmpleadoTipo(this, true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemReporteXNivelEmpleadoActionPerformed
 
  
     /**
