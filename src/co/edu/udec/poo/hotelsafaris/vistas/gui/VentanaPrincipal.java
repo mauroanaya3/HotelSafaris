@@ -114,10 +114,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemReporteXClienteReserva = new javax.swing.JMenuItem();
         itemReporteXFechaReserva = new javax.swing.JMenuItem();
         menuSuplemento = new javax.swing.JMenu();
-        itemAgregarEmpleado5 = new javax.swing.JMenuItem();
-        itemBuscarEmpleado5 = new javax.swing.JMenuItem();
-        itemEditarEmpleado5 = new javax.swing.JMenuItem();
-        itemEliminarEmpleado5 = new javax.swing.JMenuItem();
+        itemAgregarSuplemento = new javax.swing.JMenuItem();
+        itemBuscarSuplemento = new javax.swing.JMenuItem();
+        itemEditarSuplemento = new javax.swing.JMenuItem();
+        itemEliminarSuplemento = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         menuSuplementoReportes = new javax.swing.JMenu();
         itemReporteXTipoSuplemento = new javax.swing.JMenuItem();
@@ -376,6 +376,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemBuscarEstancia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         itemBuscarEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarEstancia.setText("Buscar...");
+        itemBuscarEstancia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemBuscarEstanciaActionPerformed(evt);
+            }
+        });
         menuEstancia.add(itemBuscarEstancia);
 
         itemEditarEstancia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -393,6 +398,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemEliminarEstancia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         itemEliminarEstancia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarEstancia.setText("Eliminar...");
+        itemEliminarEstancia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarEstanciaActionPerformed(evt);
+            }
+        });
         menuEstancia.add(itemEliminarEstancia);
         menuEstancia.add(jSeparator5);
 
@@ -431,6 +441,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemBuscarFactura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         itemBuscarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarFactura.setText("Buscar...");
+        itemBuscarFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemBuscarFacturaActionPerformed(evt);
+            }
+        });
         menuFactura.add(itemBuscarFactura);
 
         itemEditarFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -448,6 +463,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemEliminarFactura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         itemEliminarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarFactura.setText("Eliminar...");
+        itemEliminarFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarFacturaActionPerformed(evt);
+            }
+        });
         menuFactura.add(itemEliminarFactura);
         menuFactura.add(jSeparator6);
 
@@ -475,6 +495,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/habitacion24.png"))); // NOI18N
         menuHabitacion.setText("Habitación");
         menuHabitacion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuHabitacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuHabitacionActionPerformed(evt);
+            }
+        });
 
         itemAgregarHabitacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemAgregarHabitacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -491,6 +516,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemBuscarHabitacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         itemBuscarHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarHabitacion.setText("Buscar...");
+        itemBuscarHabitacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemBuscarHabitacionActionPerformed(evt);
+            }
+        });
         menuHabitacion.add(itemBuscarHabitacion);
 
         itemEditarHabitacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -508,6 +538,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemEliminarHabitacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         itemEliminarHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarHabitacion.setText("Eliminar...");
+        itemEliminarHabitacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarHabitacionActionPerformed(evt);
+            }
+        });
         menuHabitacion.add(itemEliminarHabitacion);
         menuHabitacion.add(jSeparator7);
 
@@ -551,6 +586,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemBuscarReserva.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         itemBuscarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
         itemBuscarReserva.setText("Buscar...");
+        itemBuscarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemBuscarReservaActionPerformed(evt);
+            }
+        });
         menuReserva.add(itemBuscarReserva);
 
         itemEditarReserva.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -568,6 +608,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         itemEliminarReserva.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         itemEliminarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
         itemEliminarReserva.setText("Eliminar...");
+        itemEliminarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarReservaActionPerformed(evt);
+            }
+        });
         menuReserva.add(itemEliminarReserva);
         menuReserva.add(jSeparator8);
 
@@ -596,39 +641,49 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuSuplemento.setText("Suplemento");
         menuSuplemento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        itemAgregarEmpleado5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemAgregarEmpleado5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemAgregarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
-        itemAgregarEmpleado5.setText("Agregar...");
-        itemAgregarEmpleado5.addActionListener(new java.awt.event.ActionListener() {
+        itemAgregarSuplemento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemAgregarSuplemento.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemAgregarSuplemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarSuplemento.setText("Agregar...");
+        itemAgregarSuplemento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemAgregarEmpleado5ActionPerformed(evt);
+                itemAgregarSuplementoActionPerformed(evt);
             }
         });
-        menuSuplemento.add(itemAgregarEmpleado5);
+        menuSuplemento.add(itemAgregarSuplemento);
 
-        itemBuscarEmpleado5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemBuscarEmpleado5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemBuscarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
-        itemBuscarEmpleado5.setText("Buscar...");
-        menuSuplemento.add(itemBuscarEmpleado5);
-
-        itemEditarEmpleado5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemEditarEmpleado5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEditarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
-        itemEditarEmpleado5.setText("Editar...");
-        itemEditarEmpleado5.addActionListener(new java.awt.event.ActionListener() {
+        itemBuscarSuplemento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemBuscarSuplemento.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemBuscarSuplemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
+        itemBuscarSuplemento.setText("Buscar...");
+        itemBuscarSuplemento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEditarEmpleado5ActionPerformed(evt);
+                itemBuscarSuplementoActionPerformed(evt);
             }
         });
-        menuSuplemento.add(itemEditarEmpleado5);
+        menuSuplemento.add(itemBuscarSuplemento);
 
-        itemEliminarEmpleado5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        itemEliminarEmpleado5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        itemEliminarEmpleado5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
-        itemEliminarEmpleado5.setText("Eliminar...");
-        menuSuplemento.add(itemEliminarEmpleado5);
+        itemEditarSuplemento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemEditarSuplemento.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemEditarSuplemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
+        itemEditarSuplemento.setText("Editar...");
+        itemEditarSuplemento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEditarSuplementoActionPerformed(evt);
+            }
+        });
+        menuSuplemento.add(itemEditarSuplemento);
+
+        itemEliminarSuplemento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemEliminarSuplemento.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemEliminarSuplemento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
+        itemEliminarSuplemento.setText("Eliminar...");
+        itemEliminarSuplemento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarSuplementoActionPerformed(evt);
+            }
+        });
+        menuSuplemento.add(itemEliminarSuplemento);
         menuSuplemento.add(jSeparator9);
 
         menuSuplementoReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reporte20.png"))); // NOI18N
@@ -696,44 +751,74 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itemEditarClienteActionPerformed
 
     private void itemAgregarEstanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarEstanciaActionPerformed
-        // TODO add your handling code here:
+        VentanaCrudEstancia ventana = new VentanaCrudEstancia(this, true);
+        ventana.setAccion("agregar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_itemAgregarEstanciaActionPerformed
 
     private void itemEditarEstanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarEstanciaActionPerformed
-        // TODO add your handling code here:
+        VentanaCrudEstancia ventana = new VentanaCrudEstancia(this, true);
+        ventana.setAccion("editar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_itemEditarEstanciaActionPerformed
 
     private void itemAgregarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarFacturaActionPerformed
-        // TODO add your handling code here:
+        VentanaCrudFactura ventana = new VentanaCrudFactura(this, true);
+        ventana.setAccion("agregar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_itemAgregarFacturaActionPerformed
 
     private void itemEditarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarFacturaActionPerformed
-        // TODO add your handling code here:
+        VentanaCrudFactura ventana = new VentanaCrudFactura(this, true);
+        ventana.setAccion("editar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_itemEditarFacturaActionPerformed
 
     private void itemAgregarHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarHabitacionActionPerformed
-        // TODO add your handling code here:
+        VentanaCrudHabitacion ventana = new VentanaCrudHabitacion(this, true);
+        ventana.setAccion("agregar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_itemAgregarHabitacionActionPerformed
 
     private void itemEditarHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarHabitacionActionPerformed
-        // TODO add your handling code here:
+        VentanaCrudHabitacion ventana = new VentanaCrudHabitacion(this, true);
+        ventana.setAccion("editar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_itemEditarHabitacionActionPerformed
 
     private void itemAgregarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarReservaActionPerformed
-        // TODO add your handling code here:
+        VentanaCrudReserva ventana = new VentanaCrudReserva(this, true);
+        ventana.setAccion("agregar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_itemAgregarReservaActionPerformed
 
     private void itemEditarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarReservaActionPerformed
-        // TODO add your handling code here:
+        VentanaCrudReserva ventana = new VentanaCrudReserva(this, true);
+        ventana.setAccion("editar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_itemEditarReservaActionPerformed
 
-    private void itemAgregarEmpleado5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarEmpleado5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_itemAgregarEmpleado5ActionPerformed
+    private void itemAgregarSuplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarSuplementoActionPerformed
+        VentanaCrudSuplemento ventana = new VentanaCrudSuplemento(this, true);
+        ventana.setAccion("agregar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemAgregarSuplementoActionPerformed
 
-    private void itemEditarEmpleado5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarEmpleado5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_itemEditarEmpleado5ActionPerformed
+    private void itemEditarSuplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarSuplementoActionPerformed
+        VentanaCrudSuplemento ventana = new VentanaCrudSuplemento(this, true);
+        ventana.setAccion("editar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemEditarSuplementoActionPerformed
 
     private void itemReporteXClienteFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteXClienteFacturaActionPerformed
         // TODO add your handling code here:
@@ -827,6 +912,80 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventana.setVisible(true);
     }//GEN-LAST:event_itemReporteXNivelEmpleadoActionPerformed
 
+    private void menuHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuHabitacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuHabitacionActionPerformed
+
+    private void itemBuscarHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBuscarHabitacionActionPerformed
+        VentanaCrudHabitacion ventana = new VentanaCrudHabitacion(this, true);
+        ventana.setAccion("buscar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemBuscarHabitacionActionPerformed
+
+    private void itemEliminarHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarHabitacionActionPerformed
+        VentanaCrudHabitacion ventana = new VentanaCrudHabitacion(this, true);
+        ventana.setAccion("eliminar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemEliminarHabitacionActionPerformed
+
+    private void itemBuscarEstanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBuscarEstanciaActionPerformed
+        VentanaCrudEstancia ventana = new VentanaCrudEstancia(this, true);
+        ventana.setAccion("buscar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemBuscarEstanciaActionPerformed
+
+    private void itemEliminarEstanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarEstanciaActionPerformed
+        VentanaCrudEstancia ventana = new VentanaCrudEstancia(this, true);
+        ventana.setAccion("eliminar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemEliminarEstanciaActionPerformed
+
+    private void itemBuscarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBuscarReservaActionPerformed
+        VentanaCrudReserva ventana = new VentanaCrudReserva(this, true);
+        ventana.setAccion("buscar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemBuscarReservaActionPerformed
+
+    private void itemEliminarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarReservaActionPerformed
+        VentanaCrudReserva ventana = new VentanaCrudReserva(this, true);
+        ventana.setAccion("eliminar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemEliminarReservaActionPerformed
+
+    private void itemBuscarSuplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBuscarSuplementoActionPerformed
+        VentanaCrudSuplemento ventana = new VentanaCrudSuplemento(this, true);
+        ventana.setAccion("agregar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemBuscarSuplementoActionPerformed
+
+    private void itemEliminarSuplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarSuplementoActionPerformed
+        VentanaCrudSuplemento ventana = new VentanaCrudSuplemento(this, true);
+        ventana.setAccion("eliminar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemEliminarSuplementoActionPerformed
+
+    private void itemBuscarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBuscarFacturaActionPerformed
+        VentanaCrudFactura ventana = new VentanaCrudFactura(this, true);
+        ventana.setAccion("buscar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemBuscarFacturaActionPerformed
+
+    private void itemEliminarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarFacturaActionPerformed
+        VentanaCrudFactura ventana = new VentanaCrudFactura(this, true);
+        ventana.setAccion("eliminar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemEliminarFacturaActionPerformed
+
  
     /**
      * @param args the command line arguments
@@ -866,36 +1025,36 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuBarSuperior;
     private javax.swing.JMenuItem itemAgregarCliente;
     private javax.swing.JMenuItem itemAgregarEmpleado;
-    private javax.swing.JMenuItem itemAgregarEmpleado5;
     private javax.swing.JMenuItem itemAgregarEstancia;
     private javax.swing.JMenuItem itemAgregarFactura;
     private javax.swing.JMenuItem itemAgregarHabitacion;
     private javax.swing.JMenuItem itemAgregarHotel;
     private javax.swing.JMenuItem itemAgregarReserva;
+    private javax.swing.JMenuItem itemAgregarSuplemento;
     private javax.swing.JMenuItem itemBuscarCliente;
     private javax.swing.JMenuItem itemBuscarEmpleado;
-    private javax.swing.JMenuItem itemBuscarEmpleado5;
     private javax.swing.JMenuItem itemBuscarEstancia;
     private javax.swing.JMenuItem itemBuscarFactura;
     private javax.swing.JMenuItem itemBuscarHabitacion;
     private javax.swing.JMenuItem itemBuscarHotel;
     private javax.swing.JMenuItem itemBuscarReserva;
+    private javax.swing.JMenuItem itemBuscarSuplemento;
     private javax.swing.JMenuItem itemEditarCliente;
     private javax.swing.JMenuItem itemEditarEmpleado;
-    private javax.swing.JMenuItem itemEditarEmpleado5;
     private javax.swing.JMenuItem itemEditarEstancia;
     private javax.swing.JMenuItem itemEditarFactura;
     private javax.swing.JMenuItem itemEditarHabitacion;
     private javax.swing.JMenuItem itemEditarHotel;
     private javax.swing.JMenuItem itemEditarReserva;
+    private javax.swing.JMenuItem itemEditarSuplemento;
     private javax.swing.JMenuItem itemEliminarCliente;
     private javax.swing.JMenuItem itemEliminarEmpleado;
-    private javax.swing.JMenuItem itemEliminarEmpleado5;
     private javax.swing.JMenuItem itemEliminarEstancia;
     private javax.swing.JMenuItem itemEliminarFactura;
     private javax.swing.JMenuItem itemEliminarHabitacion;
     private javax.swing.JMenuItem itemEliminarHotel;
     private javax.swing.JMenuItem itemEliminarReserva;
+    private javax.swing.JMenuItem itemEliminarSuplemento;
     private javax.swing.JMenuItem itemReporteXCategoriaHotel;
     private javax.swing.JMenuItem itemReporteXClienteEstancia;
     private javax.swing.JMenuItem itemReporteXClienteFactura;

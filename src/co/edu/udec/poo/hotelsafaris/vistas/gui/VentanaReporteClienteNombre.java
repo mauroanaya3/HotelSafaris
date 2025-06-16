@@ -35,7 +35,7 @@ public class VentanaReporteClienteNombre extends javax.swing.JDialog {
             jLTotal.setText(String.valueOf(modelo.getRowCount()));
 
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Sin resultados", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
         }
     }
 
