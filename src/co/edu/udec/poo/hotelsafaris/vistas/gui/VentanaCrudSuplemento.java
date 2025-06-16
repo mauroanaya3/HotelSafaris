@@ -1,7 +1,7 @@
 package co.edu.udec.poo.hotelsafaris.vistas.gui;
 
-import co.edu.udec.poo.hotelsafaris.modelo.crud.ClienteCrud;
-import co.edu.udec.poo.hotelsafaris.modelo.entidades.Cliente;
+import co.edu.udec.poo.hotelsafaris.modelo.crud.SuplementoCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.entidades.Suplemento;
 import javax.swing.JOptionPane;
 
 public class VentanaCrudSuplemento extends javax.swing.JDialog {
@@ -27,7 +27,7 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         jLTitulo = new javax.swing.JLabel();
         JLImagen = new javax.swing.JLabel();
         jPDatos = new javax.swing.JPanel();
-        jTDni = new javax.swing.JTextField();
+        jTImporte = new javax.swing.JTextField();
         jTNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -56,14 +56,14 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         jPDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 204, 255), 2, true), "Datos del Suplemento", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12), new java.awt.Color(51, 51, 51))); // NOI18N
         jPDatos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTDni.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jTDni.setPreferredSize(new java.awt.Dimension(165, 23));
-        jTDni.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTImporte.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        jTImporte.setPreferredSize(new java.awt.Dimension(165, 23));
+        jTImporte.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTDniKeyTyped(evt);
+                jTImporteKeyTyped(evt);
             }
         });
-        jPDatos.add(jTDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, -1));
+        jPDatos.add(jTImporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, -1));
 
         jTNombre.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jTNombre.setPreferredSize(new java.awt.Dimension(165, 23));
@@ -152,10 +152,8 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
 
     // Boton Limpiar
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
-        jTDni.setText("");
+        jTImporte.setText("");
         jTNombre.setText("");
-        jTDireccion.setText("");
-        jTTelefono.setText("");
 
         jBEditar.setEnabled(false);
         jBEliminar.setEnabled(false);
@@ -165,26 +163,15 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
     // Boton Agregar
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
         // Traer valores ingresados
-        String dni = jTDni.getText().trim();
+        double importe = Double.parseDouble(jTImporte.getText().trim());
         String nombre = jTNombre.getText().trim();
-        String direccion = jTDireccion.getText().trim();
-        String telefono = jTTelefono.getText().trim();
 
         // Validaciones
-        if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty()) {
+        if (jTImporte.getText().isEmpty() || nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos deben estar completos.");
             return;
         }
 
-        if (!telefono.matches("\\d{7,}")) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "El teléfono debe contener solo números y tener al menos 7 dígitos.",
-                    "Teléfono inválido",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        }
 
         // Mostrar confirmación solo si todo es válido
         int opcion = JOptionPane.showConfirmDialog(
@@ -200,15 +187,11 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         }
 
         // Crear objeto
-        Cliente nuevoCliente = new Cliente(
-                dni,
-                nombre,
-                direccion,
-                telefono);
+        Suplemento s = new Suplemento(nombre, importe);
 
         // guardar el objeto en el array
         try {
-            ClienteCrud.agregar(nuevoCliente);
+            SuplementoCrud.agregar(s);
             JOptionPane.showMessageDialog(this,
                     "Registro guardado existosamente.", "Exito",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -216,7 +199,7 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
             jBLimpiarActionPerformed(null);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Ocurrió un error al guardar el cliente: " + ex.getMessage(),
+                    "Ocurrió un error al guardar el suplemento: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -225,7 +208,7 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
     }//GEN-LAST:event_jBAgregarActionPerformed
 
     // Validar caracteres al digitar en jTDni
-    private void jTDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTDniKeyTyped
+    private void jTImporteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTImporteKeyTyped
         int tecla = evt.getKeyChar();
 
         boolean numero = tecla >= 48 && tecla <= 57;
@@ -233,30 +216,28 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         if (!numero) {
             evt.consume();
         }
-    }//GEN-LAST:event_jTDniKeyTyped
+    }//GEN-LAST:event_jTImporteKeyTyped
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // Valor buscado
-        String codigo = jTDni.getText().trim();
+        String nombre = jTNombre.getText().trim();
 
         // Validar campo vacio
-        if (codigo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un Nombre.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try {
             // realizar la busqueda
-            Cliente cliente = ClienteCrud.buscar(codigo);
+            Suplemento suplemento = SuplementoCrud.buscar(nombre);
 
-            jTNombre.setText(cliente.getNombre());
-            jTDireccion.setText(cliente.getDireccion());
-            jTTelefono.setText(cliente.getTelefono());
+            jTNombre.setText(suplemento.getTipo());
+            jTImporte.setText(String.valueOf(suplemento.getImporte()));
 
 
             // habilitar bonotes
             habilitarBotones(accion);
-            //jBEliminar.setEnabled(true);
 
         } catch (Exception ex) {
             // si no hay resultados
@@ -264,8 +245,7 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
                     "No encontrado", JOptionPane.INFORMATION_MESSAGE);
 
             jTNombre.setText("");
-            jTDireccion.setText("");
-            jTTelefono.setText("");
+            jTImporte.setText("");
 
             habilitarBotones(accion);
         }
@@ -284,14 +264,11 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         }
 
         // Traer valores ingresados
-        String dni = jTDni.getText().trim();
+        double importe = Double.parseDouble(jTImporte.getText().trim());
         String nombre = jTNombre.getText().trim();
-        String direccion = jTDireccion.getText().trim();
-        String telefono = jTTelefono.getText().trim();
 
         // Validaciones
-        if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty()
-                || telefono.isEmpty()) {
+        if (jTImporte.getText().trim().isEmpty() || nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Por favor, complete todos los campos obligatorios.",
                     "Campos incompletos", JOptionPane.WARNING_MESSAGE);
@@ -299,12 +276,11 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         }
 
         try {
-            // busco el cliente
-            Cliente cliente = ClienteCrud.buscar(dni);
+            
+            Suplemento suplemento = SuplementoCrud.buscar(nombre);
 
-            cliente.setNombre(nombre);
-            cliente.setDireccion(direccion);
-            cliente.setTelefono(telefono);
+            suplemento.setTipo(nombre);
+            suplemento.setImporte(importe);
 
             JOptionPane.showMessageDialog(this,
                     "Los cambios se han guardado exitosamente.",
@@ -313,7 +289,7 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Error al editar el cliente: " + ex.getMessage(),
+                    "Error al editar el suplemento: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -332,30 +308,30 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         }
         
         // Valor buscado
-        String dni = jTDni.getText().trim();
+        String nombre = jTNombre.getText().trim();
 
         // Validar campo vacio
-        if (dni.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un código.",
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un nombre.",
                     "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try {
             
-            ClienteCrud.eliminar(dni);
+            SuplementoCrud.eliminar(nombre);
 
             JOptionPane.showMessageDialog(this,
                     "El cliente fue eliminado exitosamente.",
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
             jTNombre.setText("");
-            jTDireccion.setText("");
-            jTTelefono.setText("");
+            jTImporte.setText("");
+            
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Error al eliminar el cliente: " + ex.getMessage(),
+                    "Error al eliminar el suplemento: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -369,30 +345,24 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
                 jBBuscar.setEnabled(false);
                 jBEditar.setEnabled(false);
                 jBEliminar.setEnabled(false);
-                jTDireccion.setEnabled(true);
-                jTDni.setEnabled(true);
-                jTNombre.setEnabled(true);
-                jTTelefono.setEnabled(true);                
+                jTImporte.setEnabled(true);
+                jTNombre.setEnabled(true);                
                 break;
             case "editar":
                 jBAgregar.setEnabled(false);
                 jBBuscar.setEnabled(true);
                 jBEditar.setEnabled(true);
                 jBEliminar.setEnabled(false);
-                jTDireccion.setEnabled(true);
-                jTDni.setEnabled(true);
+                jTImporte.setEnabled(true);
                 jTNombre.setEnabled(true);
-                jTTelefono.setEnabled(true);
                 break;
             case "eliminar":
                 jBAgregar.setEnabled(false);
                 jBBuscar.setEnabled(true);
                 jBEditar.setEnabled(false);
                 jBEliminar.setEnabled(true);
-                jTDireccion.setEnabled(false);
-                jTDni.setEnabled(true);
-                jTNombre.setEnabled(false);
-                jTTelefono.setEnabled(false);
+                jTImporte.setEnabled(false);
+                jTNombre.setEnabled(true);
                 break;
             default:
                 jBAgregar.setEnabled(false);
@@ -400,8 +370,8 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
                 jBEditar.setEnabled(false);
                 jBEliminar.setEnabled(false);
                 jTNombre.setEnabled(false);
-                jTDireccion.setEnabled(false);
-                jTTelefono.setEnabled(false);
+                jTImporte.setEnabled(false);
+                jTNombre.setEnabled(true);
 
         }
     }
@@ -472,7 +442,7 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPDatos;
-    private javax.swing.JTextField jTDni;
+    private javax.swing.JTextField jTImporte;
     private javax.swing.JTextField jTNombre;
     // End of variables declaration//GEN-END:variables
 
