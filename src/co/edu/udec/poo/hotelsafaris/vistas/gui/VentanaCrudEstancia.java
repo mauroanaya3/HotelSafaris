@@ -1,12 +1,18 @@
 package co.edu.udec.poo.hotelsafaris.vistas.gui;
 
-import co.edu.udec.poo.hotelsafaris.modelo.crud.EmpleadoCrud;
-import co.edu.udec.poo.hotelsafaris.modelo.crud.HotelCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.crud.EstanciaCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.crud.ReservaCrud;
-import co.edu.udec.poo.hotelsafaris.modelo.entidades.Empleado;
-import co.edu.udec.poo.hotelsafaris.modelo.entidades.Hotel;
+import co.edu.udec.poo.hotelsafaris.modelo.crud.ActividadCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.entidades.Estancia;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Reserva;
+import co.edu.udec.poo.hotelsafaris.modelo.entidades.Actividad;
+import co.edu.udec.poo.hotelsafaris.modelo.entidades.Habitacion;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 public class VentanaCrudEstancia extends javax.swing.JDialog {
@@ -17,6 +23,38 @@ public class VentanaCrudEstancia extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         cargarReservas();
+        
+        btnCargarHabitaciones.addActionListener(e -> {
+            try {
+                Reserva reserva = (Reserva) cmbReserva.getSelectedItem();
+                if (reserva != null) {
+                    DefaultListModel<Habitacion> modelo = new DefaultListModel<>();
+                    for (Habitacion hab : reserva.getHabitacionesReservadas()) {
+                        modelo.addElement(hab);
+                    }
+                    lstHabitaciones.setModel(modelo);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Error al cargar habitaciones: " + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        btnCargarActividades.addActionListener(e -> {
+            try {
+                ArrayList<Actividad> actividades = ActividadCrud.listarTodo();
+                DefaultListModel<Actividad> modelo = new DefaultListModel<>();
+                for (Actividad act : actividades) {
+                    modelo.addElement(act);
+                }
+                lstActividades.setModel(modelo);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Error al cargar actividades: " + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
     }
 
@@ -56,8 +94,7 @@ public class VentanaCrudEstancia extends javax.swing.JDialog {
         jBEliminar = new javax.swing.JButton();
         jBLimpiar = new javax.swing.JButton();
 
-        setTitle("Estancia");
-        setAlwaysOnTop(true);
+        setTitle("Estancias");
         setMinimumSize(new java.awt.Dimension(780, 400));
         setModal(true);
         setResizable(false);
@@ -113,18 +150,8 @@ public class VentanaCrudEstancia extends javax.swing.JDialog {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Fecha Fin:");
 
-        lstHabitaciones.setModel(new javax.swing.AbstractListModel<Habitacion>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(lstHabitaciones);
 
-        lstActividades.setModel(new javax.swing.AbstractListModel<Actividad>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(lstActividades);
 
         btnCargarHabitaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/recargar28.png"))); // NOI18N
@@ -288,9 +315,75 @@ public class VentanaCrudEstancia extends javax.swing.JDialog {
 
     // Boton Agregar
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
-        
+        try {
+            // Validaciones básicas
+            if (txtId.getText().trim().isEmpty()
+                    || txtFechaInicio.getText().trim().isEmpty()
+                    || txtFechaFin.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Complete todos los campos obligatorios.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
+            // Convertir valores
+            int id = Integer.parseInt(txtId.getText().trim());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaInicio = sdf.parse(txtFechaInicio.getText().trim());
+            Date fechaFin = sdf.parse(txtFechaFin.getText().trim());
 
+            // Validar fechas
+            if (!fechaInicio.before(fechaFin)) {
+                JOptionPane.showMessageDialog(this, "La fecha de inicio debe ser anterior a la fecha fin.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Obtener objetos seleccionados
+            Reserva reserva = (Reserva) cmbReserva.getSelectedItem();
+            List<Habitacion> habitaciones = lstHabitaciones.getSelectedValuesList();
+            List<Actividad> actividades = lstActividades.getSelectedValuesList();
+
+            // Validar selecciones
+            if (reserva == null) {
+                JOptionPane.showMessageDialog(this, "Seleccione una reserva.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (habitaciones.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Seleccione al menos una habitación.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Crear estancia
+            Estancia estancia = new Estancia();
+            estancia.setId(id);
+            estancia.setReserva(reserva);
+            estancia.setHabitacionesOcupadas(new ArrayList<>(habitaciones));
+            estancia.setFechaInicio(fechaInicio);
+            estancia.setFechaFin(fechaFin);
+            estancia.setActividadesContratadas(new ArrayList<>(actividades));
+
+            // Guardar estancia
+            EstanciaCrud.agregar(estancia);
+
+            JOptionPane.showMessageDialog(this, "Estancia creada exitosamente!",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            limpiarCampos();
+            cargarReservas();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha inválido (dd/MM/yyyy).",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al crear estancia: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jBAgregarActionPerformed
 
     // Validar caracteres al digitar en jTNombre
@@ -306,169 +399,193 @@ public class VentanaCrudEstancia extends javax.swing.JDialog {
 
     private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
         int confirmar = JOptionPane.showConfirmDialog(this,
-                "¿Está seguro que desea modificar?",
+                "¿Está seguro que desea modificar esta estancia?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
 
         if (confirmar != JOptionPane.YES_OPTION) {
-            return; // Cancelado
-        }
-
-        // Traer valores ingresados
-        String dni = txtId.getText().trim();
-        String nombre = jTNombre.getText().trim();
-        String direccion = jTDireccion.getText().trim();
-        String telefono = jTTelefono.getText().trim();
-        String nivelEducativo = (String) jCNivelEducativo.getSelectedItem();
-        String tipo = (String) jCTipo.getSelectedItem();
-        Hotel hotel = (Hotel) jCHotel.getSelectedItem();
-
-        // Validaciones
-        if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty()
-                || telefono.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Por favor, complete todos los campos obligatorios.",
-                    "Campos incompletos", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        if (!telefono.matches("\\d{7,}")) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "El teléfono debe contener solo números y tener al menos 7 dígitos.",
-                    "Teléfono inválido",
-                    JOptionPane.ERROR_MESSAGE
-            );
             return;
         }
 
         try {
-            Empleado empleado = EmpleadoCrud.buscar(dni);
+            int id = Integer.parseInt(txtId.getText().trim());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaInicio = sdf.parse(txtFechaInicio.getText().trim());
+            Date fechaFin = sdf.parse(txtFechaFin.getText().trim());
 
-            empleado.setNombre(nombre);
-            empleado.setDireccion(direccion);
-            empleado.setTelefono(telefono);
-            empleado.setNivelEducativo(nivelEducativo);
-            empleado.setTipo(tipo);
-            empleado.setHotel(hotel);
-            
-            
+            // Validar fechas
+            if (!fechaInicio.before(fechaFin)) {
+                JOptionPane.showMessageDialog(this, "La fecha de inicio debe ser anterior a la fecha fin.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-            JOptionPane.showMessageDialog(this,
-                    "Los cambios se han guardado exitosamente.",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
+            // Obtener objetos seleccionados
+            Reserva reserva = (Reserva) cmbReserva.getSelectedItem();
+            List<Habitacion> habitaciones = lstHabitaciones.getSelectedValuesList();
+            List<Actividad> actividades = lstActividades.getSelectedValuesList();
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Error al editar el cliente: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            // Validar selecciones
+            if (reserva == null) {
+                JOptionPane.showMessageDialog(this, "Seleccione una reserva.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (habitaciones.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Seleccione al menos una habitación.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Obtener estancia existente
+            Estancia estancia = EstanciaCrud.buscar(id);
+
+            // Actualizar estancia
+            estancia.setReserva(reserva);
+            estancia.setHabitacionesOcupadas(new ArrayList<>(habitaciones));
+            estancia.setFechaInicio(fechaInicio);
+            estancia.setFechaFin(fechaFin);
+            estancia.setActividadesContratadas(new ArrayList<>(actividades));
+
+            // Guardar cambios
+            EstanciaCrud.editar(estancia);
+
+            JOptionPane.showMessageDialog(this, "Estancia actualizada exitosamente!",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            limpiarCampos();
+            cargarReservas();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha inválido (dd/MM/yyyy).",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al editar estancia: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBEditarActionPerformed
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
-        int confirmar = JOptionPane.showConfirmDialog(this,
-                "¿Está seguro que desea eliminar?",
+         int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro que desea eliminar esta estancia?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
 
         if (confirmar != JOptionPane.YES_OPTION) {
-            return; // Cancelado
-        }
-
-        // Valor buscado
-        String texId = txtId.getText().trim();
-
-        // Validar campo vacio
-        if (texId.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI.",
-                    "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        int id;
-            
         try {
-            id = Integer.parseInt(texId);
-            ReservaCrud.eliminar(id);
+            int id = Integer.parseInt(txtId.getText().trim());
+            EstanciaCrud.eliminar(id);
 
             JOptionPane.showMessageDialog(this,
-                    "El empleado fue eliminado exitosamente.",
+                    "Estancia eliminada exitosamente!",
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
 
+            limpiarCampos();
+            cargarReservas();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID debe ser numérico",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Error al eliminar el empleado: " + ex.getMessage(),
+                    "Error al eliminar estancia: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-        // Valor buscado
-        String codigo = txtId.getText().trim();
+        String idTexto = txtId.getText().trim();
 
-        // Validar campo vacio
-        if (codigo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        if (idTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un ID de estancia.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try {
-            // realizar la busqueda
-            Empleado empleado = EmpleadoCrud.buscar(codigo);
-        
-            jTNombre.setText(empleado.getNombre());
-            jTDireccion.setText(empleado.getDireccion());
-            jTTelefono.setText(empleado.getTelefono());
-            jCNivelEducativo.setSelectedItem(empleado.getNivelEducativo());
-            jCTipo.setSelectedItem(empleado.getTipo());
-            jCHotel.setSelectedItem(empleado.getHotel());
-            
+            int id = Integer.parseInt(idTexto);
+            Estancia estancia = EstanciaCrud.buscar(id);
 
-            // habilitar bonotes
+            // Mostrar datos de la estancia encontrada
+            txtId.setText(String.valueOf(estancia.getId()));
+
+            // Configurar reserva
+            cmbReserva.setSelectedItem(estancia.getReserva());
+
+            // Configurar fechas
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            txtFechaInicio.setText(sdf.format(estancia.getFechaInicio()));
+            txtFechaFin.setText(sdf.format(estancia.getFechaFin()));
+
+            // Configurar lista de habitaciones
+            DefaultListModel<Habitacion> modeloHabitaciones = new DefaultListModel<>();
+            for (Habitacion hab : estancia.getHabitacionesOcupadas()) {
+                modeloHabitaciones.addElement(hab);
+            }
+            lstHabitaciones.setModel(modeloHabitaciones);
+
+            // Configurar lista de actividades
+            DefaultListModel<Actividad> modeloActividades = new DefaultListModel<>();
+            for (Actividad act : estancia.getActividadesContratadas()) {
+                modeloActividades.addElement(act);
+            }
+            lstActividades.setModel(modeloActividades);
+
             habilitarBotones(accion);
 
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El ID debe ser un número válido.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            // si no hay resultados
             JOptionPane.showMessageDialog(this, ex.getMessage(),
                     "No encontrado", JOptionPane.INFORMATION_MESSAGE);
-
-            jTNombre.setText("");
-            jTDireccion.setText("");
-            jTTelefono.setText("");
-
-            habilitarBotones(accion);
+            limpiarCampos();
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
-    // Listar hoteles e insertarlos en jCHotel
+    // Listar hoteles e insertarlos 
     private void cargarReservas() {
         try {
             ArrayList<Reserva> reservas = ReservaCrud.listarTodo();
-
-            // Limpiar elementos existentes
             cmbReserva.removeAllItems();
-
-            // Agregar al combo
             for (Reserva r : reservas) {
                 cmbReserva.addItem(r);
             }
-
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(
-                    this,
+            JOptionPane.showMessageDialog(this,
                     "Error al cargar reservas: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    private void limpiarCampos() {
+        txtId.setText("");
+        txtFechaInicio.setText("");
+        txtFechaFin.setText("");
+        if (cmbReserva.getItemCount() > 0) {
+            cmbReserva.setSelectedIndex(0);
+        }
+
+        DefaultListModel<Habitacion> modeloHab = new DefaultListModel<>();
+        lstHabitaciones.setModel(modeloHab);
+
+        DefaultListModel<Actividad> modeloAct = new DefaultListModel<>();
+        lstActividades.setModel(modeloAct);
+
+        habilitarBotones(accion);
     }
 
     // Habilitar botones segun la accion

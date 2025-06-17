@@ -37,10 +37,10 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         jBEliminar = new javax.swing.JButton();
         jBLimpiar = new javax.swing.JButton();
 
-        setTitle("Empleados");
-        setAlwaysOnTop(true);
+        setTitle("Suplementos");
         setMinimumSize(new java.awt.Dimension(780, 400));
         setModal(true);
+        setPreferredSize(new java.awt.Dimension(711, 370));
         setResizable(false);
         setSize(new java.awt.Dimension(780, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

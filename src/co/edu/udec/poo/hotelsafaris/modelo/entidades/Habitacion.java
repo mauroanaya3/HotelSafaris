@@ -77,10 +77,17 @@ public class Habitacion {
         this.hotel = hotel;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Habitación " + numero + " (" + tipo + ") - Precio base: $" + precioBase +
                "\nDisponibilidad: " + (disponible ? "Sí" : "No") +
                "\nSuplementos: " + suplementos.toString();
+    }*/
+    
+    @Override
+    public String toString() {
+        return "Habitación " + numero + " - " + 
+               (hotel != null ? hotel.getNombre() : "Sin hotel") + 
+               " (" + (disponible ? "Disponible" : "Ocupada") + ")";
     }
 }

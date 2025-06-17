@@ -1,12 +1,20 @@
 package co.edu.udec.poo.hotelsafaris.vistas.gui;
 
 import co.edu.udec.poo.hotelsafaris.modelo.crud.EmpleadoCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.crud.EstanciaCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.crud.FacturaCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.crud.HotelCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.crud.ReservaCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.entidades.Actividad;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Empleado;
+import co.edu.udec.poo.hotelsafaris.modelo.entidades.Estancia;
+import co.edu.udec.poo.hotelsafaris.modelo.entidades.Factura;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Hotel;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Reserva;
-import java.util.ArrayList;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import javax.swing.JOptionPane;
 
 public class VentanaCrudFactura extends javax.swing.JDialog {
@@ -16,7 +24,7 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
     public VentanaCrudFactura(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cargarReservas();
+        cargarEstancias();
 
     }
 
@@ -24,6 +32,7 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
     public void setAccion(String accion) {
         this.accion = accion;
         habilitarBotones(accion);
+        configurarListenersParaCalculoAutomatico();
     }
 
     @SuppressWarnings("unchecked")
@@ -34,30 +43,31 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
         JLImagen = new javax.swing.JLabel();
         jPDatos = new javax.swing.JPanel();
         txtId = new javax.swing.JTextField();
-        cmbReserva = new javax.swing.JComboBox<>();
-        txtFechaInicio = new javax.swing.JFormattedTextField();
+        cmbEstancia = new javax.swing.JComboBox<>();
+        txtFechaEmision = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtId1 = new javax.swing.JTextField();
-        txtId2 = new javax.swing.JTextField();
+        txtHabitaciones = new javax.swing.JTextField();
+        txtActiviades = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtId3 = new javax.swing.JTextField();
+        txtSuplementos = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtId4 = new javax.swing.JTextField();
+        txtAnticipo = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        txtId5 = new javax.swing.JTextField();
+        txtTotalPagar = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtFacturaGenerada = new javax.swing.JTextArea();
         jBAgregar = new javax.swing.JButton();
         jBBuscar = new javax.swing.JButton();
         jBEditar = new javax.swing.JButton();
         jBEliminar = new javax.swing.JButton();
         jBLimpiar = new javax.swing.JButton();
 
-        setTitle("Estancia");
-        setAlwaysOnTop(true);
+        setTitle("Facturas");
         setMinimumSize(new java.awt.Dimension(780, 400));
         setModal(true);
         setResizable(false);
@@ -82,10 +92,10 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
             }
         });
 
-        cmbReserva.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        cmbReserva.setPreferredSize(new java.awt.Dimension(165, 23));
+        cmbEstancia.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        cmbEstancia.setPreferredSize(new java.awt.Dimension(165, 23));
 
-        txtFechaInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        txtFechaEmision.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -97,37 +107,43 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Estancia No:");
+        jLabel4.setText("Factura No:");
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Habitaciones ($):");
 
-        txtId1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtId1.setPreferredSize(new java.awt.Dimension(165, 23));
-        txtId1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtHabitaciones.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtHabitaciones.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtHabitaciones.setEnabled(false);
+        txtHabitaciones.setPreferredSize(new java.awt.Dimension(165, 23));
+        txtHabitaciones.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtId1KeyTyped(evt);
+                txtHabitacionesKeyTyped(evt);
             }
         });
 
-        txtId2.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtId2.setPreferredSize(new java.awt.Dimension(165, 23));
-        txtId2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtActiviades.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtActiviades.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtActiviades.setEnabled(false);
+        txtActiviades.setPreferredSize(new java.awt.Dimension(165, 23));
+        txtActiviades.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtId2KeyTyped(evt);
+                txtActiviadesKeyTyped(evt);
             }
         });
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel8.setText("Suplementos ($):");
+        jLabel8.setText("Actividades ($):");
 
-        txtId3.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtId3.setPreferredSize(new java.awt.Dimension(165, 23));
-        txtId3.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtSuplementos.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtSuplementos.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtSuplementos.setEnabled(false);
+        txtSuplementos.setPreferredSize(new java.awt.Dimension(165, 23));
+        txtSuplementos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtId3KeyTyped(evt);
+                txtSuplementosKeyTyped(evt);
             }
         });
 
@@ -135,11 +151,11 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Suplementos ($):");
 
-        txtId4.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtId4.setPreferredSize(new java.awt.Dimension(165, 23));
-        txtId4.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtAnticipo.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtAnticipo.setPreferredSize(new java.awt.Dimension(165, 23));
+        txtAnticipo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtId4KeyTyped(evt);
+                txtAnticipoKeyTyped(evt);
             }
         });
 
@@ -147,17 +163,25 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("Anticipo -($)");
 
-        txtId5.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtId5.setPreferredSize(new java.awt.Dimension(165, 23));
-        txtId5.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtTotalPagar.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtTotalPagar.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtTotalPagar.setEnabled(false);
+        txtTotalPagar.setPreferredSize(new java.awt.Dimension(165, 23));
+        txtTotalPagar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtId5KeyTyped(evt);
+                txtTotalPagarKeyTyped(evt);
             }
         });
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel13.setText("Total a Pagar ($):");
+
+        txtFacturaGenerada.setColumns(20);
+        txtFacturaGenerada.setRows(5);
+        txtFacturaGenerada.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtFacturaGenerada.setEnabled(false);
+        jScrollPane1.setViewportView(txtFacturaGenerada);
 
         javax.swing.GroupLayout jPDatosLayout = new javax.swing.GroupLayout(jPDatos);
         jPDatos.setLayout(jPDatosLayout);
@@ -172,47 +196,49 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPDatosLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPDatosLayout.createSequentialGroup()
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(cmbReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(235, 235, 235)))
-                        .addGap(0, 3, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPDatosLayout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPDatosLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
                         .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPDatosLayout.createSequentialGroup()
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtId4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap()
+                                .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPDatosLayout.createSequentialGroup()
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(cmbEstancia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(235, 235, 235))))
                             .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPDatosLayout.createSequentialGroup()
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtId3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPDatosLayout.createSequentialGroup()
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtId2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPDatosLayout.createSequentialGroup()
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtId1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPDatosLayout.createSequentialGroup()
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtId5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPDatosLayout.createSequentialGroup()
+                                        .addGap(142, 142, 142)
+                                        .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPDatosLayout.createSequentialGroup()
+                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtAnticipo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPDatosLayout.createSequentialGroup()
+                                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(txtSuplementos, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPDatosLayout.createSequentialGroup()
+                                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(txtActiviades, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPDatosLayout.createSequentialGroup()
+                                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(txtHabitaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPDatosLayout.createSequentialGroup()
+                                        .addGap(119, 119, 119)
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 3, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPDatosLayout.setVerticalGroup(
             jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,36 +248,38 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
                     .addGroup(jPDatosLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(12, 12, 12)
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbEstancia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtId1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHabitaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtId2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtActiviades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtId3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSuplementos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtId4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAnticipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtId5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         getContentPane().add(jPDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 490, 360));
@@ -318,167 +346,198 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
 
     // Boton Limpiar
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
+        // Limpiar campos de texto
         txtId.setText("");
-        txtFechaInicio.setText("");
-        txtFechaFin.setText("");
-        if (cmbReserva.getItemCount() > 0) {
-            cmbReserva.setSelectedIndex(0);
+        txtFechaEmision.setText("");
+        txtHabitaciones.setText("");
+        txtActiviades.setText("");
+        txtSuplementos.setText("");
+        txtAnticipo.setText("");
+        txtTotalPagar.setText("");
+        txtFacturaGenerada.setText("");
+
+        // Reiniciar combobox de estancia
+        if (cmbEstancia.getItemCount() > 0) {
+            cmbEstancia.setSelectedIndex(0);
         }
-        lstHabitaciones.clearSelection();
-        lstActividades.clearSelection();
+
+        // Deshabilitar botones de edición/eliminación
         jBEditar.setEnabled(false);
         jBEliminar.setEnabled(false);
 
+        // Habilitar botón de agregar si está en modo agregar
+        if ("agregar".equals(accion)) {
+            jBAgregar.setEnabled(true);
+        }
+
+        // Enfocar el primer campo para nueva entrada
+        txtId.requestFocusInWindow();
     }//GEN-LAST:event_jBLimpiarActionPerformed
 
     // Boton Agregar
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
-        
+        try {
+            // Validar campos obligatorios
+            if (txtId.getText().trim().isEmpty() || txtFechaEmision.getText().trim().isEmpty()
+                    || cmbEstancia.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this,
+                        "Por favor, complete todos los campos obligatorios.",
+                        "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Validar anticipo numérico
+            double anticipo = 0;
+            if (!txtAnticipo.getText().isEmpty()) {
+                try {
+                    anticipo = Double.parseDouble(txtAnticipo.getText());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this,
+                            "El anticipo debe ser un valor numérico válido.",
+                            "Error en formato", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            // Crear nueva factura
+            Factura factura = new Factura();
+            factura.setId(Integer.parseInt(txtId.getText().trim()));
+            factura.setEstancia((Estancia) cmbEstancia.getSelectedItem());
+            factura.setFechaEmision(new SimpleDateFormat("dd/MM/yyyy").parse(txtFechaEmision.getText().trim()));
+            factura.setAnticipoDescontado(anticipo);
+
+            // Calcular totales automáticamente
+            factura.calcularTotal();
+
+            // Guardar factura
+            FacturaCrud.agregar(factura);
+
+            // Mostrar resultados
+            txtHabitaciones.setText(String.format("%.2f", factura.getTotalHabitaciones()));
+            txtActiviades.setText(String.format("%.2f", factura.getTotalActividades()));
+            txtTotalPagar.setText(String.format("%.2f", factura.getTotalPagar()));
+            txtFacturaGenerada.setText(factura.generarFactura());
+
+            JOptionPane.showMessageDialog(this,
+                    "Factura agregada exitosamente!",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al agregar factura: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }  
 
 
     }//GEN-LAST:event_jBAgregarActionPerformed
 
     private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
         int confirmar = JOptionPane.showConfirmDialog(this,
-                "¿Está seguro que desea modificar?",
+                "¿Está seguro que desea modificar esta factura?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-        );
+                JOptionPane.QUESTION_MESSAGE);
 
         if (confirmar != JOptionPane.YES_OPTION) {
-            return; // Cancelado
-        }
-
-        // Traer valores ingresados
-        String dni = txtId.getText().trim();
-        String nombre = jTNombre.getText().trim();
-        String direccion = jTDireccion.getText().trim();
-        String telefono = jTTelefono.getText().trim();
-        String nivelEducativo = (String) jCNivelEducativo.getSelectedItem();
-        String tipo = (String) jCTipo.getSelectedItem();
-        Hotel hotel = (Hotel) jCHotel.getSelectedItem();
-
-        // Validaciones
-        if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty()
-                || telefono.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Por favor, complete todos los campos obligatorios.",
-                    "Campos incompletos", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        if (!telefono.matches("\\d{7,}")) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "El teléfono debe contener solo números y tener al menos 7 dígitos.",
-                    "Teléfono inválido",
-                    JOptionPane.ERROR_MESSAGE
-            );
             return;
         }
 
         try {
-            Empleado empleado = EmpleadoCrud.buscar(dni);
+            // Obtener datos del formulario
+            int id = Integer.parseInt(txtId.getText().trim());
+            Estancia estancia = (Estancia) cmbEstancia.getSelectedItem();
+            Date fechaEmision = new SimpleDateFormat("dd/MM/yyyy").parse(txtFechaEmision.getText().trim());
+            double anticipo = txtAnticipo.getText().isEmpty() ? 0 : Double.parseDouble(txtAnticipo.getText());
 
-            empleado.setNombre(nombre);
-            empleado.setDireccion(direccion);
-            empleado.setTelefono(telefono);
-            empleado.setNivelEducativo(nivelEducativo);
-            empleado.setTipo(tipo);
-            empleado.setHotel(hotel);
-            
-            
+            // Crear factura con los nuevos datos
+            Factura factura = new Factura();
+            factura.setId(id);
+            factura.setEstancia(estancia);
+            factura.setFechaEmision(fechaEmision);
+            factura.setAnticipoDescontado(anticipo);
+            factura.calcularTotal(); // Recalcular totales
+
+            // Actualizar en el CRUD
+            FacturaCrud.editar(factura);
+
+            // Actualizar vista
+            txtHabitaciones.setText(String.format("%.2f", factura.getTotalHabitaciones()));
+            txtActiviades.setText(String.format("%.2f", factura.getTotalActividades()));
+            txtTotalPagar.setText(String.format("%.2f", factura.getTotalPagar()));
+            txtFacturaGenerada.setText(factura.generarFactura());
 
             JOptionPane.showMessageDialog(this,
-                    "Los cambios se han guardado exitosamente.",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    "Factura actualizada exitosamente!",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Error al editar el cliente: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                    "Error al editar factura: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBEditarActionPerformed
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
         int confirmar = JOptionPane.showConfirmDialog(this,
-                "¿Está seguro que desea eliminar?",
+                "¿Está seguro que desea eliminar esta factura?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-        );
+                JOptionPane.QUESTION_MESSAGE);
 
         if (confirmar != JOptionPane.YES_OPTION) {
-            return; // Cancelado
-        }
-
-        // Valor buscado
-        String texId = txtId.getText().trim();
-
-        // Validar campo vacio
-        if (texId.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI.",
-                    "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        int id;
-            
         try {
-            id = Integer.parseInt(texId);
-            ReservaCrud.eliminar(id);
+            int id = Integer.parseInt(txtId.getText().trim());
+            FacturaCrud.eliminar(id);
 
             JOptionPane.showMessageDialog(this,
-                    "El empleado fue eliminado exitosamente.",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    "Factura eliminada exitosamente!",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            limpiarCampos();
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Error al eliminar el empleado: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                    "Error al eliminar factura: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-        // Valor buscado
-        String codigo = txtId.getText().trim();
-
-        // Validar campo vacio
-        if (codigo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        String idText = txtId.getText().trim();
+        if (idText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID de factura", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
-            // realizar la busqueda
-            Empleado empleado = EmpleadoCrud.buscar(codigo);
-        
-            jTNombre.setText(empleado.getNombre());
-            jTDireccion.setText(empleado.getDireccion());
-            jTTelefono.setText(empleado.getTelefono());
-            jCNivelEducativo.setSelectedItem(empleado.getNivelEducativo());
-            jCTipo.setSelectedItem(empleado.getTipo());
-            jCHotel.setSelectedItem(empleado.getHotel());
-            
+            int id = Integer.parseInt(idText);
+            Factura factura = FacturaCrud.buscar(id);
 
-            // habilitar bonotes
-            habilitarBotones(accion);
+            // Mostrar datos en la interfaz
+            txtFechaEmision.setText(new SimpleDateFormat("dd/MM/yyyy").format(factura.getFechaEmision()));
+            cmbEstancia.setSelectedItem(factura.getEstancia());
+            txtHabitaciones.setText(String.format("%.2f", factura.getTotalHabitaciones()));
+            txtActiviades.setText(String.format("%.2f", factura.getTotalActividades()));
+            txtSuplementos.setText(String.format("%.2f", factura.getTotalSuplementos()));
+            txtAnticipo.setText(String.format("%.2f", factura.getAnticipoDescontado()));
+            txtTotalPagar.setText(String.format("%.2f", factura.getTotalPagar()));
+            txtFacturaGenerada.setText(factura.generarFactura());
 
+            // Habilitar botones según la acción
+            if ("editar".equals(accion)) {
+                jBEditar.setEnabled(true);
+            } else if ("eliminar".equals(accion)) {
+                jBEliminar.setEnabled(true);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID inválido", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            // si no hay resultados
-            JOptionPane.showMessageDialog(this, ex.getMessage(),
-                    "No encontrado", JOptionPane.INFORMATION_MESSAGE);
-
-            jTNombre.setText("");
-            jTDireccion.setText("");
-            jTTelefono.setText("");
-
-            habilitarBotones(accion);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            limpiarCampos();
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
@@ -493,99 +552,182 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtIdKeyTyped
 
-    private void txtId1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtId1KeyTyped
+    private void txtHabitacionesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHabitacionesKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtId1KeyTyped
+    }//GEN-LAST:event_txtHabitacionesKeyTyped
 
-    private void txtId2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtId2KeyTyped
+    private void txtActiviadesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtActiviadesKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtId2KeyTyped
+    }//GEN-LAST:event_txtActiviadesKeyTyped
 
-    private void txtId3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtId3KeyTyped
+    private void txtSuplementosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSuplementosKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtId3KeyTyped
+    }//GEN-LAST:event_txtSuplementosKeyTyped
 
-    private void txtId4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtId4KeyTyped
+    private void txtAnticipoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAnticipoKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtId4KeyTyped
+    }//GEN-LAST:event_txtAnticipoKeyTyped
 
-    private void txtId5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtId5KeyTyped
+    private void txtTotalPagarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalPagarKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtId5KeyTyped
+    }//GEN-LAST:event_txtTotalPagarKeyTyped
 
-    // Listar hoteles e insertarlos en jCHotel
-    private void cargarReservas() {
+    // Listar
+    private void cargarEstancias() {
         try {
-            ArrayList<Reserva> reservas = ReservaCrud.listarTodo();
+            ArrayList<Estancia> estancias = EstanciaCrud.listarTodo();
+            cmbEstancia.removeAllItems();
 
-            // Limpiar elementos existentes
-            cmbReserva.removeAllItems();
-
-            // Agregar al combo
-            for (Reserva r : reservas) {
-                cmbReserva.addItem(r);
+            for (Estancia e : estancias) {
+                cmbEstancia.addItem(e);
             }
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(
                     this,
-                    "Error al cargar reservas: " + ex.getMessage(),
+                    "Error al cargar estancias: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
         }
     }
+    
+    private void limpiarCampos() {
+        txtId.setText("");
+        txtFechaEmision.setText("");
+        txtHabitaciones.setText("");
+        txtActiviades.setText("");
+        txtSuplementos.setText("");
+        txtAnticipo.setText("");
+        txtTotalPagar.setText("");
+        txtFacturaGenerada.setText("");
+
+        if (cmbEstancia.getItemCount() > 0) {
+            cmbEstancia.setSelectedIndex(0);
+        }
+
+        jBEditar.setEnabled(false);
+        jBEliminar.setEnabled(false);
+    }
+    
+    private void configurarListenersParaCalculoAutomatico() {
+    KeyAdapter calculator = new KeyAdapter() {
+        @Override
+        public void keyReleased(KeyEvent e) {
+            calcularTotalAutomatico();
+        }
+    };
+    
+    txtAnticipo.addKeyListener(calculator);
+    cmbEstancia.addActionListener(e -> calcularTotalAutomatico());
+}
+
+    private void calcularTotalAutomatico() {
+        if (cmbEstancia.getSelectedItem() != null) {
+            try {
+                Estancia estancia = (Estancia) cmbEstancia.getSelectedItem();
+                double anticipo = txtAnticipo.getText().isEmpty() ? 0 : Double.parseDouble(txtAnticipo.getText());
+
+                double totalHabitaciones = estancia.calcularTotalEstancia();
+                double totalActividades = estancia.getActividadesContratadas().stream()
+                        .mapToDouble(Actividad::calcularCostoCliente).sum();
+                double total = totalHabitaciones + totalActividades - anticipo;
+
+                txtHabitaciones.setText(String.format("%.2f", totalHabitaciones));
+                txtActiviades.setText(String.format("%.2f", totalActividades));
+                txtTotalPagar.setText(String.format("%.2f", total));
+
+            } catch (NumberFormatException ex) {
+                // No hacer nada si el anticipo no es un número válido
+            }
+        }
+    }
 
     // Habilitar botones segun la accion
     private void habilitarBotones(String accion) {
-        switch (accion.toLowerCase()) {
+        // Convertir a minúsculas y trim para evitar problemas
+        String accionNormalizada = accion != null ? accion.toLowerCase().trim() : "";
+
+        // Configuración común para todos los casos
+        jBBuscar.setEnabled(true);  // Siempre habilitado
+        txtId.setEnabled(true);     // Siempre habilitado para búsqueda/ingreso
+
+        // Configuración específica por acción
+        switch (accionNormalizada) {
             case "agregar":
                 jBAgregar.setEnabled(true);
-                jBBuscar.setEnabled(false);
                 jBEditar.setEnabled(false);
                 jBEliminar.setEnabled(false);
-                txtId.setEnabled(true);
-                txtFechaInicio.setEnabled(true);
-                txtFechaFin.setEnabled(true);
-                cmbReserva.setEnabled(true);
-                lstHabitaciones.setEnabled(true);
-                lstActividades.setEnabled(true);
+
+                txtFechaEmision.setEnabled(true);
+                cmbEstancia.setEnabled(true);
+                txtAnticipo.setEnabled(true);
+
+                // Habilitar solo lo necesario para nueva factura
+                txtHabitaciones.setEnabled(false);  // Se calcula automáticamente
+                txtActiviades.setEnabled(false);    // Se calcula automáticamente
+                txtSuplementos.setEnabled(false);   // No usado actualmente
+                txtTotalPagar.setEnabled(false);    // Se calcula automáticamente
                 break;
+
             case "editar":
                 jBAgregar.setEnabled(false);
-                jBBuscar.setEnabled(true);
-                jBEditar.setEnabled(true);
+                jBEditar.setEnabled(true);  // Se habilita después de buscar
                 jBEliminar.setEnabled(false);
-                txtId.setEnabled(true);
-                txtFechaInicio.setEnabled(true);
-                txtFechaFin.setEnabled(true);
-                cmbReserva.setEnabled(true);
-                lstHabitaciones.setEnabled(true);
-                lstActividades.setEnabled(true);
+
+                txtFechaEmision.setEnabled(true);
+                cmbEstancia.setEnabled(true);
+                txtAnticipo.setEnabled(true);
+
+                // Campos calculados (solo lectura)
+                txtHabitaciones.setEnabled(false);
+                txtActiviades.setEnabled(false);
+                txtSuplementos.setEnabled(false);
+                txtTotalPagar.setEnabled(false);
                 break;
+
             case "eliminar":
                 jBAgregar.setEnabled(false);
-                jBBuscar.setEnabled(true);
                 jBEditar.setEnabled(false);
-                jBEliminar.setEnabled(true);
-                txtId.setEnabled(true);
-                txtFechaInicio.setEnabled(false);
-                txtFechaFin.setEnabled(false);
-                cmbReserva.setEnabled(false);
-                lstHabitaciones.setEnabled(false);
-                lstActividades.setEnabled(false);
+                jBEliminar.setEnabled(true);  // Se habilita después de buscar
+
+                // Deshabilitar edición de campos
+                txtFechaEmision.setEnabled(false);
+                cmbEstancia.setEnabled(false);
+                txtAnticipo.setEnabled(false);
+                txtHabitaciones.setEnabled(false);
+                txtActiviades.setEnabled(false);
+                txtSuplementos.setEnabled(false);
+                txtTotalPagar.setEnabled(false);
                 break;
-            default:
+
+            default:  // Modo consulta
                 jBAgregar.setEnabled(false);
-                jBBuscar.setEnabled(true);
                 jBEditar.setEnabled(false);
                 jBEliminar.setEnabled(false);
-                txtId.setEnabled(true);
-                txtFechaInicio.setEnabled(false);
-                txtFechaFin.setEnabled(false);
-                cmbReserva.setEnabled(false);
-                lstHabitaciones.setEnabled(false);
-                lstActividades.setEnabled(false);
+
+                // Todos los campos en solo lectura
+                txtFechaEmision.setEnabled(false);
+                cmbEstancia.setEnabled(false);
+                txtAnticipo.setEnabled(false);
+                txtHabitaciones.setEnabled(false);
+                txtActiviades.setEnabled(false);
+                txtSuplementos.setEnabled(false);
+                txtTotalPagar.setEnabled(false);
+        }
+
+        // Actualizar estado de los botones basado en datos existentes
+        actualizarEstadoBotones();
+    }
+
+// Método auxiliar para actualizar estados
+    private void actualizarEstadoBotones() {
+        boolean tieneDatos = !txtId.getText().isEmpty();
+
+        if ("editar".equals(accion.toLowerCase())) {
+            jBEditar.setEnabled(tieneDatos);
+        } else if ("eliminar".equals(accion.toLowerCase())) {
+            jBEliminar.setEnabled(tieneDatos);
         }
     }
 
@@ -646,7 +788,7 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLImagen;
-    private javax.swing.JComboBox<Estancia> cmbReserva;
+    private javax.swing.JComboBox<Estancia> cmbEstancia;
     private javax.swing.JButton jBAgregar;
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBEditar;
@@ -662,14 +804,16 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPDatos;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JFormattedTextField txtFechaInicio;
+    private javax.swing.JTextField txtActiviades;
+    private javax.swing.JTextField txtAnticipo;
+    private javax.swing.JTextArea txtFacturaGenerada;
+    private javax.swing.JFormattedTextField txtFechaEmision;
+    private javax.swing.JTextField txtHabitaciones;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtId1;
-    private javax.swing.JTextField txtId2;
-    private javax.swing.JTextField txtId3;
-    private javax.swing.JTextField txtId4;
-    private javax.swing.JTextField txtId5;
+    private javax.swing.JTextField txtSuplementos;
+    private javax.swing.JTextField txtTotalPagar;
     // End of variables declaration//GEN-END:variables
 
 }

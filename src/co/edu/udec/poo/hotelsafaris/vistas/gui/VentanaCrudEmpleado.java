@@ -52,7 +52,6 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         jBLimpiar = new javax.swing.JButton();
 
         setTitle("Empleados");
-        setAlwaysOnTop(true);
         setMaximumSize(new java.awt.Dimension(780, 400));
         setMinimumSize(new java.awt.Dimension(780, 400));
         setModal(true);

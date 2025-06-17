@@ -1,15 +1,17 @@
 package co.edu.udec.poo.hotelsafaris.vistas.gui;
 
-import co.edu.udec.poo.hotelsafaris.modelo.crud.EmpleadoCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.crud.ClienteCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.crud.HabitacionCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.crud.HotelCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.crud.ReservaCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Cliente;
-import co.edu.udec.poo.hotelsafaris.modelo.entidades.Empleado;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Habitacion;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Hotel;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Reserva;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 public class VentanaCrudReserva extends javax.swing.JDialog {
@@ -20,6 +22,15 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         cargarReservas();
+
+        // Configurar listeners
+        cmbHotel.addActionListener(e -> {
+            Hotel hotelSeleccionado = (Hotel) cmbHotel.getSelectedItem();
+            cargarHabitacionesDisponibles(hotelSeleccionado);
+        });
+
+        // Cargar datos iniciales
+        cargarDatosIniciales();
 
     }
 
@@ -64,7 +75,6 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         jBLimpiar = new javax.swing.JButton();
 
         setTitle("Reserva");
-        setAlwaysOnTop(true);
         setMinimumSize(new java.awt.Dimension(780, 400));
         setModal(true);
         setResizable(false);
@@ -104,11 +114,6 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Id:");
 
-        lstHabitaciones.setModel(new javax.swing.AbstractListModel<Actividad>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(lstHabitaciones);
 
         cmbCliente.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
@@ -352,99 +357,90 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         jBEditar.setEnabled(false);
         jBEliminar.setEnabled(false);
 
+        limpiarCampos();
+
     }//GEN-LAST:event_jBLimpiarActionPerformed
 
     // Boton Agregar
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
         try {
-            // 1. Obtener valores del formulario
-            String idTexto = txtId.getText().trim();
-            String fechaInicioTexto = txtFechaInicio.getText().trim();
-            String fechaFinTexto = txtFechaFin.getText().trim();
-            String precioTotalTexto = txtPrecioTotal.getText().trim();
-            String anticipoTexto = txtAnticipo.getText().trim();
-
-            // 2. Validar campos obligatorios
-            boolean camposIncompletos = idTexto.isEmpty()
-                    || fechaInicioTexto.isEmpty()
-                    || fechaFinTexto.isEmpty()
-                    || precioTotalTexto.isEmpty()
-                    || anticipoTexto.isEmpty();
-
-            if (camposIncompletos) {
+            // Validaciones básicas
+            if (txtId.getText().trim().isEmpty()
+                    || txtFechaInicio.getText().trim().isEmpty()
+                    || txtFechaFin.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Complete todos los campos obligatorios.",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // 3. Convertir valores numéricos y de fecha
-            int id = Integer.parseInt(idTexto);
-            double precioTotal = Double.parseDouble(precioTotalTexto);
-            double anticipo = Double.parseDouble(anticipoTexto);
-
+            // Convertir valores
+            int id = Integer.parseInt(txtId.getText().trim());
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date fechaInicio = sdf.parse(fechaInicioTexto);
-            Date fechaFin = sdf.parse(fechaFinTexto);
+            Date fechaInicio = sdf.parse(txtFechaInicio.getText().trim());
+            Date fechaFin = sdf.parse(txtFechaFin.getText().trim());
 
-            // 4. Validar reglas de negocio
-            boolean anticipoInvalido = anticipo > precioTotal;
-            boolean fechasInvalidas = !fechaInicio.before(fechaFin);
-
-            if (anticipoInvalido) {
-                JOptionPane.showMessageDialog(this, "El anticipo no puede ser mayor al precio total.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            if (fechasInvalidas) {
+            // Validar fechas
+            if (!fechaInicio.before(fechaFin)) {
                 JOptionPane.showMessageDialog(this, "La fecha de inicio debe ser anterior a la fecha fin.",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // 5. Obtener objetos seleccionados
+            // Obtener objetos seleccionados
             Cliente cliente = (Cliente) cmbCliente.getSelectedItem();
             Hotel hotel = (Hotel) cmbHotel.getSelectedItem();
             boolean confirmada = jRConfirmada.isSelected();
-            String estado = txtEstado.getText().trim();
-            estado = estado.isEmpty() ? "Pendiente" : estado;
+            String estado = txtEstado.getText().trim().isEmpty() ? "Pendiente" : txtEstado.getText().trim();
 
             List<Habitacion> habitaciones = lstHabitaciones.getSelectedValuesList();
 
-            // 6. Validar disponibilidad de habitaciones
-            boolean habitacionesNoDisponibles = false;
-            try {
-                for (Habitacion habitacion : habitaciones) {
-                    List<Reserva> reservas = ReservaCrud.listarPorHabitacion(habitacion.getId());
-                    for (Reserva r : reservas) {
-                        if ((fechaInicio.after(r.getFechaInicio()) && fechaInicio.before(r.getFechaFin()))
-                                || (fechaFin.after(r.getFechaInicio()) && fechaFin.before(r.getFechaFin()))
-                                || (fechaInicio.before(r.getFechaInicio()) && fechaFin.after(r.getFechaFin()))) {
-                            habitacionesNoDisponibles = true;
-                            break;
-                        }
-                    }
-                    if (habitacionesNoDisponibles) {
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-                habitacionesNoDisponibles = true;
-            }
-
-            if (habitacionesNoDisponibles) {
-                JOptionPane.showMessageDialog(this,
-                        "Una o más habitaciones no están disponibles en las fechas seleccionadas.",
+            // Validar habitaciones seleccionadas
+            if (habitaciones.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Seleccione al menos una habitación.",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // 7. Crear y guardar reserva
+            // Calcular precio total y anticipo
+            double precioTotal = Double.parseDouble(txtPrecioTotal.getText().trim());
+            double anticipo = txtAnticipo.getText().trim().isEmpty() ? 0
+                    : Double.parseDouble(txtAnticipo.getText().trim());
+
+            if (anticipo > precioTotal) {
+                JOptionPane.showMessageDialog(this, "El anticipo no puede ser mayor al precio total.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Verificar disponibilidad de habitaciones
+            for (Habitacion hab : habitaciones) {
+                if (!hab.isDisponible()) {
+                    JOptionPane.showMessageDialog(this,
+                            "La habitación " + hab.getNumero() + " no está disponible.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            // Validar Duplicados
+            
+            try {
+                // Verificar si ya existe una reserva con este ID
+                ReservaCrud.buscar(id);
+                JOptionPane.showMessageDialog(this,
+                        "Ya existe una reserva con este ID.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            } catch (Exception ex) {
+                // No existe, continuar
+            }
+            
+            // Crear y guardar reserva
             Reserva reserva = new Reserva();
             reserva.setId(id);
             reserva.setCliente(cliente);
             reserva.setHotel(hotel);
-            reserva.setHabitacionesReservadas(habitaciones);
+            reserva.setHabitacionesReservadas(new ArrayList<>(habitaciones));
             reserva.setFechaInicio(fechaInicio);
             reserva.setFechaFin(fechaFin);
             reserva.setAnticipo(anticipo);
@@ -453,18 +449,17 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
 
             ReservaCrud.agregar(reserva);
 
-            // 8. Mostrar éxito y limpiar
+            // Actualizar disponibilidad de habitaciones
+            for (Habitacion hab : habitaciones) {
+                hab.setDisponible(false);
+                HabitacionCrud.editar(hab);
+            }
+
             JOptionPane.showMessageDialog(this, "Reserva creada exitosamente!",
                     "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            txtId.setText("");
-            txtFechaInicio.setText("");
-            txtFechaFin.setText("");
-            txtPrecioTotal.setText("");
-            txtAnticipo.setText("");
-            jRConfirmada.setSelected(false);
-            txtEstado.setText("");
-            lstHabitaciones.clearSelection();
+            limpiarCampos();
+            cargarReservas(); // Recargar datos
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos.",
@@ -478,7 +473,7 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jBAgregarActionPerformed
 
-    // Validar caracteres al digitar en jTNombre
+    // Validar caracteres al digitar
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
         int tecla = evt.getKeyChar();
 
@@ -491,62 +486,106 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
 
     private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
         int confirmar = JOptionPane.showConfirmDialog(this,
-                "¿Está seguro que desea modificar?",
+                "¿Está seguro que desea modificar esta reserva?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
 
         if (confirmar != JOptionPane.YES_OPTION) {
-            return; // Cancelado
-        }
-
-        // Traer valores ingresados
-        String dni = txtId.getText().trim();
-        String nombre = jTNombre.getText().trim();
-        String direccion = jTDireccion.getText().trim();
-        String telefono = jTTelefono.getText().trim();
-        String nivelEducativo = (String) jCNivelEducativo.getSelectedItem();
-        String tipo = (String) jCTipo.getSelectedItem();
-        Hotel hotel = (Hotel) jCHotel.getSelectedItem();
-
-        // Validaciones
-        if (dni.isEmpty() || nombre.isEmpty() || direccion.isEmpty()
-                || telefono.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Por favor, complete todos los campos obligatorios.",
-                    "Campos incompletos", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (!telefono.matches("\\d{7,}")) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "El teléfono debe contener solo números y tener al menos 7 dígitos.",
-                    "Teléfono inválido",
-                    JOptionPane.ERROR_MESSAGE
-            );
             return;
         }
 
         try {
-            Empleado empleado = EmpleadoCrud.buscar(dni);
+            // 1. Obtener valores del formulario
+            int id = Integer.parseInt(txtId.getText().trim());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaInicio = sdf.parse(txtFechaInicio.getText().trim());
+            Date fechaFin = sdf.parse(txtFechaFin.getText().trim());
+            double precioTotal = Double.parseDouble(txtPrecioTotal.getText().trim());
+            double anticipo = txtAnticipo.getText().trim().isEmpty() ? 0
+                    : Double.parseDouble(txtAnticipo.getText().trim());
 
-            empleado.setNombre(nombre);
-            empleado.setDireccion(direccion);
-            empleado.setTelefono(telefono);
-            empleado.setNivelEducativo(nivelEducativo);
-            empleado.setTipo(tipo);
-            empleado.setHotel(hotel);
+            // 2. Validaciones básicas
+            if (anticipo > precioTotal) {
+                JOptionPane.showMessageDialog(this,
+                        "El anticipo no puede ser mayor al precio total",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
+            if (!fechaInicio.before(fechaFin)) {
+                JOptionPane.showMessageDialog(this,
+                        "La fecha de inicio debe ser anterior a la fecha fin",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 3. Obtener objetos seleccionados
+            Cliente cliente = (Cliente) cmbCliente.getSelectedItem();
+            Hotel hotel = (Hotel) cmbHotel.getSelectedItem();
+            boolean confirmada = jRConfirmada.isSelected();
+            String estado = txtEstado.getText().trim();
+            estado = estado.isEmpty() ? "Pendiente" : estado;
+
+            List<Habitacion> habitacionesSeleccionadas = lstHabitaciones.getSelectedValuesList();
+
+            // 4. Validar habitaciones seleccionadas
+            if (habitacionesSeleccionadas.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Seleccione al menos una habitación",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 5. Obtener la reserva existente
+            Reserva reservaExistente = ReservaCrud.buscar(id);
+
+            // 6. Liberar las habitaciones anteriores
+            for (Habitacion hab : reservaExistente.getHabitacionesReservadas()) {
+                hab.setDisponible(true);
+                HabitacionCrud.editar(hab);
+            }
+
+            // 7. Actualizar la reserva
+            reservaExistente.setCliente(cliente);
+            reservaExistente.setHotel(hotel);
+            reservaExistente.setHabitacionesReservadas(new ArrayList<>(habitacionesSeleccionadas));
+            reservaExistente.setFechaInicio(fechaInicio);
+            reservaExistente.setFechaFin(fechaFin);
+            reservaExistente.setAnticipo(anticipo);
+            reservaExistente.setConfirmada(confirmada);
+            reservaExistente.setEstado(estado);
+
+            // 8. Reservar las nuevas habitaciones
+            for (Habitacion hab : habitacionesSeleccionadas) {
+                hab.setDisponible(false);
+                HabitacionCrud.editar(hab);
+            }
+
+            // 9. Actualizar en el CRUD
+            ReservaCrud.editar(reservaExistente);
+
+            // 10. Mostrar mensaje de éxito
             JOptionPane.showMessageDialog(this,
-                    "Los cambios se han guardado exitosamente.",
+                    "Reserva actualizada exitosamente!",
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
 
+            // 11. Recargar datos
+            cargarReservas();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Ingrese valores numéricos válidos",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Formato de fecha inválido (dd/MM/yyyy)",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Error al editar el cliente: " + ex.getMessage(),
+                    "Error al editar reserva: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -554,79 +593,111 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
         int confirmar = JOptionPane.showConfirmDialog(this,
-                "¿Está seguro que desea eliminar?",
+                "¿Está seguro que desea eliminar esta reserva?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
         );
 
         if (confirmar != JOptionPane.YES_OPTION) {
-            return; // Cancelado
-        }
-
-        // Valor buscado
-        String texId = txtId.getText().trim();
-
-        // Validar campo vacio
-        if (texId.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI.",
-                    "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        int id;
-
         try {
-            id = Integer.parseInt(texId);
+            int id = Integer.parseInt(txtId.getText().trim());
+            Reserva reserva = ReservaCrud.buscar(id);
+
+            // Liberar habitaciones
+            for (Habitacion hab : reserva.getHabitacionesReservadas()) {
+                hab.setDisponible(true);
+                HabitacionCrud.editar(hab);
+            }
+
+            // Eliminar reserva
             ReservaCrud.eliminar(id);
 
             JOptionPane.showMessageDialog(this,
-                    "El empleado fue eliminado exitosamente.",
+                    "Reserva eliminada exitosamente!",
                     "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
 
+            limpiarCampos();
+            cargarReservas(); // Recargar datos
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID debe ser numérico", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                    "Error al eliminar el empleado: " + ex.getMessage(),
+                    "Error al eliminar reserva: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-        // Valor buscado
-        String codigo = txtId.getText().trim();
+        // Valor buscado (ID de reserva)
+        String idTexto = txtId.getText().trim();
 
-        // Validar campo vacio
-        if (codigo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        // Validar campo vacío
+        if (idTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar un ID de reserva.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try {
-            // realizar la busqueda
-            Empleado empleado = EmpleadoCrud.buscar(codigo);
+            // Convertir y realizar la búsqueda
+            int id = Integer.parseInt(idTexto);
+            Reserva reserva = ReservaCrud.buscar(id);
 
-            jTNombre.setText(empleado.getNombre());
-            jTDireccion.setText(empleado.getDireccion());
-            jTTelefono.setText(empleado.getTelefono());
-            jCNivelEducativo.setSelectedItem(empleado.getNivelEducativo());
-            jCTipo.setSelectedItem(empleado.getTipo());
-            jCHotel.setSelectedItem(empleado.getHotel());
+            // Mostrar datos de la reserva encontrada
+            txtId.setText(String.valueOf(reserva.getId()));
 
-            // habilitar bonotes
+            // Configurar cliente
+            cmbCliente.setSelectedItem(reserva.getCliente());
+
+            // Configurar hotel
+            cmbHotel.setSelectedItem(reserva.getHotel());
+
+            // Configurar fechas
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            txtFechaInicio.setText(sdf.format(reserva.getFechaInicio()));
+            txtFechaFin.setText(sdf.format(reserva.getFechaFin()));
+
+            // Configurar otros campos
+            txtPrecioTotal.setText(String.valueOf(reserva.calcularPrecio()));
+            txtAnticipo.setText(String.valueOf(reserva.getAnticipo()));
+            jRConfirmada.setSelected(reserva.isConfirmada());
+            txtEstado.setText(reserva.getEstado());
+
+            // Configurar lista de habitaciones
+            DefaultListModel<Habitacion> modeloHabitaciones = new DefaultListModel<>();
+            for (Habitacion hab : reserva.getHabitacionesReservadas()) {
+                modeloHabitaciones.addElement(hab);
+            }
+            lstHabitaciones.setModel(modeloHabitaciones);
+
+            // Seleccionar las habitaciones de la reserva
+            int[] indices = new int[reserva.getHabitacionesReservadas().size()];
+            for (int i = 0; i < indices.length; i++) {
+                indices[i] = ((DefaultListModel<Habitacion>) lstHabitaciones.getModel())
+                        .indexOf(reserva.getHabitacionesReservadas().get(i));
+            }
+            lstHabitaciones.setSelectedIndices(indices);
+
+            // Habilitar botones según la acción
             habilitarBotones(accion);
 
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El ID debe ser un número válido.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            // si no hay resultados
+            // Si no hay resultados
             JOptionPane.showMessageDialog(this, ex.getMessage(),
                     "No encontrado", JOptionPane.INFORMATION_MESSAGE);
 
-            jTNombre.setText("");
-            jTDireccion.setText("");
-            jTTelefono.setText("");
-
-            habilitarBotones(accion);
+            // Limpiar campos
+            limpiarCampos();
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
@@ -646,80 +717,140 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEstadoKeyTyped
 
-    // Listar hoteles e insertarlos en jCHotel
+    // Listar e insertar listas
     private void cargarReservas() {
         try {
-            ArrayList<Reserva> reservas = ReservaCrud.listarTodo();
-
-            // Limpiar elementos existentes
+            // 1. Cargar hoteles
+            ArrayList<Hotel> hoteles = HotelCrud.listarTodo();
             cmbHotel.removeAllItems();
+            for (Hotel h : hoteles) {
+                cmbHotel.addItem(h);
+            }
 
-            // Agregar al combo
-            for (Reserva r : reservas) {
-                cmbHotel.addItem(r);
+            // 2. Cargar clientes
+            ArrayList<Cliente> clientes = ClienteCrud.listarTodo();
+            cmbCliente.removeAllItems();
+            for (Cliente c : clientes) {
+                cmbCliente.addItem(c);
+            }
+
+            // 3. Cargar habitaciones del primer hotel (si existe)
+            if (cmbHotel.getItemCount() > 0) {
+                Hotel primerHotel = (Hotel) cmbHotel.getItemAt(0);
+                cargarHabitacionesDisponibles(primerHotel);
             }
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(
                     this,
-                    "Error al cargar reservas: " + ex.getMessage(),
+                    "Error al cargar datos: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
         }
     }
+    
+    private void cargarDatosIniciales() {
+        try {
+            // Cargar hoteles
+            ArrayList<Hotel> hoteles = HotelCrud.listarTodo();
+            cmbHotel.removeAllItems();
+            for (Hotel h : hoteles) {
+                cmbHotel.addItem(h);
+            }
+
+            // Cargar clientes
+            ArrayList<Cliente> clientes = ClienteCrud.listarTodo();
+            cmbCliente.removeAllItems();
+            for (Cliente c : clientes) {
+                cmbCliente.addItem(c);
+            }
+
+            // Cargar habitaciones del primer hotel si existe
+            if (cmbHotel.getItemCount() > 0) {
+                cargarHabitacionesDisponibles((Hotel) cmbHotel.getSelectedItem());
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar datos iniciales: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cargarHabitacionesDisponibles(Hotel hotel) {
+        try {
+            ArrayList<Habitacion> todas = HabitacionCrud.listarTodo();
+            DefaultListModel<Habitacion> modelo = new DefaultListModel<>();
+
+            for (Habitacion hab : todas) {
+                if (hab.getHotel() != null
+                        && hab.getHotel().equals(hotel)
+                        && hab.isDisponible()) {
+                    modelo.addElement(hab);
+                }
+            }
+
+            lstHabitaciones.setModel(modelo);
+
+            if (modelo.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "No hay habitaciones disponibles para este hotel",
+                        "Información",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar habitaciones: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     // Habilitar botones segun la accion
     private void habilitarBotones(String accion) {
-        switch (accion.toLowerCase()) {
-            case "agregar":
-                jBAgregar.setEnabled(true);
-                jBBuscar.setEnabled(false);
-                jBEditar.setEnabled(false);
-                jBEliminar.setEnabled(false);
-                txtId.setEnabled(true);
-                txtFechaInicio.setEnabled(true);
-                txtFechaFin.setEnabled(true);
-                cmbHotel.setEnabled(true);
-                lstHabitaciones.setEnabled(true);
-                lstHabitaciones.setEnabled(true);
-                break;
-            case "editar":
-                jBAgregar.setEnabled(false);
-                jBBuscar.setEnabled(true);
-                jBEditar.setEnabled(true);
-                jBEliminar.setEnabled(false);
-                txtId.setEnabled(true);
-                txtFechaInicio.setEnabled(true);
-                txtFechaFin.setEnabled(true);
-                cmbHotel.setEnabled(true);
-                lstHabitaciones.setEnabled(true);
-                lstHabitaciones.setEnabled(true);
-                break;
-            case "eliminar":
-                jBAgregar.setEnabled(false);
-                jBBuscar.setEnabled(true);
-                jBEditar.setEnabled(false);
-                jBEliminar.setEnabled(true);
-                txtId.setEnabled(true);
-                txtFechaInicio.setEnabled(false);
-                txtFechaFin.setEnabled(false);
-                cmbHotel.setEnabled(false);
-                lstHabitaciones.setEnabled(false);
-                lstHabitaciones.setEnabled(false);
-                break;
-            default:
-                jBAgregar.setEnabled(false);
-                jBBuscar.setEnabled(true);
-                jBEditar.setEnabled(false);
-                jBEliminar.setEnabled(false);
-                txtId.setEnabled(true);
-                txtFechaInicio.setEnabled(false);
-                txtFechaFin.setEnabled(false);
-                cmbHotel.setEnabled(false);
-                lstHabitaciones.setEnabled(false);
-                lstHabitaciones.setEnabled(false);
+        boolean modoAgregar = "agregar".equalsIgnoreCase(accion);
+        boolean modoEditar = "editar".equalsIgnoreCase(accion);
+        boolean modoEliminar = "eliminar".equalsIgnoreCase(accion);
+
+        jBAgregar.setEnabled(modoAgregar);
+        jBEditar.setEnabled(modoEditar && !txtId.getText().trim().isEmpty());
+        jBEliminar.setEnabled(modoEliminar && !txtId.getText().trim().isEmpty());
+        jBBuscar.setEnabled(!modoAgregar);
+
+        // Habilitar campos según la acción
+        txtId.setEnabled(true);
+        txtFechaInicio.setEnabled(modoAgregar || modoEditar);
+        txtFechaFin.setEnabled(modoAgregar || modoEditar);
+        cmbCliente.setEnabled(modoAgregar || modoEditar);
+        cmbHotel.setEnabled(modoAgregar || modoEditar);
+        lstHabitaciones.setEnabled(modoAgregar || modoEditar);
+        txtPrecioTotal.setEnabled(false); // Siempre calculado automáticamente
+        txtAnticipo.setEnabled(modoAgregar || modoEditar);
+        jRConfirmada.setEnabled(modoAgregar || modoEditar);
+        txtEstado.setEnabled(modoAgregar || modoEditar);
+    }
+
+    private void limpiarCampos() {
+        txtId.setText("");
+        txtFechaInicio.setText("");
+        txtFechaFin.setText("");
+        txtPrecioTotal.setText("");
+        txtAnticipo.setText("");
+        txtEstado.setText("");
+        jRConfirmada.setSelected(false);
+
+        // Limpiar selecciones manteniendo los datos cargados
+        lstHabitaciones.clearSelection();
+        if (cmbHotel.getItemCount() > 0) {
+            cmbHotel.setSelectedIndex(0);
         }
+        if (cmbCliente.getItemCount() > 0) {
+            cmbCliente.setSelectedIndex(0);
+        }
+
+        // Deshabilitar botones según la acción actual
+        habilitarBotones(accion);
     }
 
     public static void main(String args[]) {
@@ -816,7 +947,7 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRConfirmada;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JList<Actividad> lstHabitaciones;
+    private javax.swing.JList<Habitacion> lstHabitaciones;
     private javax.swing.JTextField txtAnticipo;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JFormattedTextField txtFechaFin;

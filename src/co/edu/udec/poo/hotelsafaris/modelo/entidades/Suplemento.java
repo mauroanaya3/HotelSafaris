@@ -29,7 +29,7 @@ public class Suplemento {
 
     @Override
     public String toString() {
-        return "Suplemento: " + tipo + " ($" + importe + ")";
+        return tipo + " ($" + importe + ")";
     }
 }
 

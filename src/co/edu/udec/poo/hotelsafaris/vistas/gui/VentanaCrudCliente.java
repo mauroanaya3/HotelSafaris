@@ -41,8 +41,7 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
         jBEliminar = new javax.swing.JButton();
         jBLimpiar = new javax.swing.JButton();
 
-        setTitle("Empleados");
-        setAlwaysOnTop(true);
+        setTitle("Clientes");
         setMinimumSize(new java.awt.Dimension(780, 400));
         setModal(true);
         setResizable(false);
