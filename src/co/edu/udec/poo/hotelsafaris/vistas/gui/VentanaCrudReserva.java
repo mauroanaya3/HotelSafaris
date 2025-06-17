@@ -2,10 +2,14 @@ package co.edu.udec.poo.hotelsafaris.vistas.gui;
 
 import co.edu.udec.poo.hotelsafaris.modelo.crud.EmpleadoCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.crud.ReservaCrud;
+import co.edu.udec.poo.hotelsafaris.modelo.entidades.Cliente;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Empleado;
+import co.edu.udec.poo.hotelsafaris.modelo.entidades.Habitacion;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Hotel;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Reserva;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import javax.swing.JOptionPane;
 
 public class VentanaCrudReserva extends javax.swing.JDialog {
@@ -33,25 +37,25 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         JLImagen = new javax.swing.JLabel();
         jPDatos = new javax.swing.JPanel();
         txtId = new javax.swing.JTextField();
-        cmbReserva = new javax.swing.JComboBox<>();
+        cmbHotel = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        lstActividades = new javax.swing.JList<>();
-        cmbReserva1 = new javax.swing.JComboBox<>();
+        lstHabitaciones = new javax.swing.JList<>();
+        cmbCliente = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        jRConfirmada = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
-        txtId1 = new javax.swing.JTextField();
+        txtPrecioTotal = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtId2 = new javax.swing.JTextField();
+        txtAnticipo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtFechaInicio = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
         txtFechaFin = new javax.swing.JFormattedTextField();
-        txtId3 = new javax.swing.JTextField();
+        txtEstado = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jBAgregar = new javax.swing.JButton();
         jBBuscar = new javax.swing.JButton();
@@ -85,8 +89,8 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
             }
         });
 
-        cmbReserva.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        cmbReserva.setPreferredSize(new java.awt.Dimension(165, 23));
+        cmbHotel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        cmbHotel.setPreferredSize(new java.awt.Dimension(165, 23));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -100,26 +104,25 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Id:");
 
-        lstActividades.setModel(new javax.swing.AbstractListModel<Actividad>() {
+        lstHabitaciones.setModel(new javax.swing.AbstractListModel<Actividad>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(lstActividades);
+        jScrollPane2.setViewportView(lstHabitaciones);
 
-        cmbReserva1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        cmbReserva1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Individual", "Doble", "Suite" }));
-        cmbReserva1.setPreferredSize(new java.awt.Dimension(165, 23));
+        cmbCliente.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        cmbCliente.setPreferredSize(new java.awt.Dimension(165, 23));
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("Cliente");
 
-        jRadioButton1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jRadioButton1.setText("Confirmada");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        jRConfirmada.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jRConfirmada.setText("Confirmada");
+        jRConfirmada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                jRConfirmadaActionPerformed(evt);
             }
         });
 
@@ -127,11 +130,11 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Precio Total:");
 
-        txtId1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtId1.setPreferredSize(new java.awt.Dimension(165, 23));
-        txtId1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtPrecioTotal.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtPrecioTotal.setPreferredSize(new java.awt.Dimension(165, 23));
+        txtPrecioTotal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtId1KeyTyped(evt);
+                txtPrecioTotalKeyTyped(evt);
             }
         });
 
@@ -139,11 +142,11 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Anticipo ($):");
 
-        txtId2.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtId2.setPreferredSize(new java.awt.Dimension(165, 23));
-        txtId2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtAnticipo.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtAnticipo.setPreferredSize(new java.awt.Dimension(165, 23));
+        txtAnticipo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtId2KeyTyped(evt);
+                txtAnticipoKeyTyped(evt);
             }
         });
 
@@ -159,11 +162,11 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
 
         txtFechaFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
-        txtId3.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtId3.setPreferredSize(new java.awt.Dimension(165, 23));
-        txtId3.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtEstado.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtEstado.setPreferredSize(new java.awt.Dimension(165, 23));
+        txtEstado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtId3KeyTyped(evt);
+                txtEstadoKeyTyped(evt);
             }
         });
 
@@ -187,13 +190,13 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(cmbReserva1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPDatosLayout.createSequentialGroup()
                                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbHotel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31)
-                                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jRConfirmada, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27))))
                     .addGroup(jPDatosLayout.createSequentialGroup()
                         .addGap(35, 35, 35)
@@ -224,12 +227,12 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
                                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtId2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtId1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtAnticipo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPDatosLayout.createSequentialGroup()
                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtId3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(38, 38, 38))))
         );
         jPDatosLayout.setVerticalGroup(
@@ -237,15 +240,15 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
             .addGroup(jPDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(cmbReserva1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton1))
+                    .addComponent(cmbHotel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRConfirmada))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -260,15 +263,15 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPDatosLayout.createSequentialGroup()
                         .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtId3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35)
                         .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtId2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAnticipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtId1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -341,11 +344,11 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         txtId.setText("");
         txtFechaInicio.setText("");
         txtFechaFin.setText("");
-        if (cmbReserva.getItemCount() > 0) {
-            cmbReserva.setSelectedIndex(0);
+        if (cmbHotel.getItemCount() > 0) {
+            cmbHotel.setSelectedIndex(0);
         }
         lstHabitaciones.clearSelection();
-        lstActividades.clearSelection();
+        lstHabitaciones.clearSelection();
         jBEditar.setEnabled(false);
         jBEliminar.setEnabled(false);
 
@@ -353,9 +356,126 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
 
     // Boton Agregar
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
-        
+        try {
+            // 1. Obtener valores del formulario
+            String idTexto = txtId.getText().trim();
+            String fechaInicioTexto = txtFechaInicio.getText().trim();
+            String fechaFinTexto = txtFechaFin.getText().trim();
+            String precioTotalTexto = txtPrecioTotal.getText().trim();
+            String anticipoTexto = txtAnticipo.getText().trim();
 
+            // 2. Validar campos obligatorios
+            boolean camposIncompletos = idTexto.isEmpty()
+                    || fechaInicioTexto.isEmpty()
+                    || fechaFinTexto.isEmpty()
+                    || precioTotalTexto.isEmpty()
+                    || anticipoTexto.isEmpty();
 
+            if (camposIncompletos) {
+                JOptionPane.showMessageDialog(this, "Complete todos los campos obligatorios.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 3. Convertir valores numéricos y de fecha
+            int id = Integer.parseInt(idTexto);
+            double precioTotal = Double.parseDouble(precioTotalTexto);
+            double anticipo = Double.parseDouble(anticipoTexto);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaInicio = sdf.parse(fechaInicioTexto);
+            Date fechaFin = sdf.parse(fechaFinTexto);
+
+            // 4. Validar reglas de negocio
+            boolean anticipoInvalido = anticipo > precioTotal;
+            boolean fechasInvalidas = !fechaInicio.before(fechaFin);
+
+            if (anticipoInvalido) {
+                JOptionPane.showMessageDialog(this, "El anticipo no puede ser mayor al precio total.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (fechasInvalidas) {
+                JOptionPane.showMessageDialog(this, "La fecha de inicio debe ser anterior a la fecha fin.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 5. Obtener objetos seleccionados
+            Cliente cliente = (Cliente) cmbCliente.getSelectedItem();
+            Hotel hotel = (Hotel) cmbHotel.getSelectedItem();
+            boolean confirmada = jRConfirmada.isSelected();
+            String estado = txtEstado.getText().trim();
+            estado = estado.isEmpty() ? "Pendiente" : estado;
+
+            List<Habitacion> habitaciones = lstHabitaciones.getSelectedValuesList();
+
+            // 6. Validar disponibilidad de habitaciones
+            boolean habitacionesNoDisponibles = false;
+            try {
+                for (Habitacion habitacion : habitaciones) {
+                    List<Reserva> reservas = ReservaCrud.listarPorHabitacion(habitacion.getId());
+                    for (Reserva r : reservas) {
+                        if ((fechaInicio.after(r.getFechaInicio()) && fechaInicio.before(r.getFechaFin()))
+                                || (fechaFin.after(r.getFechaInicio()) && fechaFin.before(r.getFechaFin()))
+                                || (fechaInicio.before(r.getFechaInicio()) && fechaFin.after(r.getFechaFin()))) {
+                            habitacionesNoDisponibles = true;
+                            break;
+                        }
+                    }
+                    if (habitacionesNoDisponibles) {
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                habitacionesNoDisponibles = true;
+            }
+
+            if (habitacionesNoDisponibles) {
+                JOptionPane.showMessageDialog(this,
+                        "Una o más habitaciones no están disponibles en las fechas seleccionadas.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 7. Crear y guardar reserva
+            Reserva reserva = new Reserva();
+            reserva.setId(id);
+            reserva.setCliente(cliente);
+            reserva.setHotel(hotel);
+            reserva.setHabitacionesReservadas(habitaciones);
+            reserva.setFechaInicio(fechaInicio);
+            reserva.setFechaFin(fechaFin);
+            reserva.setAnticipo(anticipo);
+            reserva.setConfirmada(confirmada);
+            reserva.setEstado(estado);
+
+            ReservaCrud.agregar(reserva);
+
+            // 8. Mostrar éxito y limpiar
+            JOptionPane.showMessageDialog(this, "Reserva creada exitosamente!",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            txtId.setText("");
+            txtFechaInicio.setText("");
+            txtFechaFin.setText("");
+            txtPrecioTotal.setText("");
+            txtAnticipo.setText("");
+            jRConfirmada.setSelected(false);
+            txtEstado.setText("");
+            lstHabitaciones.clearSelection();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha inválido (dd/MM/yyyy).",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al crear reserva: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jBAgregarActionPerformed
 
     // Validar caracteres al digitar en jTNombre
@@ -398,7 +518,7 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
                     "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         if (!telefono.matches("\\d{7,}")) {
             JOptionPane.showMessageDialog(
                     this,
@@ -418,8 +538,6 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
             empleado.setNivelEducativo(nivelEducativo);
             empleado.setTipo(tipo);
             empleado.setHotel(hotel);
-            
-            
 
             JOptionPane.showMessageDialog(this,
                     "Los cambios se han guardado exitosamente.",
@@ -457,7 +575,7 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         }
 
         int id;
-            
+
         try {
             id = Integer.parseInt(texId);
             ReservaCrud.eliminar(id);
@@ -488,14 +606,13 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         try {
             // realizar la busqueda
             Empleado empleado = EmpleadoCrud.buscar(codigo);
-        
+
             jTNombre.setText(empleado.getNombre());
             jTDireccion.setText(empleado.getDireccion());
             jTTelefono.setText(empleado.getTelefono());
             jCNivelEducativo.setSelectedItem(empleado.getNivelEducativo());
             jCTipo.setSelectedItem(empleado.getTipo());
             jCHotel.setSelectedItem(empleado.getHotel());
-            
 
             // habilitar bonotes
             habilitarBotones(accion);
@@ -513,21 +630,21 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
-    private void txtId1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtId1KeyTyped
+    private void txtPrecioTotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioTotalKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtId1KeyTyped
+    }//GEN-LAST:event_txtPrecioTotalKeyTyped
 
-    private void txtId2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtId2KeyTyped
+    private void txtAnticipoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAnticipoKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtId2KeyTyped
+    }//GEN-LAST:event_txtAnticipoKeyTyped
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void jRConfirmadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRConfirmadaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_jRConfirmadaActionPerformed
 
-    private void txtId3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtId3KeyTyped
+    private void txtEstadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtId3KeyTyped
+    }//GEN-LAST:event_txtEstadoKeyTyped
 
     // Listar hoteles e insertarlos en jCHotel
     private void cargarReservas() {
@@ -535,11 +652,11 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
             ArrayList<Reserva> reservas = ReservaCrud.listarTodo();
 
             // Limpiar elementos existentes
-            cmbReserva.removeAllItems();
+            cmbHotel.removeAllItems();
 
             // Agregar al combo
             for (Reserva r : reservas) {
-                cmbReserva.addItem(r);
+                cmbHotel.addItem(r);
             }
 
         } catch (Exception ex) {
@@ -563,9 +680,9 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
                 txtId.setEnabled(true);
                 txtFechaInicio.setEnabled(true);
                 txtFechaFin.setEnabled(true);
-                cmbReserva.setEnabled(true);
+                cmbHotel.setEnabled(true);
                 lstHabitaciones.setEnabled(true);
-                lstActividades.setEnabled(true);
+                lstHabitaciones.setEnabled(true);
                 break;
             case "editar":
                 jBAgregar.setEnabled(false);
@@ -575,9 +692,9 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
                 txtId.setEnabled(true);
                 txtFechaInicio.setEnabled(true);
                 txtFechaFin.setEnabled(true);
-                cmbReserva.setEnabled(true);
+                cmbHotel.setEnabled(true);
                 lstHabitaciones.setEnabled(true);
-                lstActividades.setEnabled(true);
+                lstHabitaciones.setEnabled(true);
                 break;
             case "eliminar":
                 jBAgregar.setEnabled(false);
@@ -587,9 +704,9 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
                 txtId.setEnabled(true);
                 txtFechaInicio.setEnabled(false);
                 txtFechaFin.setEnabled(false);
-                cmbReserva.setEnabled(false);
+                cmbHotel.setEnabled(false);
                 lstHabitaciones.setEnabled(false);
-                lstActividades.setEnabled(false);
+                lstHabitaciones.setEnabled(false);
                 break;
             default:
                 jBAgregar.setEnabled(false);
@@ -599,9 +716,9 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
                 txtId.setEnabled(true);
                 txtFechaInicio.setEnabled(false);
                 txtFechaFin.setEnabled(false);
-                cmbReserva.setEnabled(false);
+                cmbHotel.setEnabled(false);
                 lstHabitaciones.setEnabled(false);
-                lstActividades.setEnabled(false);
+                lstHabitaciones.setEnabled(false);
         }
     }
 
@@ -678,8 +795,8 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLImagen;
-    private javax.swing.JComboBox<Hotel> cmbReserva;
-    private javax.swing.JComboBox<Cliente> cmbReserva1;
+    private javax.swing.JComboBox<Cliente> cmbCliente;
+    private javax.swing.JComboBox<Hotel> cmbHotel;
     private javax.swing.JButton jBAgregar;
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBEditar;
@@ -696,16 +813,16 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPDatos;
-    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRConfirmada;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JList<Actividad> lstActividades;
+    private javax.swing.JList<Actividad> lstHabitaciones;
+    private javax.swing.JTextField txtAnticipo;
+    private javax.swing.JTextField txtEstado;
     private javax.swing.JFormattedTextField txtFechaFin;
     private javax.swing.JFormattedTextField txtFechaInicio;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtId1;
-    private javax.swing.JTextField txtId2;
-    private javax.swing.JTextField txtId3;
+    private javax.swing.JTextField txtPrecioTotal;
     // End of variables declaration//GEN-END:variables
 
 }
