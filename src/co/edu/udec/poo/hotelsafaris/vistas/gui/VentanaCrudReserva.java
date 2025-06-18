@@ -370,78 +370,130 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
         }
 
         try {
-            // Validaciones básicas
+            // 1. Validaciones básicas de campos obligatorios
             if (txtId.getText().trim().isEmpty()
                     || txtFechaInicio.getText().trim().isEmpty()
                     || txtFechaFin.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Complete todos los campos obligatorios.",
+                JOptionPane.showMessageDialog(this,
+                        "Complete todos los campos obligatorios: ID y Fechas",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Convertir valores
-            int id = Integer.parseInt(txtId.getText().trim());
+            // 2. Convertir y validar ID
+            int id;
+            try {
+                id = Integer.parseInt(txtId.getText().trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this,
+                        "El ID debe ser un número entero válido",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 3. Convertir y validar fechas
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date fechaInicio = sdf.parse(txtFechaInicio.getText().trim());
-            Date fechaFin = sdf.parse(txtFechaFin.getText().trim());
+            Date fechaInicio;
+            Date fechaFin;
 
-            // Validar fechas
-            if (!fechaInicio.before(fechaFin)) {
-                JOptionPane.showMessageDialog(this, "La fecha de inicio debe ser anterior a la fecha fin.",
+            try {
+                fechaInicio = sdf.parse(txtFechaInicio.getText().trim());
+                fechaFin = sdf.parse(txtFechaFin.getText().trim());
+
+                // Validar que fecha inicio sea anterior a fecha fin
+                if (!fechaInicio.before(fechaFin)) {
+                    JOptionPane.showMessageDialog(this,
+                            "La fecha de inicio debe ser anterior a la fecha fin",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Validar que no sea fecha pasada
+                Date hoy = new Date();
+                if (fechaInicio.before(hoy)) {
+                    JOptionPane.showMessageDialog(this,
+                            "La fecha de inicio no puede ser anterior al día actual",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } catch (ParseException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Formato de fecha inválido (debe ser dd/MM/yyyy)",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Obtener objetos seleccionados
+            // 4. Validar selección de cliente y hotel
+            if (cmbCliente.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this,
+                        "Seleccione un cliente",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (cmbHotel.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this,
+                        "Seleccione un hotel",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 5. Obtener objetos seleccionados
             Cliente cliente = (Cliente) cmbCliente.getSelectedItem();
             Hotel hotel = (Hotel) cmbHotel.getSelectedItem();
             boolean confirmada = jRConfirmada.isSelected();
             String estado = txtEstado.getText().trim().isEmpty() ? "Pendiente" : txtEstado.getText().trim();
 
+            // 6. Validar habitaciones seleccionadas
             List<Habitacion> habitaciones = lstHabitaciones.getSelectedValuesList();
-
-            // Validar habitaciones seleccionadas
             if (habitaciones.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Seleccione al menos una habitación.",
+                JOptionPane.showMessageDialog(this,
+                        "Seleccione al menos una habitación",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Calcular precio total y anticipo
-            double precioTotal = Double.parseDouble(txtPrecioTotal.getText().trim());
-            double anticipo = txtAnticipo.getText().trim().isEmpty() ? 0
-                    : Double.parseDouble(txtAnticipo.getText().trim());
+            // 7. Validar y convertir anticipo
+            double anticipo;
+            try {
+                anticipo = txtAnticipo.getText().trim().isEmpty() ? 0
+                        : Double.parseDouble(txtAnticipo.getText().trim());
 
-            if (anticipo > precioTotal) {
-                JOptionPane.showMessageDialog(this, "El anticipo no puede ser mayor al precio total.",
+                if (anticipo < 0) {
+                    JOptionPane.showMessageDialog(this,
+                            "El anticipo no puede ser negativo",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Ingrese un valor numérico válido para el Anticipo",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Verificar disponibilidad de habitaciones
+            // 8. Verificar disponibilidad de habitaciones
             for (Habitacion hab : habitaciones) {
                 if (!hab.isDisponible()) {
                     JOptionPane.showMessageDialog(this,
-                            "La habitación " + hab.getNumero() + " no está disponible.",
+                            "La habitación " + hab.getNumero() + " no está disponible",
                             "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
 
-            // Validar Duplicados
-            
+            // 9. Verificar duplicados
             try {
-                // Verificar si ya existe una reserva con este ID
                 ReservaCrud.buscar(id);
                 JOptionPane.showMessageDialog(this,
-                        "Ya existe una reserva con este ID.",
+                        "Ya existe una reserva con este ID",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             } catch (Exception ex) {
                 // No existe, continuar
             }
-            
-            // Crear y guardar reserva
+
+            // 10. Crear y guardar reserva
             Reserva reserva = new Reserva();
             reserva.setId(id);
             reserva.setCliente(cliente);
@@ -453,29 +505,28 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
             reserva.setConfirmada(confirmada);
             reserva.setEstado(estado);
 
+            // Calcular el precio automáticamente (según el método de la clase Reserva)
+            // No necesitamos setPrecioTotal porque se calcula con calcularPrecio()
             ReservaCrud.agregar(reserva);
 
-            // Actualizar disponibilidad de habitaciones
+            // 11. Actualizar disponibilidad de habitaciones
             for (Habitacion hab : habitaciones) {
                 hab.setDisponible(false);
                 HabitacionCrud.editar(hab);
             }
 
-            JOptionPane.showMessageDialog(this, "Reserva creada exitosamente!",
+            JOptionPane.showMessageDialog(this,
+                    "Reserva creada exitosamente!\nPrecio total: $" + reserva.calcularPrecio(),
                     "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
             limpiarCampos();
-            cargarReservas(); // Recargar datos
+            cargarReservas();
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this, "Formato de fecha inválido (dd/MM/yyyy).",
-                    "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al crear reserva: " + e.getMessage(),
+            JOptionPane.showMessageDialog(this,
+                    "Error inesperado al crear reserva: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }//GEN-LAST:event_jBAgregarActionPerformed
 
@@ -785,27 +836,34 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
     }
 
     private void cargarHabitacionesDisponibles(Hotel hotel) {
+        if (hotel == null) {
+            return;
+        }
         try {
             ArrayList<Habitacion> todas = HabitacionCrud.listarTodo();
             DefaultListModel<Habitacion> modelo = new DefaultListModel<>();
+
+            boolean hayDisponibles = false;
 
             for (Habitacion hab : todas) {
                 if (hab.getHotel() != null
                         && hab.getHotel().getCodigo() == hotel.getCodigo()
                         && hab.isDisponible()) {
                     modelo.addElement(hab);
+                    hayDisponibles = true;
                 }
             }
 
-
             lstHabitaciones.setModel(modelo);
 
-            if (modelo.isEmpty()) {
+            // Mover el mensaje fuera del bucle y mostrarlo solo una vez
+            if (!hayDisponibles) {
                 JOptionPane.showMessageDialog(this,
                         "No hay habitaciones disponibles para este hotel",
                         "Información",
                         JOptionPane.INFORMATION_MESSAGE);
             }
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
                     "Error al cargar habitaciones: " + ex.getMessage(),
@@ -813,6 +871,7 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     // Habilitar botones segun la accion
     private void habilitarBotones(String accion) {

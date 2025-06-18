@@ -11,7 +11,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
-        this.setLayout(null); 
+        this.setLayout(null);
 
         centrarLogo();
 
@@ -20,7 +20,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 centrarLogo();
             }
-            
+
             @Override
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 centrarLogo();
@@ -29,7 +29,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     }
 
-    
     private void centrarLogo() {
         int anchoContenedor = this.getContentPane().getWidth();
         int altoContenedor = this.getContentPane().getHeight();
@@ -42,7 +41,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLFondo.setLocation(x, y);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -122,6 +120,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuSuplementoReportes = new javax.swing.JMenu();
         itemReporteXTipoSuplemento = new javax.swing.JMenuItem();
         itemReporteXImporteSuplemento = new javax.swing.JMenuItem();
+        menuActividad = new javax.swing.JMenu();
+        itemAgregarActividad = new javax.swing.JMenuItem();
+        itemBuscarActividad = new javax.swing.JMenuItem();
+        itemEditarActividad = new javax.swing.JMenuItem();
+        itemEliminarActividad = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
+        menuActividadReportes = new javax.swing.JMenu();
+        itemReporteXTipoSuplemento1 = new javax.swing.JMenuItem();
+        itemReporteXImporteSuplemento1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión Hotelera");
@@ -702,6 +709,71 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         MenuBarSuperior.add(menuSuplemento);
 
+        menuActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/actividad24.png"))); // NOI18N
+        menuActividad.setText("Actividad");
+        menuActividad.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        itemAgregarActividad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemAgregarActividad.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemAgregarActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/agregarRegistro20.png"))); // NOI18N
+        itemAgregarActividad.setText("Agregar...");
+        itemAgregarActividad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemAgregarActividadActionPerformed(evt);
+            }
+        });
+        menuActividad.add(itemAgregarActividad);
+
+        itemBuscarActividad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemBuscarActividad.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemBuscarActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/busccar20.png"))); // NOI18N
+        itemBuscarActividad.setText("Buscar...");
+        itemBuscarActividad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemBuscarActividadActionPerformed(evt);
+            }
+        });
+        menuActividad.add(itemBuscarActividad);
+
+        itemEditarActividad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemEditarActividad.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemEditarActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/modificar20.png"))); // NOI18N
+        itemEditarActividad.setText("Editar...");
+        itemEditarActividad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEditarActividadActionPerformed(evt);
+            }
+        });
+        menuActividad.add(itemEditarActividad);
+
+        itemEliminarActividad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemEliminarActividad.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemEliminarActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/eliminar20.png"))); // NOI18N
+        itemEliminarActividad.setText("Eliminar...");
+        itemEliminarActividad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarActividadActionPerformed(evt);
+            }
+        });
+        menuActividad.add(itemEliminarActividad);
+        menuActividad.add(jSeparator10);
+
+        menuActividadReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/co/edu/udec/poo/hotelsafaris/vistas/gui/img/reporte20.png"))); // NOI18N
+        menuActividadReportes.setText("Reportes");
+        menuActividadReportes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+
+        itemReporteXTipoSuplemento1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemReporteXTipoSuplemento1.setText("Buscar por Tipo...");
+        menuActividadReportes.add(itemReporteXTipoSuplemento1);
+
+        itemReporteXImporteSuplemento1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        itemReporteXImporteSuplemento1.setText("Buscar por Importe...");
+        menuActividadReportes.add(itemReporteXImporteSuplemento1);
+
+        menuActividad.add(menuActividadReportes);
+
+        MenuBarSuperior.add(menuActividad);
+
         setJMenuBar(MenuBarSuperior);
 
         pack();
@@ -878,14 +950,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         VentanaReporteHotelNombre ventana = new VentanaReporteHotelNombre(this, true);
         ventana.setLocationRelativeTo(this);
         ventana.setVisible(true);
-        
+
     }//GEN-LAST:event_itemReporteXNombreHotelActionPerformed
 
     private void itemReporteXCategoriaHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteXCategoriaHotelActionPerformed
         VentanaReporteHotelCategoria ventana = new VentanaReporteHotelCategoria(this, true);
         ventana.setLocationRelativeTo(this);
         ventana.setVisible(true);
-        
+
     }//GEN-LAST:event_itemReporteXCategoriaHotelActionPerformed
 
     private void itemReporteXNombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteXNombreClienteActionPerformed
@@ -986,7 +1058,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventana.setVisible(true);
     }//GEN-LAST:event_itemEliminarFacturaActionPerformed
 
- 
+    private void itemAgregarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarActividadActionPerformed
+        VentanaCrudActividad ventana = new VentanaCrudActividad(this, true);
+        ventana.setAccion("agregar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemAgregarActividadActionPerformed
+
+    private void itemBuscarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBuscarActividadActionPerformed
+        VentanaCrudActividad ventana = new VentanaCrudActividad(this, true);
+        ventana.setAccion("buscar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemBuscarActividadActionPerformed
+
+    private void itemEditarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarActividadActionPerformed
+        VentanaCrudActividad ventana = new VentanaCrudActividad(this, true);
+        ventana.setAccion("editar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemEditarActividadActionPerformed
+
+    private void itemEliminarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarActividadActionPerformed
+        VentanaCrudActividad ventana = new VentanaCrudActividad(this, true);
+        ventana.setAccion("eliminar");
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_itemEliminarActividadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1023,6 +1122,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuBarSuperior;
+    private javax.swing.JMenuItem itemAgregarActividad;
     private javax.swing.JMenuItem itemAgregarCliente;
     private javax.swing.JMenuItem itemAgregarEmpleado;
     private javax.swing.JMenuItem itemAgregarEstancia;
@@ -1031,6 +1131,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemAgregarHotel;
     private javax.swing.JMenuItem itemAgregarReserva;
     private javax.swing.JMenuItem itemAgregarSuplemento;
+    private javax.swing.JMenuItem itemBuscarActividad;
     private javax.swing.JMenuItem itemBuscarCliente;
     private javax.swing.JMenuItem itemBuscarEmpleado;
     private javax.swing.JMenuItem itemBuscarEstancia;
@@ -1039,6 +1140,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemBuscarHotel;
     private javax.swing.JMenuItem itemBuscarReserva;
     private javax.swing.JMenuItem itemBuscarSuplemento;
+    private javax.swing.JMenuItem itemEditarActividad;
     private javax.swing.JMenuItem itemEditarCliente;
     private javax.swing.JMenuItem itemEditarEmpleado;
     private javax.swing.JMenuItem itemEditarEstancia;
@@ -1047,6 +1149,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemEditarHotel;
     private javax.swing.JMenuItem itemEditarReserva;
     private javax.swing.JMenuItem itemEditarSuplemento;
+    private javax.swing.JMenuItem itemEliminarActividad;
     private javax.swing.JMenuItem itemEliminarCliente;
     private javax.swing.JMenuItem itemEliminarEmpleado;
     private javax.swing.JMenuItem itemEliminarEstancia;
@@ -1064,6 +1167,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemReporteXFechaInicioEstancia;
     private javax.swing.JMenuItem itemReporteXFechaReserva;
     private javax.swing.JMenuItem itemReporteXImporteSuplemento;
+    private javax.swing.JMenuItem itemReporteXImporteSuplemento1;
     private javax.swing.JMenuItem itemReporteXNivelEmpleado;
     private javax.swing.JMenuItem itemReporteXNombreCliente;
     private javax.swing.JMenuItem itemReporteXNombreHotel;
@@ -1071,8 +1175,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemReporteXTipoEmpleado;
     private javax.swing.JMenuItem itemReporteXTipoHabitacion;
     private javax.swing.JMenuItem itemReporteXTipoSuplemento;
+    private javax.swing.JMenuItem itemReporteXTipoSuplemento1;
     private javax.swing.JLabel jLFondo;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
@@ -1080,6 +1186,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JMenu menuActividad;
+    private javax.swing.JMenu menuActividadReportes;
     private javax.swing.JMenu menuCliente;
     private javax.swing.JMenu menuClienteReportes;
     private javax.swing.JMenu menuEmpleado;
