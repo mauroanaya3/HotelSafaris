@@ -6,7 +6,6 @@ import co.edu.udec.poo.hotelsafaris.modelo.entidades.Actividad;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Empleado;
 import java.awt.event.KeyEvent;
 import java.util.*;
-import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
 public class VentanaCrudActividad extends javax.swing.JDialog {
@@ -330,7 +329,7 @@ public class VentanaCrudActividad extends javax.swing.JDialog {
         txtDescripcion.setText("");
         txtHorario.setText("");
         txtPrecio.setText("");
-        
+
         lstDias.clearSelection();
 
         jRGratuito.setSelected(true);
@@ -537,15 +536,15 @@ public class VentanaCrudActividad extends javax.swing.JDialog {
 
         return true;
     }
-    
+
     private void limpiarCampos() {
         txtCodigo.setText("");
         txtNombre.setText("");
         txtDescripcion.setText("");
         txtHorario.setText("");
-        
+
         lstDias.clearSelection();
-        
+
         jRGratuito.setSelected(true);
         txtPrecio.setText("");
         txtPrecio.setEnabled(false);
@@ -573,7 +572,7 @@ public class VentanaCrudActividad extends javax.swing.JDialog {
                 jRGratuito.setEnabled(true);
                 jRPago.setEnabled(true);
                 lstDias.setEnabled(true);
-                                
+
                 break;
 
             case "editar":
@@ -638,14 +637,12 @@ public class VentanaCrudActividad extends javax.swing.JDialog {
                 cmbAnimador.addItem(e);
             }
 
-
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
                     "Error al cargar datos iniciales: " + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -717,8 +714,8 @@ public class VentanaCrudActividad extends javax.swing.JDialog {
             }
         });
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLImagen;
     private javax.swing.JComboBox<Empleado> cmbAnimador;

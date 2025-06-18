@@ -423,7 +423,7 @@ public class VentanaCrudHotel extends javax.swing.JDialog {
         if (confirmar != JOptionPane.YES_OPTION) {
             return; // Cancelado
         }
-        
+
         // Valor buscado
         String codigoTexto = jTCodigo.getText().trim();
 
@@ -440,7 +440,6 @@ public class VentanaCrudHotel extends javax.swing.JDialog {
 
             // busco el hotel
             // Hotel hotel = HotelCrud.buscar(codigo);
-            
             HotelCrud.eliminar(codigo);
 
             JOptionPane.showMessageDialog(this,

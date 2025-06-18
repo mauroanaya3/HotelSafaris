@@ -344,7 +344,7 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
                     "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         if (!telefono.matches("\\d{7,}")) {
             JOptionPane.showMessageDialog(
                     this,
@@ -364,8 +364,6 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
             empleado.setNivelEducativo(nivelEducativo);
             empleado.setTipo(tipo);
             empleado.setHotel(hotel);
-            
-            
 
             JOptionPane.showMessageDialog(this,
                     "Los cambios se han guardado exitosamente.",
@@ -431,14 +429,13 @@ public class VentanaCrudEmpleado extends javax.swing.JDialog {
         try {
             // realizar la busqueda
             Empleado empleado = EmpleadoCrud.buscar(codigo);
-        
+
             jTNombre.setText(empleado.getNombre());
             jTDireccion.setText(empleado.getDireccion());
             jTTelefono.setText(empleado.getTelefono());
             jCNivelEducativo.setSelectedItem(empleado.getNivelEducativo());
             jCTipo.setSelectedItem(empleado.getTipo());
             jCHotel.setSelectedItem(empleado.getHotel());
-            
 
             // habilitar bonotes
             habilitarBotones(accion);

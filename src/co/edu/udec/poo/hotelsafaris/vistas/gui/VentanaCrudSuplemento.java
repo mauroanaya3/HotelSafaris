@@ -172,7 +172,6 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
             return;
         }
 
-
         // Mostrar confirmación solo si todo es válido
         int opcion = JOptionPane.showConfirmDialog(
                 this,
@@ -235,7 +234,6 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
             jTNombre.setText(suplemento.getTipo());
             jTImporte.setText(String.valueOf(suplemento.getImporte()));
 
-
             // habilitar bonotes
             habilitarBotones(accion);
 
@@ -276,7 +274,7 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         }
 
         try {
-            
+
             Suplemento suplemento = SuplementoCrud.buscar(nombre);
 
             suplemento.setTipo(nombre);
@@ -306,7 +304,7 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         if (confirmar != JOptionPane.YES_OPTION) {
             return; // Cancelado
         }
-        
+
         // Valor buscado
         String nombre = jTNombre.getText().trim();
 
@@ -318,7 +316,7 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
         }
 
         try {
-            
+
             SuplementoCrud.eliminar(nombre);
 
             JOptionPane.showMessageDialog(this,
@@ -327,7 +325,6 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
                     JOptionPane.INFORMATION_MESSAGE);
             jTNombre.setText("");
             jTImporte.setText("");
-            
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
@@ -346,7 +343,7 @@ public class VentanaCrudSuplemento extends javax.swing.JDialog {
                 jBEditar.setEnabled(false);
                 jBEliminar.setEnabled(false);
                 jTImporte.setEnabled(true);
-                jTNombre.setEnabled(true);                
+                jTNombre.setEnabled(true);
                 break;
             case "editar":
                 jBAgregar.setEnabled(false);

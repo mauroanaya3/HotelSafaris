@@ -276,7 +276,6 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
             jTDireccion.setText(cliente.getDireccion());
             jTTelefono.setText(cliente.getTelefono());
 
-
             // habilitar bonotes
             habilitarBotones(accion);
             //jBEliminar.setEnabled(true);
@@ -353,7 +352,7 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
         if (confirmar != JOptionPane.YES_OPTION) {
             return; // Cancelado
         }
-        
+
         // Valor buscado
         String dni = jTDni.getText().trim();
 
@@ -365,7 +364,7 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
         }
 
         try {
-            
+
             ClienteCrud.eliminar(dni);
 
             JOptionPane.showMessageDialog(this,
@@ -395,7 +394,7 @@ public class VentanaCrudCliente extends javax.swing.JDialog {
                 jTDireccion.setEnabled(true);
                 jTDni.setEnabled(true);
                 jTNombre.setEnabled(true);
-                jTTelefono.setEnabled(true);                
+                jTTelefono.setEnabled(true);
                 break;
             case "editar":
                 jBAgregar.setEnabled(false);

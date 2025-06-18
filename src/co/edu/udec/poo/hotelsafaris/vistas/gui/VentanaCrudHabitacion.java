@@ -1,6 +1,5 @@
 package co.edu.udec.poo.hotelsafaris.vistas.gui;
 
-
 import co.edu.udec.poo.hotelsafaris.modelo.crud.HabitacionCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.crud.HotelCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.crud.SuplementoCrud;
@@ -267,7 +266,7 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
 
     // Boton Limpiar
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
-         txtId.setText("");
+        txtId.setText("");
         txtPrecioBase.setText("");
         txtPrecioTotal.setText("");
         cmbTipo.setSelectedIndex(0);
@@ -514,7 +513,6 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
                 break;
         }
     }
-
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

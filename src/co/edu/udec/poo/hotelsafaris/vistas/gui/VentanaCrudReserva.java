@@ -21,7 +21,7 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
     public VentanaCrudReserva(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         cargarReservas();
 
         // Configurar listeners
@@ -806,7 +806,7 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
             );
         }
     }
-    
+
     private void cargarDatosIniciales() {
         try {
             // Cargar hoteles
@@ -871,7 +871,6 @@ public class VentanaCrudReserva extends javax.swing.JDialog {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     // Habilitar botones segun la accion
     private void habilitarBotones(String accion) {

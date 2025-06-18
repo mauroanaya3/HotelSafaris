@@ -23,7 +23,7 @@ public class VentanaCrudEstancia extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         cargarReservas();
-        
+
         btnCargarHabitaciones.addActionListener(e -> {
             try {
                 Reserva reserva = (Reserva) cmbReserva.getSelectedItem();
@@ -472,7 +472,7 @@ public class VentanaCrudEstancia extends javax.swing.JDialog {
     }//GEN-LAST:event_jBEditarActionPerformed
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
-         int confirmar = JOptionPane.showConfirmDialog(this,
+        int confirmar = JOptionPane.showConfirmDialog(this,
                 "¿Está seguro que desea eliminar esta estancia?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION,
@@ -570,7 +570,7 @@ public class VentanaCrudEstancia extends javax.swing.JDialog {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void limpiarCampos() {
         txtId.setText("");
         txtFechaInicio.setText("");

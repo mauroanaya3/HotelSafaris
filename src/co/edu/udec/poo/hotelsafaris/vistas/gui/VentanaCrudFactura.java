@@ -426,7 +426,7 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this,
                     "Error al agregar factura: " + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
-        }  
+        }
 
 
     }//GEN-LAST:event_jBAgregarActionPerformed
@@ -591,7 +591,7 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
             );
         }
     }
-    
+
     private void limpiarCampos() {
         txtId.setText("");
         txtFechaEmision.setText("");
@@ -609,18 +609,18 @@ public class VentanaCrudFactura extends javax.swing.JDialog {
         jBEditar.setEnabled(false);
         jBEliminar.setEnabled(false);
     }
-    
+
     private void configurarListenersParaCalculoAutomatico() {
-    KeyAdapter calculator = new KeyAdapter() {
-        @Override
-        public void keyReleased(KeyEvent e) {
-            calcularTotalAutomatico();
-        }
-    };
-    
-    txtAnticipo.addKeyListener(calculator);
-    cmbEstancia.addActionListener(e -> calcularTotalAutomatico());
-}
+        KeyAdapter calculator = new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                calcularTotalAutomatico();
+            }
+        };
+
+        txtAnticipo.addKeyListener(calculator);
+        cmbEstancia.addActionListener(e -> calcularTotalAutomatico());
+    }
 
     private void calcularTotalAutomatico() {
         if (cmbEstancia.getSelectedItem() != null) {
