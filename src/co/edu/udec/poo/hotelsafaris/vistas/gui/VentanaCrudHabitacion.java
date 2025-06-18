@@ -1,11 +1,9 @@
 package co.edu.udec.poo.hotelsafaris.vistas.gui;
 
-import co.edu.udec.poo.hotelsafaris.modelo.crud.EmpleadoCrud;
+
 import co.edu.udec.poo.hotelsafaris.modelo.crud.HabitacionCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.crud.HotelCrud;
-import co.edu.udec.poo.hotelsafaris.modelo.crud.ReservaCrud;
 import co.edu.udec.poo.hotelsafaris.modelo.crud.SuplementoCrud;
-import co.edu.udec.poo.hotelsafaris.modelo.entidades.Empleado;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Habitacion;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Hotel;
 import co.edu.udec.poo.hotelsafaris.modelo.entidades.Suplemento;
@@ -49,9 +47,9 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
         jRDisponible = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
-        txtPrecioBase = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtPrecioTotal = new javax.swing.JTextField();
+        txtPrecioTotal = new javax.swing.JFormattedTextField();
+        txtPrecioBase1 = new javax.swing.JFormattedTextField();
         jBAgregar = new javax.swing.JButton();
         jBBuscar = new javax.swing.JButton();
         jBEditar = new javax.swing.JButton();
@@ -115,25 +113,17 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel8.setText("Precio Base:");
 
-        txtPrecioBase.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtPrecioBase.setPreferredSize(new java.awt.Dimension(165, 23));
-        txtPrecioBase.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPrecioBaseKeyTyped(evt);
-            }
-        });
-
         jLabel9.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel9.setText("Precio Total:");
 
-        txtPrecioTotal.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtPrecioTotal.setPreferredSize(new java.awt.Dimension(165, 23));
-        txtPrecioTotal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPrecioTotalKeyTyped(evt);
-            }
-        });
+        txtPrecioTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.##"))));
+        txtPrecioTotal.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtPrecioTotal.setPreferredSize(new java.awt.Dimension(163, 23));
+
+        txtPrecioBase1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.##"))));
+        txtPrecioBase1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtPrecioBase1.setPreferredSize(new java.awt.Dimension(163, 23));
 
         javax.swing.GroupLayout jPDatosLayout = new javax.swing.GroupLayout(jPDatos);
         jPDatos.setLayout(jPDatosLayout);
@@ -173,14 +163,16 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
                     .addGroup(jPDatosLayout.createSequentialGroup()
                         .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPDatosLayout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPDatosLayout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPrecioBase, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(txtPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8))
+                        .addGap(0, 280, Short.MAX_VALUE))))
+            .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPDatosLayout.createSequentialGroup()
+                    .addGap(105, 105, 105)
+                    .addComponent(txtPrecioBase1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(270, Short.MAX_VALUE)))
         );
         jPDatosLayout.setVerticalGroup(
             jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,18 +191,21 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPrecioBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(jPDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPDatosLayout.createSequentialGroup()
+                    .addGap(95, 95, 95)
+                    .addComponent(txtPrecioBase1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(220, Short.MAX_VALUE)))
         );
 
         getContentPane().add(jPDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 490, 360));
@@ -278,7 +273,7 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
     // Boton Limpiar
     private void jBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimpiarActionPerformed
          txtId.setText("");
-        txtPrecioBase.setText("");
+        txtPrecioTotal.setText("");
         txtPrecioTotal.setText("");
         cmbTipo.setSelectedIndex(0);
 
@@ -300,7 +295,7 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
             int numero = Integer.parseInt(txtId.getText().trim());
             String tipo = (String) cmbTipo.getSelectedItem();
             boolean disponible = jRDisponible.isSelected();
-            double precioBase = Double.parseDouble(txtPrecioBase.getText().trim());
+            double precioBase = Double.parseDouble(txtPrecioTotal.getText().trim());
             Hotel hotel = (Hotel) cmbHotel.getSelectedItem();
 
             Habitacion h = new Habitacion(numero, tipo, disponible, precioBase, hotel);
@@ -348,7 +343,7 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
             int numero = Integer.parseInt(txtId.getText().trim());
             String tipo = (String) cmbTipo.getSelectedItem();
             boolean disponible = jRDisponible.isSelected();
-            double precioBase = Double.parseDouble(txtPrecioBase.getText().trim());
+            double precioBase = Double.parseDouble(txtPrecioTotal.getText().trim());
             Hotel hotel = (Hotel) cmbHotel.getSelectedItem();
 
             Habitacion h = new Habitacion(numero, tipo, disponible, precioBase, hotel);
@@ -405,7 +400,7 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
 
             cmbTipo.setSelectedItem(h.getTipo());
             jRDisponible.setSelected(h.isDisponible());
-            txtPrecioBase.setText(String.valueOf(h.getPrecioBase()));
+            txtPrecioTotal.setText(String.valueOf(h.getPrecioBase()));
             txtPrecioTotal.setText(String.valueOf(h.calcularPrecioTotal()));
             cmbHotel.setSelectedItem(h.getHotel());
 
@@ -427,14 +422,6 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
-
-    private void txtPrecioBaseKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioBaseKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioBaseKeyTyped
-
-    private void txtPrecioTotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioTotalKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioTotalKeyTyped
 
     // Listar hoteles e insertarlos
     private void cargarHoteles() {
@@ -478,7 +465,7 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
                 jBEliminar.setEnabled(false);
 
                 txtId.setEnabled(true);
-                txtPrecioBase.setEnabled(true);
+                txtPrecioTotal.setEnabled(true);
                 txtPrecioTotal.setEnabled(false); // se calcula automáticamente
                 cmbHotel.setEnabled(true);
                 cmbTipo.setEnabled(true);
@@ -493,7 +480,7 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
                 jBEliminar.setEnabled(false);
 
                 txtId.setEnabled(false); // para evitar cambiar el número único
-                txtPrecioBase.setEnabled(true);
+                txtPrecioTotal.setEnabled(true);
                 txtPrecioTotal.setEnabled(false);
                 cmbHotel.setEnabled(true);
                 cmbTipo.setEnabled(true);
@@ -508,7 +495,7 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
                 jBEliminar.setEnabled(true);
 
                 txtId.setEnabled(true);
-                txtPrecioBase.setEnabled(false);
+                txtPrecioTotal.setEnabled(false);
                 txtPrecioTotal.setEnabled(false);
                 cmbHotel.setEnabled(false);
                 cmbTipo.setEnabled(false);
@@ -523,7 +510,7 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
                 jBEliminar.setEnabled(false);
 
                 txtId.setEnabled(true);
-                txtPrecioBase.setEnabled(false);
+                txtPrecioTotal.setEnabled(false);
                 txtPrecioTotal.setEnabled(false);
                 cmbHotel.setEnabled(false);
                 cmbTipo.setEnabled(false);
@@ -611,8 +598,8 @@ public class VentanaCrudHabitacion extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JList<Suplemento> lstSuplementos;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtPrecioBase;
-    private javax.swing.JTextField txtPrecioTotal;
+    private javax.swing.JFormattedTextField txtPrecioBase1;
+    private javax.swing.JFormattedTextField txtPrecioTotal;
     // End of variables declaration//GEN-END:variables
 
 }
